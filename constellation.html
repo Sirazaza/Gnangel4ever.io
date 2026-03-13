@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>กลุ่มดาวของ Angel 🌙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;700&family=Cormorant+Garamond:ital,wght@1,300;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050a14;
+  --pink:#ffb3e6;
+  --pink2:#ff6ec7;
+  --gold:#ffd6a5;
+  --blue:#a8d0ff;
+  --muted:rgba(255,255,255,.55);
+  --line:#c8a8ff;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{
+  height:100%;overflow:hidden;
+  background:var(--bg);
+  font-family:"Noto Sans Thai",system-ui;
+  color:#fff;
+  user-select:none;
+}
+
+/* ─── CANVAS ─── */
+#sky{
+  position:fixed;inset:0;
+  z-index:1;
+  touch-action:none;
+}
+
+/* ─── UI LAYER ─── */
+#ui{
+  position:fixed;inset:0;
+  z-index:10;
+  pointer-events:none;
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:20px 16px 28px;
+}
+
+/* ─── HEADER ─── */
+.top-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  pointer-events:all;
+}
+.back-btn{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--muted);letter-spacing:1px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  padding:8px 14px;border-radius:999px;
+  cursor:pointer;backdrop-filter:blur(8px);
+  transition:all .2s;text-decoration:none;
+}
+.back-btn:hover{color:#fff;background:rgba(255,255,255,.1);}
+
+.title-area{text-align:center;pointer-events:none;}
+.page-tag{font-size:10px;letter-spacing:3px;color:var(--pink);opacity:.6;}
+.page-title{
+  font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:22px;
+  background:linear-gradient(135deg,#fff,var(--pink),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.hint-area{
+  font-size:11px;color:var(--muted);letter-spacing:.5px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  padding:6px 14px;border-radius:999px;
+  backdrop-filter:blur(8px);
+  white-space:nowrap;
+}
+
+/* ─── BOTTOM BAR ─── */
+.bottom-bar{
+  pointer-events:all;
+  display:flex;flex-direction:column;
+  gap:12px;align-items:center;
+}
+
+/* ─── NAME INPUT ─── */
+.name-wrap{
+  display:flex;gap:8px;align-items:center;
+  width:min(90%,380px);
+}
+.name-input{
+  flex:1;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;
+  padding:10px 16px;
+  color:#fff;
+  font-family:"Noto Sans Thai",system-ui;
+  font-size:13px;
+  outline:none;
+  backdrop-filter:blur(8px);
+  transition:border-color .2s;
+}
+.name-input::placeholder{color:rgba(255,255,255,.3);}
+.name-input:focus{border-color:var(--pink2);}
+
+.save-btn{
+  padding:10px 18px;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--pink2),#e040a8);
+  border:none;color:#fff;
+  font-family:"Noto Sans Thai",system-ui;
+  font-weight:700;font-size:13px;
+  cursor:pointer;
+  box-shadow:0 4px 16px rgba(224,64,168,.4);
+  transition:all .2s;
+  white-space:nowrap;
+}
+.save-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(224,64,168,.5);}
+.save-btn:active{transform:scale(.97);}
+
+/* ─── ACTION BUTTONS ─── */
+.action-row{
+  display:flex;gap:10px;
+}
+.act-btn{
+  padding:9px 16px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);
+  color:var(--muted);
+  font-family:"Noto Sans Thai",system-ui;
+  font-size:12px;font-weight:700;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:all .2s;
+}
+.act-btn:hover{color:#fff;background:rgba(255,255,255,.1);}
+.act-btn.danger:hover{background:rgba(255,80,80,.15);border-color:rgba(255,80,80,.3);color:#ff9999;}
+
+/* ─── SAVED NAMES TOAST ─── */
+.toast{
+  position:fixed;
+  top:80px;left:50%;transform:translateX(-50%) translateY(-10px);
+  background:rgba(255,110,199,.15);
+  border:1px solid rgba(255,110,199,.3);
+  backdrop-filter:blur(12px);
+  padding:10px 20px;border-radius:999px;
+  font-size:13px;color:var(--pink);
+  z-index:200;
+  opacity:0;pointer-events:none;
+  transition:all .3s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ─── SAVED LIST ─── */
+.saved-overlay{
+  position:fixed;inset:0;z-index:150;
+  display:none;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(10px);
+}
+.saved-overlay.show{display:flex;}
+.saved-sheet{
+  width:min(92%,440px);
+  background:rgba(12,5,22,.95);
+  border:1px solid rgba(255,179,230,.1);
+  border-radius:24px 24px 0 0;
+  padding:24px 20px 36px;
+  animation:sheetUp .35s cubic-bezier(.175,.885,.32,1.275) both;
+  max-height:60vh;overflow-y:auto;
+}
+@keyframes sheetUp{
+  from{transform:translateY(100%);}
+  to{transform:translateY(0);}
+}
+.sheet-title{
+  font-size:13px;letter-spacing:2px;color:var(--pink);
+  margin-bottom:16px;text-align:center;opacity:.7;
+}
+.saved-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-radius:12px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  margin-bottom:8px;
+  font-size:14px;
+}
+.saved-item-name{color:#fff;}
+.saved-item-del{
+  font-size:12px;color:rgba(255,100,100,.6);
+  cursor:pointer;padding:4px 8px;
+  border-radius:8px;
+  transition:all .2s;
+}
+.saved-item-del:hover{background:rgba(255,80,80,.1);color:#ff9999;}
+.empty-saved{text-align:center;color:var(--muted);font-size:13px;padding:20px;}
+
+/* ─── STAR PULSE ─── */
+@keyframes starGlow{
+  0%,100%{filter:drop-shadow(0 0 3px var(--pink));}
+  50%{filter:drop-shadow(0 0 10px var(--pink2)) drop-shadow(0 0 20px var(--pink));}
+}
+</style>
+</head>
+<body>
+
+<canvas id="sky"></canvas>
+
+<div id="ui">
+  <div class="top-bar">
+    <a class="back-btn" href="index.html">← กลับ</a>
+    <div class="title-area">
+      <div class="page-tag">✦ MY CONSTELLATION ✦</div>
+      <div class="page-title">กลุ่มดาวของ Angel 🌙</div>
+    </div>
+    <div class="hint-area" id="hintText">แตะดาวเพื่อเริ่ม</div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="name-wrap">
+      <input class="name-input" id="nameInput" placeholder="ตั้งชื่อกลุ่มดาวนี้... 🌙" maxlength="30"/>
+      <button class="save-btn" id="saveBtn">บันทึก ✨</button>
+    </div>
+    <div class="action-row">
+      <button class="act-btn" id="undoBtn">↩ undo</button>
+      <button class="act-btn danger" id="clearBtn">🗑 ล้าง</button>
+      <button class="act-btn" id="listBtn">📋 ที่บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="saved-overlay" id="savedOverlay">
+  <div class="saved-sheet">
+    <div class="sheet-title">✦ กลุ่มดาวที่บันทึกไว้ ✦</div>
+    <div id="savedList"></div>
+    <button class="act-btn" style="width:100%;justify-content:center;margin-top:8px;" onclick="document.getElementById('savedOverlay').classList.remove('show')">ปิด</button>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("sky");
+const ctx = canvas.getContext("2d");
+let W, H;
+
+// ─── BG STARS ───
+let bgStars = [];
+function initStars() {
+  bgStars = [];
+  for (let i = 0; i < 180; i++) {
+    bgStars.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: .4 + Math.random() * 1.4,
+      alpha: .2 + Math.random() * .7,
+      twinkle: Math.random() * Math.PI * 2,
+      speed: .005 + Math.random() * .015,
+    });
+  }
+}
+
+// ─── INTERACTIVE STARS ───
+let iStars = [];
+function initIStars() {
+  iStars = [];
+  const count = Math.floor((W * H) / 18000);
+  for (let i = 0; i < count; i++) {
+    const margin = 60;
+    iStars.push({
+      x: margin + Math.random() * (W - margin * 2),
+      y: margin + Math.random() * (H - margin * 2),
+      r: 3 + Math.random() * 3,
+      alpha: .5 + Math.random() * .5,
+      pulse: Math.random() * Math.PI * 2,
+      connected: false,
+    });
+  }
+}
+
+// ─── STATE ───
+let lines = [];       // {from, to} index pairs
+let selected = null;  // index of last tapped star
+let history = [];     // for undo
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  initStars();
+  initIStars();
+}
+resize();
+window.addEventListener("resize", resize);
+
+// ─── DRAW LOOP ───
+function draw(ts) {
+  ctx.clearRect(0, 0, W, H);
+
+  // deep bg gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, "#030812");
+  grad.addColorStop(1, "#0a0518");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // nebula blobs
+  [[W*.3, H*.2, 280, 270, .045], [W*.75, H*.6, 240, 300, .04], [W*.1, H*.7, 200, 280, .035]].forEach(([x,y,rx,ry,a]) => {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, Math.max(rx,ry));
+    g.addColorStop(0, `rgba(180,100,255,${a})`);
+    g.addColorStop(1, "transparent");
+    ctx.fillStyle = g;
+    ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill();
+  });
+
+  // bg stars twinkle
+  bgStars.forEach(s => {
+    s.twinkle += s.speed;
+    const a = s.alpha * (.6 + .4 * Math.sin(s.twinkle));
+    ctx.beginPath();ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${a})`;
+    ctx.fill();
+  });
+
+  // drawn lines
+  lines.forEach(l => {
+    const a = iStars[l.from], b = iStars[l.to];
+    const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+    grad.addColorStop(0, "rgba(200,168,255,.7)");
+    grad.addColorStop(.5, "rgba(255,179,230,.5)");
+    grad.addColorStop(1, "rgba(200,168,255,.7)");
+    ctx.beginPath();ctx.moveTo(a.x, a.y);ctx.lineTo(b.x, b.y);
+    ctx.strokeStyle = grad;ctx.lineWidth = 1.2;
+    ctx.shadowColor = "rgba(200,168,255,.4)";ctx.shadowBlur = 6;
+    ctx.stroke();ctx.shadowBlur = 0;
+  });
+
+  // interactive stars
+  iStars.forEach((s, i) => {
+    s.pulse += .025;
+    const glow = s.connected || i === selected;
+    const r = s.r + (glow ? 1.5 + Math.sin(s.pulse) * 1 : Math.sin(s.pulse) * .5);
+    const alpha = s.alpha;
+
+    // outer glow
+    if (glow) {
+      const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, r * 4);
+      g.addColorStop(0, i === selected ? "rgba(255,110,199,.5)" : "rgba(200,168,255,.3)");
+      g.addColorStop(1, "transparent");
+      ctx.beginPath();ctx.arc(s.x, s.y, r * 4, 0, Math.PI*2);
+      ctx.fillStyle = g;ctx.fill();
+    }
+
+    // star core
+    ctx.beginPath();ctx.arc(s.x, s.y, r, 0, Math.PI*2);
+    ctx.fillStyle = i === selected
+      ? `rgba(255,110,199,${alpha})`
+      : glow ? `rgba(220,190,255,${alpha})` : `rgba(255,255,255,${alpha * .8})`;
+    ctx.shadowColor = i === selected ? "rgba(255,110,199,.8)" : "rgba(200,168,255,.6)";
+    ctx.shadowBlur = glow ? 12 : 4;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // sparkle cross for selected
+    if (i === selected) {
+      const sz = r * 2.5;
+      ctx.strokeStyle = "rgba(255,110,199,.6)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();ctx.moveTo(s.x - sz, s.y);ctx.lineTo(s.x + sz, s.y);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(s.x, s.y - sz);ctx.lineTo(s.x, s.y + sz);ctx.stroke();
+    }
+  });
+
+  // line preview (finger to nearest star)
+  if (selected !== null && touchPos) {
+    const s = iStars[selected];
+    ctx.beginPath();ctx.moveTo(s.x, s.y);ctx.lineTo(touchPos.x, touchPos.y);
+    ctx.strokeStyle = "rgba(255,179,230,.25)";ctx.lineWidth = 1;
+    ctx.setLineDash([4,6]);ctx.stroke();ctx.setLineDash([]);
+  }
+
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+
+// ─── HIT TEST ───
+function hitStar(x, y) {
+  const hitR = 28; // generous touch target
+  let best = -1, bestD = Infinity;
+  iStars.forEach((s, i) => {
+    const d = Math.hypot(s.x - x, s.y - y);
+    if (d < hitR && d < bestD) { best = i; bestD = d; }
+  });
+  return best;
+}
+
+// ─── TOUCH / MOUSE ───
+let touchPos = null;
+
+function getPos(e) {
+  if (e.touches) {
+    return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+  return { x: e.clientX, y: e.clientY };
+}
+
+function onTap(x, y) {
+  const hit = hitStar(x, y);
+  if (hit === -1) {
+    // deselect if tapping empty space
+    selected = null;
+    document.getElementById("hintText").textContent = "แตะดาวเพื่อเริ่ม";
+    return;
+  }
+
+  if (selected === null) {
+    selected = hit;
+    iStars[hit].connected = true;
+    document.getElementById("hintText").textContent = "แตะดาวดวงถัดไป ✨";
+  } else {
+    if (hit === selected) {
+      // tap same star = deselect / end line
+      selected = null;
+      document.getElementById("hintText").textContent = "จบแล้ว! แตะดาวใหม่ได้เลย 🌙";
+      return;
+    }
+    // check duplicate line
+    const dup = lines.find(l =>
+      (l.from === selected && l.to === hit) ||
+      (l.from === hit && l.to === selected)
+    );
+    if (!dup) {
+      history.push({ lines: JSON.parse(JSON.stringify(lines)), selected });
+      lines.push({ from: selected, to: hit });
+      iStars[hit].connected = true;
+      updateConnected();
+    }
+    selected = hit;
+  }
+}
+
+function updateConnected() {
+  const used = new Set();
+  lines.forEach(l => { used.add(l.from); used.add(l.to); });
+  iStars.forEach((s, i) => s.connected = used.has(i));
+}
+
+canvas.addEventListener("click", e => {
+  if (e.target !== canvas) return;
+  const p = getPos(e);
+  onTap(p.x, p.y);
+});
+
+canvas.addEventListener("touchstart", e => {
+  e.preventDefault();
+  const p = getPos(e);
+  touchPos = p;
+  onTap(p.x, p.y);
+}, { passive: false });
+
+canvas.addEventListener("touchmove", e => {
+  e.preventDefault();
+  touchPos = getPos(e);
+}, { passive: false });
+
+canvas.addEventListener("touchend", () => { touchPos = null; });
+canvas.addEventListener("mousemove", e => {
+  if (selected !== null) touchPos = { x: e.clientX, y: e.clientY };
+  else touchPos = null;
+});
+
+// ─── UNDO ───
+document.getElementById("undoBtn").onclick = () => {
+  if (history.length === 0) { showToast("ไม่มีอะไรให้ undo แล้ว 🥲"); return; }
+  const prev = history.pop();
+  lines = prev.lines;
+  selected = null;
+  updateConnected();
+  document.getElementById("hintText").textContent = "undo แล้ว ✨";
+};
+
+// ─── CLEAR ───
+document.getElementById("clearBtn").onclick = () => {
+  lines = [];
+  history = [];
+  selected = null;
+  iStars.forEach(s => s.connected = false);
+  document.getElementById("hintText").textContent = "ล้างแล้ว แตะดาวเพื่อเริ่มใหม่ 🌙";
+};
+
+// ─── SAVE ───
+let savedList = JSON.parse(localStorage.getItem("constellations") || "[]");
+
+document.getElementById("saveBtn").onclick = () => {
+  const name = document.getElementById("nameInput").value.trim();
+  if (!name) { showToast("ใส่ชื่อกลุ่มดาวด้วยนะ 🌙"); return; }
+  if (lines.length === 0) { showToast("วาดเส้นก่อนนะ ✨"); return; }
+  savedList.push({ name, lines: JSON.parse(JSON.stringify(lines)), date: new Date().toLocaleDateString("th-TH") });
+  localStorage.setItem("constellations", JSON.stringify(savedList));
+  document.getElementById("nameInput").value = "";
+  showToast(`บันทึก "${name}" แล้ว 🌟`);
+};
+
+// ─── SAVED LIST ───
+document.getElementById("listBtn").onclick = () => {
+  renderSaved();
+  document.getElementById("savedOverlay").classList.add("show");
+};
+
+document.getElementById("savedOverlay").onclick = e => {
+  if (e.target === document.getElementById("savedOverlay"))
+    document.getElementById("savedOverlay").classList.remove("show");
+};
+
+function renderSaved() {
+  const el = document.getElementById("savedList");
+  if (savedList.length === 0) {
+    el.innerHTML = `<div class="empty-saved">ยังไม่มีกลุ่มดาวที่บันทึก 🌙<br>วาดแล้วกดบันทึกได้เลย</div>`;
+    return;
+  }
+  el.innerHTML = savedList.map((c, i) => `
+    <div class="saved-item">
+      <div>
+        <div class="saved-item-name">🌟 ${c.name}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;">${c.date} · ${c.lines.length} เส้น</div>
+      </div>
+      <div class="saved-item-del" onclick="deleteSaved(${i})">ลบ ✕</div>
+    </div>
+  `).join("");
+}
+
+function deleteSaved(i) {
+  savedList.splice(i, 1);
+  localStorage.setItem("constellations", JSON.stringify(savedList));
+  renderSaved();
+}
+
+// ─── TOAST ───
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+</script>
+</body>
+</html>
