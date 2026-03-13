@@ -1,308 +1,1090 @@
 <!doctype html>
 <html lang="th">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ฝันร้ายจงออกไปปิ้วๆ ฝันดีในทุกๆวันต่อให้ไม่มีใครบอกเว็บนี้จะบอกเอง!</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ฝันดี ANGEL 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;700;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --bg1:#13081a; --bg2:#1a0b24;
-    --pink1:#ff9bd5; --pink2:#ff73c6;
-    --muted:rgba(255,255,255,0.75);
-  }
+:root{
+  --bg-deep:#0c0516;
+  --bg-mid:#140824;
+  --pink:#ffb3e6;
+  --pink2:#ff6ec7;
+  --pink3:#e040a8;
+  --gold:#ffd6a5;
+  --muted:rgba(255,255,255,0.65);
+  --glass:rgba(255,255,255,0.04);
+  --glass-border:rgba(255,255,255,0.08);
+}
 
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;overflow:hidden;font-family:"Inter","Noto Sans Thai",system-ui;background:linear-gradient(180deg,var(--bg1),var(--bg2));color:white;}
+*{box-sizing:border-box;margin:0;padding:0;}
 
-  /* 🌸 floating particles */
-  .float{position:absolute;border-radius:50%;background:radial-gradient(circle,var(--pink1),transparent 70%);filter:blur(3px);opacity:.6;animation:floatUp 12s linear infinite}
-  @keyframes floatUp{
-    0%{transform:translateY(120vh) scale(.4);opacity:0}
-    20%{opacity:1}
-    100%{transform:translateY(-20vh) scale(1);opacity:0}
-  }
+html,body{
+  height:100%;
+  overflow:hidden;
+  font-family:"Noto Sans Thai",system-ui;
+  background:var(--bg-deep);
+  color:#fff;
+  cursor:none;
+}
 
-  /* 🐱 floating cat images */
-  .floating-cat{
-    position:absolute;
-    border-radius:999px;
-    overflow:hidden;
-    opacity:0.7;
-    filter:blur(1px) drop-shadow(0 0 14px rgba(255,130,180,0.45));
-    animation:floatCat 12s ease-in-out infinite;
-    z-index:1;
-  }
-  .floating-cat img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
-  @keyframes floatCat{
-    0%{transform:translate(0,0) scale(1);}
-    50%{transform:translate(60px,-40px) scale(1.06);}
-    100%{transform:translate(0,0) scale(1);}
-  }
+/* ─── CUSTOM CURSOR ─── */
+#cursor{
+  position:fixed;
+  width:18px;height:18px;
+  background:radial-gradient(circle,var(--pink2),transparent 70%);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s;
+  mix-blend-mode:screen;
+}
+#cursor-trail{
+  position:fixed;
+  width:6px;height:6px;
+  background:var(--pink);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9998;
+  transform:translate(-50%,-50%);
+  opacity:.5;
+  transition:left .12s,top .12s;
+}
 
-  /* 🌸 center content */
-  .wrap{
-    position:relative;
-    z-index:10;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    text-align:center;
-    padding:24px;
-  }
+/* ─── ANIMATED BG ─── */
+#bg-canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
 
-  h1{font-size:28px}
-  p.lead{color:var(--muted);font-size:14px;margin-bottom:12px}
+/* ─── NOISE GRAIN ─── */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px;
+  pointer-events:none;
+  z-index:1;
+}
 
-  /* 🔮 preview card */
-  .card-preview{
-    display:flex;
-    gap:18px;
-    padding:20px;
-    width:min(92%,780px);
-    border-radius:18px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    backdrop-filter:blur(8px);
-    box-shadow:0 18px 50px rgba(0,0,0,.55);
-    align-items:center;
-  }
+/* ─── FLOATING STARS ─── */
+.star{
+  position:absolute;
+  border-radius:50%;
+  background:#fff;
+  animation:twinkle var(--dur) ease-in-out infinite var(--delay);
+}
+@keyframes twinkle{
+  0%,100%{opacity:.1;transform:scale(.8);}
+  50%{opacity:.9;transform:scale(1.4);}
+}
 
-  .preview-icon{
-    width:90px;height:90px;border-radius:18px;
-    overflow:hidden;flex-shrink:0;
-    background:linear-gradient(135deg,var(--pink1),var(--pink2));
-    box-shadow:0 8px 30px rgba(255,110,180,0.15);
-  }
-  .preview-icon img{width:100%;height:100%;object-fit:cover}
+/* ─── SAKURA PETALS ─── */
+.petal{
+  position:absolute;
+  width:8px;height:10px;
+  background:radial-gradient(ellipse,var(--pink) 30%,transparent 80%);
+  border-radius:50% 50% 50% 0;
+  opacity:0;
+  animation:petalFall var(--fdur) linear var(--fdelay) infinite;
+  transform-origin:center center;
+}
+@keyframes petalFall{
+  0%{transform:translateY(-40px) rotate(0deg) translateX(0);opacity:0;}
+  10%{opacity:.8;}
+  90%{opacity:.5;}
+  100%{transform:translateY(110vh) rotate(540deg) translateX(var(--drift));opacity:0;}
+}
 
-  .preview-body{text-align:left;flex:1;}
-  .preview-body .name{font-weight:800;font-size:18px}
-  .preview-body .title{font-weight:900;font-size:20px;color:#ffd7f3;margin-top:4px}
-  .preview-body .msg{margin-top:8px;color:var(--muted);font-size:15px}
+/* ─── WRAP ─── */
+.wrap{
+  position:relative;
+  z-index:10;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:28px;
+  text-align:center;
+  padding:24px;
+}
 
-  /* buttons */
-  .controls{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap}
-  .btn{padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:white;transition:.12s}
-  .btn.pink{background:linear-gradient(90deg,var(--pink1),var(--pink2));border:none;box-shadow:0 8px 24px rgba(255,110,180,.25)}
-  .btn:active{transform:scale(.96)}
+/* ─── HEADER ─── */
+.header-tag{
+  font-size:11px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--pink);
+  opacity:.7;
+  animation:fadeSlide .8s both;
+}
 
-  /* modal */
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20}
-  .overlay.show{display:flex}
-  .modal{
-    width:100%;max-width:560px;padding:24px;border-radius:20px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 30px 70px rgba(0,0,0,.7);
-    transform:translateY(16px);
-    opacity:0;
-    transition:.28s cubic-bezier(.2,.9,.28,1);
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  .overlay.show .modal{opacity:1;transform:none;}
+.title-wrap{
+  animation:fadeSlide .8s .1s both;
+}
 
-  .avatar{
-    width:130px;height:130px;border-radius:18px;overflow:hidden;
-    margin-bottom:14px;background:linear-gradient(135deg,var(--pink1),var(--pink2));
-    box-shadow:0 12px 34px rgba(255,110,180,.2);
-  }
-  .avatar img{width:100%;height:100%;object-fit:cover}
+h1{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  font-size:clamp(28px,6vw,48px);
+  background:linear-gradient(135deg,#fff 0%,var(--pink) 40%,var(--gold) 80%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1.2;
+  filter:drop-shadow(0 0 20px rgba(255,110,199,.4));
+}
 
-  .message{color:var(--muted);font-size:16px;line-height:1.6;margin-top:6px}
-  .meta{color:#bbb;font-size:13px;margin-top:10px}
+.lead{
+  margin-top:6px;
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:1px;
+}
 
+@keyframes fadeSlide{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ─── MAIN CARD ─── */
+.card{
+  display:flex;
+  gap:22px;
+  padding:24px 28px;
+  width:min(92%,680px);
+  border-radius:24px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);
+  box-shadow:0 30px 80px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05);
+  animation:fadeSlide .9s .2s both;
+  transition:transform .3s,box-shadow .3s;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 40px rgba(255,110,199,.12);
+}
+
+.icon{
+  flex-shrink:0;
+  width:88px;height:88px;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  background:linear-gradient(135deg,var(--pink2),var(--pink3));
+}
+.icon::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);
+  border-radius:20px;
+}
+.icon img{width:100%;height:100%;object-fit:cover;}
+
+.body{flex:1;text-align:left;}
+
+.card-title{
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+}
+.card-sub{
+  font-size:12px;
+  color:var(--pink);
+  letter-spacing:1px;
+  margin-top:2px;
+}
+
+.preview-msg{
+  margin-top:10px;
+  font-size:13px;
+  color:var(--muted);
+  min-height:20px;
+  transition:all .4s;
+}
+
+.controls{
+  margin-top:16px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* ─── BUTTONS ─── */
+.btn{
+  padding:10px 18px;
+  border-radius:14px;
+  cursor:none;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);
+  color:white;
+  font-family:"Noto Sans Thai",system-ui;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.5px;
+  transition:all .25s;
+  position:relative;
+  overflow:hidden;
+}
+.btn::before{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);
+  opacity:0;
+  transition:opacity .25s;
+}
+.btn:hover::before{opacity:1;}
+.btn:hover{transform:translateY(-1px);}
+.btn:active{transform:scale(.97);}
+
+.btn.pink{
+  background:linear-gradient(135deg,var(--pink2),var(--pink3));
+  border:none;
+  box-shadow:0 4px 20px rgba(224,64,168,.4);
+}
+.btn.pink:hover{
+  box-shadow:0 8px 30px rgba(224,64,168,.6);
+}
+
+/* ─── OVERLAY ─── */
+.overlay{
+  position:fixed;inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(12px);
+  z-index:100;
+}
+.overlay.show{display:flex;}
+
+/* ─── MODAL ─── */
+.modal{
+  width:90%;max-width:480px;
+  padding:36px 32px;
+  border-radius:28px;
+  background:rgba(20,8,36,.85);
+  border:1px solid rgba(255,179,230,.15);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  animation:modalPop .45s cubic-bezier(.175,.885,.32,1.275) both;
+  box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 60px rgba(255,110,199,.1);
+}
+
+.modal::before{
+  content:"";
+  position:absolute;
+  top:-40%;left:-20%;
+  width:140%;height:80%;
+  background:radial-gradient(ellipse,rgba(255,110,199,.08),transparent 70%);
+  pointer-events:none;
+}
+
+@keyframes modalPop{
+  from{transform:scale(.85) translateY(20px);opacity:0;}
+  to{transform:scale(1) translateY(0);opacity:1;}
+}
+
+/* ─── AVATAR RING ─── */
+.avatar-wrap{
+  position:relative;
+  width:120px;height:120px;
+  margin:0 auto 22px;
+}
+.avatar-ring{
+  position:absolute;inset:-6px;
+  border-radius:50%;
+  background:conic-gradient(var(--pink2),var(--gold),var(--pink),var(--pink2));
+  animation:spin 4s linear infinite;
+  opacity:.7;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.avatar-ring-blur{
+  position:absolute;inset:-6px;
+  border-radius:50%;
+  background:conic-gradient(var(--pink2),var(--gold),var(--pink),var(--pink2));
+  filter:blur(8px);
+  animation:spin 4s linear infinite;
+  opacity:.4;
+}
+
+.avatar{
+  position:absolute;inset:0;
+  border-radius:50%;
+  overflow:hidden;
+  border:3px solid var(--bg-deep);
+}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+
+/* ─── MESSAGE AREA ─── */
+.msg-label{
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--pink);
+  opacity:.6;
+  margin-bottom:12px;
+}
+
+.message{
+  font-size:17px;
+  line-height:1.75;
+  color:rgba(255,255,255,.9);
+  min-height:60px;
+  transition:opacity .3s;
+}
+
+/* ─── STARS ROW ─── */
+.stars-row{
+  margin:16px 0 8px;
+  display:flex;
+  justify-content:center;
+  gap:4px;
+}
+.stars-row span{
+  font-size:14px;
+  animation:starPop .5s cubic-bezier(.175,.885,.32,1.275) both;
+}
+.stars-row span:nth-child(1){animation-delay:.05s;}
+.stars-row span:nth-child(2){animation-delay:.1s;}
+.stars-row span:nth-child(3){animation-delay:.15s;}
+.stars-row span:nth-child(4){animation-delay:.2s;}
+.stars-row span:nth-child(5){animation-delay:.25s;}
+@keyframes starPop{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+.meta{
+  font-size:12px;
+  color:rgba(255,255,255,.3);
+  margin-bottom:22px;
+}
+
+.modal .controls{
+  justify-content:center;
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-wrap{
+  width:100%;
+  height:3px;
+  background:rgba(255,255,255,.06);
+  border-radius:999px;
+  margin-bottom:18px;
+  overflow:hidden;
+}
+.progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--pink2),var(--gold));
+  border-radius:999px;
+  transition:width .6s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 8px var(--pink2);
+}
+
+/* ─── HEART BURST ─── */
+.heart-burst{
+  position:fixed;
+  pointer-events:none;
+  z-index:9997;
+  font-size:16px;
+  animation:heartFly 1.2s ease-out forwards;
+}
+@keyframes heartFly{
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  100%{opacity:0;transform:translateY(-80px) scale(.5);}
+}
+
+/* ─── BOTTOM DECORATION ─── */
+.deco-text{
+  font-size:11px;
+  color:rgba(255,255,255,.15);
+  letter-spacing:2px;
+  animation:fadeSlide 1s .5s both;
+}
+
+/* ─── DONE STATE ─── */
+.modal.done .avatar-ring{background:conic-gradient(#aaa,#555,#aaa);}
+
+/* ─── MOOD CHECK OVERLAY ─── */
+.mood-overlay{
+  position:fixed;inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(14px);
+  z-index:200;
+}
+.mood-overlay.show{display:flex;}
+.mood-modal{
+  width:90%;max-width:440px;
+  padding:32px 28px;
+  border-radius:28px;
+  background:rgba(20,8,36,.9);
+  border:1px solid rgba(255,179,230,.15);
+  text-align:center;
+  animation:modalPop .4s cubic-bezier(.175,.885,.32,1.275) both;
+  box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 60px rgba(255,110,199,.1);
+}
+.mood-title{
+  font-size:14px;letter-spacing:2px;
+  color:var(--pink);margin-bottom:6px;opacity:.7;
+}
+.mood-question{
+  font-size:20px;font-weight:900;
+  margin-bottom:24px;line-height:1.4;
+}
+.mood-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-bottom:16px;
+}
+.mood-btn{
+  padding:16px 10px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);
+  color:#fff;font-family:"Noto Sans Thai",system-ui;
+  font-size:13px;font-weight:700;cursor:none;
+  transition:all .25s;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.mood-btn .mood-icon{font-size:28px;}
+.mood-btn:hover{
+  background:rgba(255,110,199,.15);
+  border-color:rgba(255,110,199,.4);
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 8px 24px rgba(255,110,199,.2);
+}
+.mood-btn.selected{
+  background:linear-gradient(135deg,rgba(255,110,199,.3),rgba(224,64,168,.2));
+  border-color:var(--pink2);
+  box-shadow:0 0 20px rgba(255,110,199,.3);
+}
+
+/* ─── SHAKE HINT ─── */
+.shake-hint{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%);
+  z-index:50;
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+  padding:10px 18px;border-radius:999px;
+  font-size:12px;color:var(--muted);letter-spacing:.5px;
+  animation:fadeSlide 1s 1s both, shakePulse 2s 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes shakePulse{
+  0%,100%{transform:translateX(-50%) rotate(0deg);}
+  20%{transform:translateX(-50%) rotate(-4deg);}
+  40%{transform:translateX(-50%) rotate(4deg);}
+  60%{transform:translateX(-50%) rotate(-2deg);}
+  80%{transform:translateX(-50%) rotate(2deg);}
+}
+.shake-flash{
+  position:fixed;inset:0;
+  background:radial-gradient(circle,rgba(255,110,199,.3),transparent 70%);
+  z-index:9000;pointer-events:none;opacity:0;
+  animation:shakeFlash .6s ease-out forwards;
+}
+@keyframes shakeFlash{
+  0%{opacity:1;}100%{opacity:0;}
+}
+
+/* ─── SHOOTING STAR ─── */
+.shooting-star{
+  position:fixed;
+  top:0;left:0;
+  width:3px;height:3px;
+  background:#fff;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:6;
+  box-shadow:0 0 6px 2px rgba(255,179,230,.8);
+  animation:shoot var(--sdur) linear var(--sdelay) infinite;
+  opacity:0;
+}
+@keyframes shoot{
+  0%{opacity:0;transform:translate(var(--sx),var(--sy)) rotate(var(--srot));}
+  5%{opacity:1;}
+  40%{opacity:.8;}
+  60%{opacity:0;transform:translate(calc(var(--sx) + var(--sdx)),calc(var(--sy) + var(--sdy))) rotate(var(--srot));}
+  100%{opacity:0;transform:translate(calc(var(--sx) + var(--sdx)),calc(var(--sy) + var(--sdy))) rotate(var(--srot));}
+}
+
+/* ─── NIGHT INTRO ─── */
+.night-intro{
+  position:fixed;inset:0;
+  z-index:500;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:rgba(8,2,18,.97);
+  animation:nightIntroFade 1s 2.8s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes nightIntroFade{
+  to{opacity:0;pointer-events:none;}
+}
+.night-intro-text{
+  font-family:"Playfair Display",serif;
+  font-style:italic;
+  font-size:clamp(22px,5vw,38px);
+  background:linear-gradient(135deg,#fff,var(--pink),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:0;
+  animation:nightTextIn .9s .3s ease-out forwards;
+  text-align:center;line-height:1.4;
+  filter:drop-shadow(0 0 20px rgba(255,110,199,.5));
+}
+.night-intro-sub{
+  margin-top:12px;font-size:13px;
+  color:var(--pink);opacity:0;letter-spacing:2px;
+  animation:nightTextIn .9s .8s ease-out forwards;
+}
+@keyframes nightTextIn{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.night-stars-burst{
+  position:absolute;inset:0;pointer-events:none;
+  overflow:hidden;
+}
+.nb-star{
+  position:absolute;
+  font-size:16px;
+  opacity:0;
+  animation:nbStarPop var(--nd) var(--ndelay) ease-out forwards;
+}
+@keyframes nbStarPop{
+  0%{opacity:0;transform:scale(0) translateY(0);}
+  30%{opacity:1;transform:scale(1.3) translateY(-10px);}
+  70%{opacity:.8;}
+  100%{opacity:0;transform:scale(.5) translateY(-40px);}
+}
 </style>
 </head>
 
 <body>
 
-<!-- background particles -->
-<div id="particles"></div>
-
-<!-- 🐱 floating cats -->
-<div id="catFloatingArea"></div>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="bg-canvas"></canvas>
+<div id="petals"></div>
+<div id="stars-bg"></div>
 
 <div class="wrap">
-  <h1>ฝันดี ANGEL 🌸</h1>
-  <p class="lead">กดเพื่อสุ่มบอกฝันดีจะได้มะฝันร้าย</p>
+  <div class="header-tag">✦ sweet dreams ✦</div>
 
-  <div class="card-preview">
-    <div class="preview-icon"><img id="previewImg" alt=""></div>
+  <div class="title-wrap">
+    <h1>ฝันดี ANGEL 🌸</h1>
+    <p class="lead">คืนนี้มีข้อความพิเศษรอเธออยู่</p>
+  </div>
 
-    <div class="preview-body">
-      <div class="name">ANGEL</div>
-      <div class="title">ฝันดี ANGEL ✨</div>
-      <div class="msg" id="previewShort">กดเพื่อที่จะดั้ยฝานดี</div>
-
+  <div class="card">
+    <div class="icon">
+      <img src="angel.jpg" id="previewImg" onerror="this.style.display='none'">
+    </div>
+    <div class="body">
+      <div class="card-title">ฝันดีนะ Angel ✨</div>
+      <div class="card-sub">GOODNIGHT MESSAGE</div>
+      <div class="preview-msg" id="previewShort">เทอคับ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱ 💝</div>
       <div class="controls">
-        <button class="btn pink" id="openBtn">กดดิน้อง ✨</button>
-        <button class="btn" id="resetBtn">รีเซ็ต</button>
-        <button class="btn" id="soundToggle">Melt with u กล่อม</button>
+        <button class="btn pink" id="openBtn">รับข้อความ ✨</button>
+        <button class="btn" id="moodBtn">🌙 mood check</button>
+        <button class="btn" onclick="location.href='constellation.html'">🌟 วาดกลุ่มดาว</button>
+        <button class="btn" id="resetBtn">🔄 รีเซ็ต</button>
+        <button class="btn" id="soundBtn">🎵 เปิดเพลง</button>
       </div>
     </div>
   </div>
+
+  <div class="deco-text">made with 💗 especially for you</div>
 </div>
 
-<!-- modal -->
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <div class="avatar"><img id="modalImg" alt=""></div>
-    <div class="name">ANGEL</div>
-    <div class="message" id="message"></div>
-    <div class="meta" id="metaInfo"></div>
+<!-- MOOD OVERLAY -->
+<div class="mood-overlay" id="moodOverlay">
+  <div class="mood-modal">
+    <div class="mood-title">✦ mood check ✦</div>
+    <div class="mood-question">วันนี้เจิ้ลเป็นยังไงบ้าง? 🌙</div>
+    <div class="mood-grid">
+      <button class="mood-btn" data-mood="happy" onclick="pickMood(this)">
+        <span class="mood-icon">🌸</span><span>ดีมากเลย</span>
+      </button>
+      <button class="mood-btn" data-mood="tired" onclick="pickMood(this)">
+        <span class="mood-icon">😴</span><span>เหนื่อยหน่อย</span>
+      </button>
+      <button class="mood-btn" data-mood="sad" onclick="pickMood(this)">
+        <span class="mood-icon">🌧️</span><span>ไม่ค่อยดี</span>
+      </button>
+      <button class="mood-btn" data-mood="okay" onclick="pickMood(this)">
+        <span class="mood-icon">☁️</span><span>ก็โอเคนะ</span>
+      </button>
+    </div>
+    <button class="btn" style="width:100%;" onclick="closeMood()">ยังไม่อยากบอก 🌙</button>
+  </div>
+</div>
 
-    <div class="controls" style="margin-top:16px">
-      <button class="btn pink" id="nextBtn">อีกข้อความ</button>
+<!-- SHAKE HINT (mobile) -->
+<div class="shake-hint" id="shakeHint">📳 เขย่าเพื่อสุ่มข้อความ</div>
+
+<!-- NIGHT INTRO (22:00–02:00) -->
+<div class="night-intro" id="nightIntro" style="display:none;">
+  <div class="night-stars-burst" id="nbStars"></div>
+  <div class="night-intro-text">ดึกแล้วนะ Angel 🌙<br>นอนได้แล้วนะ</div>
+  <div class="night-intro-sub">✦ sweet dreams ✦</div>
+</div>
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+
+    <div class="avatar-wrap">
+      <div class="avatar-ring-blur"></div>
+      <div class="avatar-ring"></div>
+      <div class="avatar">
+        <img src="angel.jpg" onerror="this.style.background='linear-gradient(135deg,#ffb3e6,#ff6ec7)'">
+      </div>
+    </div>
+
+    <div class="msg-label">✦ ข้อความฝันดี ✦</div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="message" id="message">...</div>
+
+    <div class="stars-row" id="starsRow">
+      <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+    </div>
+
+    <div class="meta" id="meta"></div>
+
+    <div class="controls">
+      <button class="btn pink" id="nextBtn">ข้อความถัดไป ✨</button>
       <button class="btn" id="closeBtn">ปิด</button>
-      <button class="btn" id="resetSmall">รีเซ็ต</button>
     </div>
   </div>
 </div>
 
+<audio id="bgm" loop>
+  <source src="melt with you (feat. Ccn) [1fZusKAxA4w].mp3" type="audio/mpeg">
+</audio>
+
 <script>
-/* Load ANGEL image */
-document.getElementById("previewImg").src = "angel.jpg";
-document.getElementById("modalImg").src = "angel.jpg";
-
-/* Create floating background circles */
-(function particles(){
-  const p=document.getElementById("particles");
-  for(let i=0;i<34;i++){
-    const s=document.createElement("div");
-    s.className="float";
-    s.style.left=Math.random()*100+"%";
-    s.style.width=s.style.height=8+Math.random()*20+"px";
-    s.style.animationDelay=Math.random()*8+"s";
-    s.style.animationDuration=10+Math.random()*10+"s";
-    s.style.opacity=(0.3+Math.random()*0.6);
-    p.appendChild(s);
-  }
-})();
-
-/* 🐱 floating cats */
-(function floatingCats(){
-  const area=document.getElementById("catFloatingArea");
-  for(let i=0;i<6;i++){
-    const d=document.createElement("div");
-    d.className="floating-cat";
-    const img=document.createElement("img");
-    img.src="cat.png";
-    d.appendChild(img);
-
-    d.style.left=Math.random()*100+"%";
-    d.style.top=Math.random()*100+"%";
-    d.style.animationDelay=Math.random()*6+"s";
-
-    const size=90+Math.random()*50;
-    d.style.width=d.style.height=size+"px";
-
-    area.appendChild(d);
-  }
-})();
-
-/* messages */
-const M=[
-"คืนนี้ขอให้หลับฝันดี เหมือนลอยอยู่ในโลกแห่งความนุ่มนวล ✨",
-"ขอให้แองเจิ้ลฝันเห็นดวงดาวที่สวยที่สุด แล้วตื่นมาพร้อมรอยกับรอยยิ้มที่ฉวยที่ฉุด 😊",
-"ใ今天累了吗？希望明天的 ANGEL 醒来时精神满满，不再疲倦。今晚不要做噩梦哦。꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒ 🌸",
-"คืนนี้กองกำลัง “กันฝันร้าย” จะปกป้องเจิ้ลเอง 💖",
-"วันนี้เหนื่อยไหม ขอให้แองเจิ้ลในวันพรุ่งนี้ตื่นมาสดใสไม่เหนื่อย! และวันนี้หลับไม่ฝันร้าย 🛌",
-"หลับฝันดีนะ ANGEL ☁️💗",
-"คืนนี้ดาวทุกดวงจะคอยปกป้องเธอ 🌟",
-"คืนนี้ดวงดาวทุกดวงจะยิ้มให้เจิ้ล ขอให้ตื่นมาแล้วรู้สึกนุ่มนวลดั่งอยู่บนเมฆ 💫",
-"หวังว่าความรู้สึกของเจิ้ลจะไม่ถูกใครทำร้ายอีกนะ ต่อให้วันนี้มันไม่ดี ก็ขอให้พรุ่งนี้เบาลงนิดนึงก็ยังดี🎀",
-"วันนี้เจิ้ลเก่งมากเยย แม้จะเหนื่อยก็ยังผ่านมาได้ ขอให้คืนนี้หลับลึก ไม่ฝันร้ายเลยสักนิด 🌙",
-"หวังว่าเจิ้ลจะหลับแบบไม่ตื่นกลางดึกนะ 🌙",
-"เจิ้ลเก่งพอแล้ว แม้วันที่ไม่ไหวก็ยังพยายามอยู่ดี💖 ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒",
-"ไม่ต้องเข้มแข็งตลอดก็ได้ พักบ้างก็ไม่ผิดอะไร ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒",
-"愿你的心不再被谁伤到。你值得更好的☁️💗",
-"ขอให้คืนนี้ไม่มีฝันร้ายเลยสักนิดเดียว",
-"มีบางสิ่งที่เจิ้ลลืมพัก… เดาว่าคือ “ตัวเอง” ใช่ไหม eiei",
-"อิอิอิอิอิอิอิอิอิอิอิิอิอิอิ งงอะดิจะได้นอน.꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱",
-"เทอคับ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱",
-"อย่าลืมชาจแบต ที่หมายถึงแบตมือถือแกด้วย!",
-"งิ๋งแปลว่าไรนะ....",
-"เทอเหนื่อยไหม ;-;",
-"เทอคับบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱"
+// ─── PHOTOS ───
+const PHOTOS = [
+  "848d5638-3c1c-4ba1-b15d-6e510e74c094.jpg",
+  "02b69c3c-7cf4-4c05-a683-4beac2f75138.jpg",
+  "09af00b3-a3d8-4c48-b42a-6a606344cbe5.jpg",
+  "c37b936e-b606-4069-a208-56946e16ea1a.jpg",
+  "6da5e1db-6a3c-4be0-a1f3-1a817bc2dc51.jpg",
 ];
-let order=[...Array(M.length).keys()].sort(()=>Math.random()-.5);
-let idx=0;
-
-/* audio */
-const audio=new Audio("melt with you (feat. Ccn) [1fZusKAxA4w].mp3");
-audio.loop=true; audio.volume=.23;
-let sound=false;
-
-/* elements */
-const overlay=document.getElementById("overlay");
-const msg=document.getElementById("message");
-const meta=document.getElementById("metaInfo");
-const previewShort=document.getElementById("previewShort");
-
-/* show card */
-function openCard(first=true){
-  const t=M[order[idx]]; idx++;
-  msg.textContent=t;
-  meta.textContent="เหลืออีก "+(M.length-idx)+" ข้อความ";
-
-  previewShort.textContent=t.length>90?t.slice(0,90)+"…":t;
-
-  overlay.classList.add("show");
-
-  if(first){
-    sound=true;
-    document.getElementById("soundToggle").textContent="ปิดเสียง";
-    audio.currentTime=0; audio.play().catch(()=>{});
-  } else {
-    if(sound) audio.play().catch(()=>{});
-  }
+let lastPhoto = -1;
+function randomPhoto() {
+  let i;
+  do { i = Math.floor(Math.random() * PHOTOS.length); } while (i === lastPhoto);
+  lastPhoto = i;
+  return PHOTOS[i];
+}
+function switchPhoto() {
+  const src = randomPhoto();
+  const imgs = document.querySelectorAll(".avatar img, #previewImg");
+  imgs.forEach(img => {
+    img.style.opacity = "0";
+    img.style.transition = "opacity .4s";
+    setTimeout(() => {
+      img.src = src;
+      img.style.opacity = "1";
+    }, 400);
+  });
 }
 
-/* close */
-function closeCard(){ overlay.classList.remove("show"); audio.pause(); audio.currentTime=0; }
+// ─── MESSAGES ───
+const M = [
+  {text:"ขอให้แองเจิ้ลฝันเห็นดวงดาวที่สวยที่สุด แล้วตื่นมาพร้อมรอยกับรอยยิ้มที่ฉวยที่ฉุด  ✨", emoji:"🌙"},
+  {text:"หวังว่าเจิ้ลจะหลับสบาย สะดุ้งน้อยลงนะ\nพรุ่งนี้จะดีกว่าวันนี้แน่นอน 🌙", emoji:"✨"},
+  {text:"พักผ่อนเถอะนะ วันนี้ทำดีที่สุดแล้ว\nเราภูมิใจในตัวเจิ้ลมาก 💗", emoji:"💝"},
+  {text:"愿你的心不再被谁伤到 ☁️\nขอให้หัวใจเจิ้ลอบอุ่นเสมอ", emoji:"☁️"},
+  {text:"今天累了吗？希望明天的 ANGEL 醒来时精神满满，不再疲倦。今晚不要做噩梦哦。꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒ 🌸", emoji:"🌸"},
+  {text:"คืนนี้กองกำลัง \"กันฝันร้าย\" จะปกป้องเจิ้ลเอง 💖", emoji:"💖"},
+  {text:"วันนี้เหนื่อยไหม ขอให้แองเจิ้ลในวันพรุ่งนี้ตื่นมาสดใสไม่เหนื่อย! และวันนี้หลับไม่ฝันร้าย 🛌", emoji:"🛌"},
+  {text:"หลับฝันดีนะ ANGEL ☁️💗", emoji:"☁️"},
+  {text:"หวังว่าความรู้สึกของเจิ้ลจะไม่ถูกใครทำร้ายอีกนะ ต่อให้วันนี้มันไม่ดี ก็ขอให้พรุ่งนี้เบาลงนิดนึงก็ยังดี 🎀", emoji:"🎀"},
+  {text:"วันนี้เจิ้ลเก่งมากเยย แม้จะเหนื่อยก็ยังผ่านมาได้ ขอให้คืนนี้หลับลึก ไม่ฝันร้ายเลยสักนิด 🌙", emoji:"🌙"},
+  {text:"หวังว่าเจิ้ลจะหลับแบบไม่ตื่นกลางดึกนะ 🌙", emoji:"💤"},
+  {text:"เจิ้ลเก่งพอแล้ว ! นอนได้แล้วว꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒", emoji:"✨"},
+  {text:"愿你的心不再被谁伤到。你值得更好的 ☁️💗", emoji:"💗"},
+  {text:"ขอให้คืนนี้ไม่มีฝันร้ายเลยสักนิดเดียว", emoji:"🌙"},
+  {text:"ถ้าวันนี้มันหนักไปหน่อย ขอให้ความเหนื่อยหายไปตอนหลับ แล้วพรุ่งนี้ของเจิ้ลจะสดใสกว่าเดิม ✨", emoji:"✨"},
+  {text:"อิอิอิอิอิอิอิอิอิอิอิิอิอิอิ งงอะดิจะได้นอน꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"😹"},
+  {text:"เทอคับ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"💝"},
+  {text:"อย่าลืมชาจแบต ที่หมายถึงแบตมือถือแกด้วย!", emoji:"🔋"},
+  {text:"งิ๋งแปลว่าไรนะ….", emoji:"🤔"},
+  {text:"เทอเหนื่อยไหม ;-;", emoji:"🫂"},
+  {text:"เทอคับบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"💞"},
+];
 
-/* buttons */
-document.getElementById("openBtn").onclick=()=>openCard(true);
-document.getElementById("nextBtn").onclick=()=>openCard(false);
-document.getElementById("closeBtn").onclick=closeCard;
+let order = [...Array(M.length).keys()].sort(() => Math.random() - .5);
+let idx = 0;
 
-document.getElementById("resetBtn").onclick=()=>{
-  order=[...Array(M.length).keys()].sort(()=>Math.random()-.5); idx=0;
-  alert("รีเซ็ตแล้วค่ะ 💖");
+const overlay = document.getElementById("overlay");
+const modal = document.getElementById("modal");
+const messageEl = document.getElementById("message");
+const metaEl = document.getElementById("meta");
+const previewEl = document.getElementById("previewShort");
+const progressBar = document.getElementById("progressBar");
+const starsRow = document.getElementById("starsRow");
+
+function updateProgress() {
+  const pct = (idx / M.length) * 100;
+  progressBar.style.width = pct + "%";
+}
+
+function showMessage() {
+  if (idx >= M.length) {
+    messageEl.textContent = "ข้อความหมดแล้ว 🌙\nฝันดีนะ Angel 💗";
+    metaEl.textContent = "กดรีเซ็ตเพื่อเริ่มใหม่";
+    starsRow.innerHTML = "💗";
+    modal.classList.add("done");
+    return;
+  }
+  const item = M[order[idx]];
+  idx++;
+  switchPhoto();
+
+  // fade out → in
+  messageEl.style.opacity = "0";
+  setTimeout(() => {
+    messageEl.textContent = item.text;
+    messageEl.style.opacity = "1";
+  }, 200);
+
+  metaEl.textContent = `เหลืออีก ${M.length - idx} ข้อความ`;
+  previewEl.textContent = item.text.split('\n')[0];
+
+  // re-animate stars
+  starsRow.innerHTML = `<span>${item.emoji}</span><span>⭐</span><span>${item.emoji}</span><span>⭐</span><span>${item.emoji}</span>`;
+
+  updateProgress();
+}
+
+document.getElementById("openBtn").onclick = () => {
+  document.getElementById("nextBtn").style.display = "";
+  overlay.classList.add("show");
+  showMessage();
 };
-document.getElementById("resetSmall").onclick=()=>{
-  order=[...Array(M.length).keys()].sort(()=>Math.random()-.5); idx=0;
-  closeCard();
-  setTimeout(()=>openCard(true),200);
+
+document.getElementById("nextBtn").onclick = showMessage;
+
+document.getElementById("closeBtn").onclick = () => {
+  overlay.classList.remove("show");
+  document.getElementById("nextBtn").style.display = "";
 };
 
-/* toggle sound */
-document.getElementById("soundToggle").onclick=()=>{
-  sound=!sound;
-  document.getElementById("soundToggle").textContent=sound?"ปิดเสียง":"เปิดเสียง";
-  if(sound){
-    audio.currentTime=0;
-    audio.play().catch(()=>{});
-  } else {
-    audio.pause(); audio.currentTime=0;
+document.getElementById("resetBtn").onclick = () => {
+  order = [...Array(M.length).keys()].sort(() => Math.random() - .5);
+  idx = 0;
+  modal.classList.remove("done");
+  previewEl.textContent = "รีเซ็ตแล้ว รับข้อความใหม่ได้เลย 🌸";
+  updateProgress();
+};
+
+overlay.onclick = e => {
+  if (e.target === overlay) {
+    overlay.classList.remove("show");
+    document.getElementById("nextBtn").style.display = "";
   }
 };
 
-overlay.onclick=e=>{if(e.target===overlay) closeCard();}
-</script>
+// ─── MOOD CHECK ───
+const moodMessages = {
+  happy: [
+    {text:"วันนี้แกไปทํามาถึงได้แฮปปี้ๆๆๆๆ", emoji:"🌸"},
+    {text:"มีความสุขไปทําไรมาน่ะถึงมีความสุขขขขข วันนี้สนุกใช่ไหมๆ ไปเจอเรื่องไรดีๆมาาา", emoji:"💗"},
+  ],
+  tired: [
+    {text:"เหนื่อยแล้วก็พักได้นะ ทักมาได้เสมอเรารอฟังเรื่องของแกอยู่ 💙\nคืนนี้ขอให้ความเหนื่อยหายไปพร้อมกับวันนี้", emoji:"💤"},
+    {text:"แกเก่งที่ฉุดเเล้วท่องๆไว้ๆๆๆๆๆๆ!!!!!!!!!!!!!!!!!!!!!!!🌙\nพรุ่งนี้ค่อยสู้ใหม่", emoji:"🌙"},
+  ],
+  sad: [
+    {text:"เป็นไรไหนเล่า แบ่งมาให้เราบ้าง🫂\nคืนนี้ขอให้หลับแล้วความรู้สึกนี้เบาลงนิดนึงก็ยังดี", emoji:"🫂"},
+    {text:"ไม่มีอะไรสําคัญเท่าหัวใจของแกแล่ว รักษามันให้ดีเป็นอะไรก็มาเล่าเราจะรับฟังและไม่ตัดสินแกแน่นอน 💗\nGN NA KUB", emoji:"🎀"},
+  ],
+  okay: [
+    {text:"เย่ะ แกโอเค เราอยากรู้ว่าแกโอถึงกดในนี้เราจะไม่รู้อยู่ดีก็เถอะ ;-; แต่ว่าๆ ถ้าโอเคก็ดีแล้วววแกจะได้มีความสุขบ้าง", emoji:"☁️"},
+    {text:"เย้ะ ถึงเราจะไม่รับรู้อยู่ดีT-T(ทักมาหน่อย) แต่ว่าดีมากที่วันนี้แกโอเค", emoji:"💝"},
+  ],
+};
 
+const moodOverlay = document.getElementById("moodOverlay");
+
+document.getElementById("moodBtn").onclick = () => {
+  moodOverlay.classList.add("show");
+};
+
+function closeMood() {
+  moodOverlay.classList.remove("show");
+}
+
+function pickMood(btn) {
+  document.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+  const mood = btn.dataset.mood;
+  const pool = moodMessages[mood];
+  const item = pool[Math.floor(Math.random() * pool.length)];
+
+  setTimeout(() => {
+    moodOverlay.classList.remove("show");
+    overlay.classList.add("show");
+    switchPhoto();
+    messageEl.style.opacity = "0";
+    setTimeout(() => {
+      messageEl.textContent = item.text;
+      messageEl.style.opacity = "1";
+    }, 200);
+    starsRow.innerHTML = `<span>${item.emoji}</span><span>⭐</span><span>${item.emoji}</span><span>⭐</span><span>${item.emoji}</span>`;
+    metaEl.textContent = "💗";
+    previewEl.textContent = item.text.split('\n')[0];
+
+    // ซ่อนปุ่ม "ข้อความถัดไป" ตอนเปิดจาก mood
+    document.getElementById("nextBtn").style.display = "none";
+  }, 400);
+}
+
+moodOverlay.onclick = e => {
+  if (e.target === moodOverlay) closeMood();
+};
+
+// ─── SHAKE TO REVEAL ───
+let lastShake = 0;
+let shakeCount = 0;
+let lastX = 0, lastY = 0, lastZ = 0;
+
+if (window.DeviceMotionEvent) {
+  window.addEventListener("devicemotion", e => {
+    const acc = e.accelerationIncludingGravity;
+    if (!acc) return;
+    const dx = Math.abs(acc.x - lastX);
+    const dy = Math.abs(acc.y - lastY);
+    const dz = Math.abs(acc.z - lastZ);
+    lastX = acc.x; lastY = acc.y; lastZ = acc.z;
+
+    if (dx + dy + dz > 20) {
+      const now = Date.now();
+      if (now - lastShake < 600) shakeCount++;
+      else shakeCount = 1;
+      lastShake = now;
+
+      if (shakeCount >= 3) {
+        shakeCount = 0;
+        triggerShake();
+      }
+    }
+  });
+  document.getElementById("shakeHint").style.display = "flex";
+} else {
+  document.getElementById("shakeHint").style.display = "none";
+}
+
+function triggerShake() {
+  // flash effect
+  const flash = document.createElement("div");
+  flash.className = "shake-flash";
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 700);
+
+  // burst hearts
+  for (let i = 0; i < 8; i++) {
+    const el = document.createElement("div");
+    el.className = "heart-burst";
+    el.textContent = ["💗","✨","🌸","⭐","💖","🌙","🎀","💝"][i];
+    el.style.left = (20 + Math.random() * 60) + "vw";
+    el.style.top = (30 + Math.random() * 40) + "vh";
+    el.style.animationDelay = (i * 0.05) + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1400);
+  }
+
+  // show random message
+  if (!overlay.classList.contains("show")) {
+    overlay.classList.add("show");
+    showMessage();
+  } else {
+    showMessage();
+  }
+}
+let playing = false;
+const bgm = document.getElementById("bgm");
+document.getElementById("soundBtn").onclick = () => {
+  if (playing) {
+    bgm.pause();
+    document.getElementById("soundBtn").textContent = "🎵 เปิดเพลง";
+  } else {
+    bgm.play().catch(() => {});
+    document.getElementById("soundBtn").textContent = "🔇 ปิดเพลง";
+  }
+  playing = !playing;
+};
+
+// ─── CUSTOM CURSOR ───
+const cursor = document.getElementById("cursor");
+const trail = document.getElementById("cursor-trail");
+document.addEventListener("mousemove", e => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+  trail.style.left = e.clientX + "px";
+  trail.style.top = e.clientY + "px";
+});
+
+// ─── HEART BURST ON CLICK ───
+document.addEventListener("click", e => {
+  const emojis = ["💗","✨","🌸","⭐","💖","🌙"];
+  for (let i = 0; i < 4; i++) {
+    const el = document.createElement("div");
+    el.className = "heart-burst";
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = (e.clientX + (Math.random() - .5) * 40) + "px";
+    el.style.top = (e.clientY + (Math.random() - .5) * 20) + "px";
+    el.style.animationDelay = (i * 0.06) + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1400);
+  }
+});
+
+// ─── SAKURA PETALS ───
+const petalsEl = document.getElementById("petals");
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement("div");
+  p.className = "petal";
+  p.style.setProperty("--fdur", (8 + Math.random() * 8) + "s");
+  p.style.setProperty("--fdelay", (Math.random() * 12) + "s");
+  p.style.setProperty("--drift", (Math.random() > .5 ? "" : "-") + (20 + Math.random() * 60) + "px");
+  p.style.left = Math.random() * 110 + "%";
+  petalsEl.appendChild(p);
+}
+
+// ─── TWINKLING STARS ───
+const starsEl = document.getElementById("stars-bg");
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement("div");
+  s.className = "star";
+  const size = 1 + Math.random() * 2.5;
+  s.style.width = s.style.height = size + "px";
+  s.style.left = Math.random() * 100 + "%";
+  s.style.top = Math.random() * 100 + "%";
+  s.style.setProperty("--dur", (2 + Math.random() * 4) + "s");
+  s.style.setProperty("--delay", (Math.random() * 4) + "s");
+  starsEl.appendChild(s);
+}
+
+// ─── CANVAS BG ─── (animated nebula)
+const canvas = document.getElementById("bg-canvas");
+const ctx = canvas.getContext("2d");
+let W, H;
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+const orbs = Array.from({length: 5}, (_, i) => ({
+  x: Math.random() * W,
+  y: Math.random() * H,
+  r: 200 + Math.random() * 250,
+  vx: (Math.random() - .5) * .25,
+  vy: (Math.random() - .5) * .25,
+  hue: [300, 280, 320, 260, 340][i],
+  alpha: .06 + Math.random() * .06,
+}));
+
+function drawBg() {
+  ctx.clearRect(0, 0, W, H);
+
+  // deep bg
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, "#0c0516");
+  grad.addColorStop(1, "#140824");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  orbs.forEach(o => {
+    o.x += o.vx;
+    o.y += o.vy;
+    if (o.x < -o.r) o.x = W + o.r;
+    if (o.x > W + o.r) o.x = -o.r;
+    if (o.y < -o.r) o.y = H + o.r;
+    if (o.y > H + o.r) o.y = -o.r;
+
+    const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+    g.addColorStop(0, `hsla(${o.hue},80%,70%,${o.alpha})`);
+    g.addColorStop(1, `hsla(${o.hue},80%,50%,0)`);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// ─── NIGHT MODE DETECT ───
+const hour = new Date().getHours();
+const isNight = hour >= 22 || hour < 2;
+
+if (isNight) {
+  // darker orbs
+  orbs.forEach(o => { o.hue -= 20; o.alpha *= .7; });
+
+  // change header text
+  document.querySelector(".lead").textContent = "ดึกแล้วนะ นอนได้แล้ว 🌙";
+  document.querySelector("h1").innerHTML = "ฝันดี ANGEL 🌙";
+
+  // show night intro
+  const intro = document.getElementById("nightIntro");
+  intro.style.display = "flex";
+  setTimeout(() => intro.remove(), 4200);
+
+  // burst stars in intro
+  const nbEl = document.getElementById("nbStars");
+  const nbEmojis = ["🌙","⭐","✨","💗","🌸","💫","🌟"];
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement("div");
+    s.className = "nb-star";
+    s.textContent = nbEmojis[Math.floor(Math.random() * nbEmojis.length)];
+    s.style.left = (5 + Math.random() * 90) + "%";
+    s.style.top = (10 + Math.random() * 80) + "%";
+    s.style.setProperty("--nd", (.6 + Math.random() * .8) + "s");
+    s.style.setProperty("--ndelay", (.1 + Math.random() * 1.5) + "s");
+    nbEl.appendChild(s);
+  }
+
+  // shooting stars (night only)
+  const shootEl = document.getElementById("stars-bg");
+  for (let i = 0; i < 6; i++) {
+    const s = document.createElement("div");
+    s.className = "shooting-star";
+    const sx = Math.random() * 80;
+    const sy = Math.random() * 40;
+    s.style.setProperty("--sx", sx + "vw");
+    s.style.setProperty("--sy", sy + "vh");
+    s.style.setProperty("--sdx", (30 + Math.random() * 30) + "vw");
+    s.style.setProperty("--sdy", (20 + Math.random() * 20) + "vh");
+    s.style.setProperty("--srot", (-30 - Math.random() * 20) + "deg");
+    s.style.setProperty("--sdur", (4 + Math.random() * 6) + "s");
+    s.style.setProperty("--sdelay", (Math.random() * 8) + "s");
+    shootEl.appendChild(s);
+  }
+}
+</script>
 </body>
 </html>
-
-
