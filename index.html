@@ -31,6 +31,11 @@ html,body{
   cursor:none;
 }
 
+@media (hover: none) and (pointer: coarse) {
+  html, body { cursor: auto; }
+  #cursor, #cursor-trail { display: none; }
+}
+
 /* ─── CUSTOM CURSOR ─── */
 #cursor{
   position:fixed;
@@ -39,9 +44,10 @@ html,body{
   border-radius:50%;
   pointer-events:none;
   z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform .1s;
+  top:0;left:0;
+  transform:translate(-100px,-100px);
   mix-blend-mode:screen;
+  will-change:transform;
 }
 #cursor-trail{
   position:fixed;
@@ -50,9 +56,11 @@ html,body{
   border-radius:50%;
   pointer-events:none;
   z-index:9998;
-  transform:translate(-50%,-50%);
+  top:0;left:0;
+  transform:translate(-100px,-100px);
   opacity:.5;
-  transition:left .12s,top .12s;
+  transition:transform .12s;
+  will-change:transform;
 }
 
 /* ─── ANIMATED BG ─── */
@@ -705,7 +713,29 @@ function switchPhoto() {
 }
 
 // ─── MESSAGES ───
-const M = [ {text:"ขอให้แองเจิ้ลฝันเห็นดวงดาวที่สวยที่สุด แล้วตื่นมาพร้อมรอยกับรอยยิ้มที่ฉวยที่ฉุด  ✨", emoji:"🌙"}, {text:"หวังว่าเจิ้ลจะหลับสบาย สะดุ้งน้อยลงนะ\nพรุ่งนี้จะดีกว่าวันนี้แน่นอน 🌙", emoji:"✨"}, {text:"พักผ่อนเถอะนะ วันนี้ทำดีที่สุดแล้ว\nเราภูมิใจในตัวเจิ้ลมาก 💗", emoji:"💝"}, {text:"愿你的心不再被谁伤到 ☁️\nขอให้หัวใจเจิ้ลอบอุ่นเสมอ", emoji:"☁️"}, {text:"今天累了吗？希望明天的 ANGEL 醒来时精神满满，不再疲倦。今晚不要做噩梦哦。꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒ 🌸", emoji:"🌸"}, {text:"คืนนี้กองกำลัง \"กันฝันร้าย\" จะปกป้องเจิ้ลเอง 💖", emoji:"💖"}, {text:"วันนี้เหนื่อยไหม ขอให้แองเจิ้ลในวันพรุ่งนี้ตื่นมาสดใสไม่เหนื่อย! และวันนี้หลับไม่ฝันร้าย 🛌", emoji:"🛌"}, {text:"หลับฝันดีนะ ANGEL ☁️💗", emoji:"☁️"}, {text:"หวังว่าความรู้สึกของเจิ้ลจะไม่ถูกใครทำร้ายอีกนะ ต่อให้วันนี้มันไม่ดี ก็ขอให้พรุ่งนี้เบาลงนิดนึงก็ยังดี 🎀", emoji:"🎀"}, {text:"วันนี้เจิ้ลเก่งมากเยย แม้จะเหนื่อยก็ยังผ่านมาได้ ขอให้คืนนี้หลับลึก ไม่ฝันร้ายเลยสักนิด 🌙", emoji:"🌙"}, {text:"หวังว่าเจิ้ลจะหลับแบบไม่ตื่นกลางดึกนะ 🌙", emoji:"💤"}, {text:"เจิ้ลเก่งพอแล้ว ! นอนได้แล้วว꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒", emoji:"✨"}, {text:"愿你的心不再被谁伤到。你值得更好的 ☁️💗", emoji:"💗"}, {text:"ขอให้คืนนี้ไม่มีฝันร้ายเลยสักนิดเดียว", emoji:"🌙"}, {text:"ถ้าวันนี้มันหนักไปหน่อย ขอให้ความเหนื่อยหายไปตอนหลับ แล้วพรุ่งนี้ของเจิ้ลจะสดใสกว่าเดิม ✨", emoji:"✨"}, {text:"อิอิอิอิอิอิอิอิอิอิอิิอิอิอิ งงอะดิจะได้นอน꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"😹"}, {text:"เทอคับ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"💝"}, {text:"อย่าลืมชาจแบต ที่หมายถึงแบตมือถือแกด้วย!", emoji:"🔋"}, {text:"งิ๋งแปลว่าไรนะ….", emoji:"🤔"}, {text:"เทอเหนื่อยไหม ;-;", emoji:"🫂"}, {text:"เทอคับบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"💞"}, ];
+const M = [
+  {text:"ขอให้แองเจิ้ลฝันเห็นดวงดาวที่สวยที่สุด แล้วตื่นมาพร้อมรอยกับรอยยิ้มที่ฉวยที่ฉุด  ✨", emoji:"🌙"},
+  {text:"หวังว่าเจิ้ลจะหลับสบาย สะดุ้งน้อยลงนะ\nพรุ่งนี้จะดีกว่าวันนี้แน่นอน 🌙", emoji:"✨"},
+  {text:"พักผ่อนเถอะนะ วันนี้ทำดีที่สุดแล้ว\nเราภูมิใจในตัวเจิ้ลมาก 💗", emoji:"💝"},
+  {text:"愿你的心不再被谁伤到 ☁️\nขอให้หัวใจเจิ้ลอบอุ่นเสมอ", emoji:"☁️"},
+  {text:"今天累了吗？希望明天的 ANGEL 醒来时精神满满，不再疲倦。今晚不要做噩梦哦。꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒ 🌸", emoji:"🌸"},
+  {text:"คืนนี้กองกำลัง \"กันฝันร้าย\" จะปกป้องเจิ้ลเอง 💖", emoji:"💖"},
+  {text:"วันนี้เหนื่อยไหม ขอให้แองเจิ้ลในวันพรุ่งนี้ตื่นมาสดใสไม่เหนื่อย! และวันนี้หลับไม่ฝันร้าย 🛌", emoji:"🛌"},
+  {text:"หลับฝันดีนะ ANGEL ☁️💗", emoji:"☁️"},
+  {text:"หวังว่าความรู้สึกของเจิ้ลจะไม่ถูกใครทำร้ายอีกนะ ต่อให้วันนี้มันไม่ดี ก็ขอให้พรุ่งนี้เบาลงนิดนึงก็ยังดี 🎀", emoji:"🎀"},
+  {text:"วันนี้เจิ้ลเก่งมากเยย แม้จะเหนื่อยก็ยังผ่านมาได้ ขอให้คืนนี้หลับลึก ไม่ฝันร้ายเลยสักนิด 🌙", emoji:"🌙"},
+  {text:"หวังว่าเจิ้ลจะหลับแบบไม่ตื่นกลางดึกนะ 🌙", emoji:"💤"},
+  {text:"เจิ้ลเก่งพอแล้ว ! นอนได้แล้วว꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱⸒⸒", emoji:"✨"},
+  {text:"愿你的心不再被谁伤到。你值得更好的 ☁️💗", emoji:"💗"},
+  {text:"ขอให้คืนนี้ไม่มีฝันร้ายเลยสักนิดเดียว", emoji:"🌙"},
+  {text:"ถ้าวันนี้มันหนักไปหน่อย ขอให้ความเหนื่อยหายไปตอนหลับ แล้วพรุ่งนี้ของเจิ้ลจะสดใสกว่าเดิม ✨", emoji:"✨"},
+  {text:"อิอิอิอิอิอิอิอิอิอิอิิอิอิอิ งงอะดิจะได้นอน꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"😹"},
+  {text:"เทอคับ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"💝"},
+  {text:"อย่าลืมชาจแบต ที่หมายถึงแบตมือถือแกด้วย!", emoji:"🔋"},
+  {text:"งิ๋งแปลว่าไรนะ….", emoji:"🤔"},
+  {text:"เทอเหนื่อยไหม ;-;", emoji:"🫂"},
+  {text:"เทอคับบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบบ꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱", emoji:"💞"},
+];
 
 let order = [...Array(M.length).keys()].sort(() => Math.random() - .5);
 let idx = 0;
@@ -854,11 +884,11 @@ document.getElementById("soundBtn").onclick = () => {
 // ─── CUSTOM CURSOR ───
 const cursor = document.getElementById("cursor");
 const trail = document.getElementById("cursor-trail");
+let mx = -100, my = -100;
 document.addEventListener("mousemove", e => {
-  cursor.style.left = e.clientX + "px";
-  cursor.style.top = e.clientY + "px";
-  trail.style.left = e.clientX + "px";
-  trail.style.top = e.clientY + "px";
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx}px, ${my}px)`;
+  trail.style.transform = `translate(${mx}px, ${my}px)`;
 });
 
 // ─── HEART BURST ON CLICK ───
