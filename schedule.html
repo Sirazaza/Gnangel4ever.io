@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ตารางของ Angel 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0516;
+  --pink:#ffb3e6;
+  --pink2:#ff6ec7;
+  --gold:#ffd6a5;
+  --muted:rgba(255,255,255,.6);
+  --glass:rgba(255,255,255,.04);
+  --exam:#ff6b6b;
+  --important:#ffd93d;
+  --normal:#a8d8ff;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{
+  min-height:100%;
+  font-family:"Noto Sans Thai",system-ui;
+  background:var(--bg);
+  color:#fff;
+}
+
+/* ─── BG ─── */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(180,100,255,.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, rgba(255,110,199,.06) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+/* ─── HEADER ─── */
+.header{
+  position:relative;z-index:10;
+  text-align:center;
+  padding:32px 20px 16px;
+}
+.back-btn{
+  position:absolute;left:16px;top:32px;
+  font-size:12px;color:var(--muted);letter-spacing:1px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  padding:8px 14px;border-radius:999px;
+  cursor:pointer;text-decoration:none;
+  transition:all .2s;
+}
+.back-btn:hover{color:#fff;background:rgba(255,255,255,.1);}
+.page-tag{font-size:10px;letter-spacing:3px;color:var(--pink);opacity:.6;margin-bottom:4px;}
+.page-title{
+  font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:28px;
+  background:linear-gradient(135deg,#fff,var(--pink),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.page-sub{font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:1px;}
+
+/* ─── LEGEND ─── */
+.legend{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  padding:0 16px 16px;position:relative;z-index:10;
+}
+.legend-item{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--muted);
+}
+.legend-dot{width:10px;height:10px;border-radius:3px;}
+
+/* ─── GRID ─── */
+.cal-wrap{
+  position:relative;z-index:10;
+  padding:0 12px 40px;
+  overflow-x:auto;
+}
+.cal{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  min-width:560px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+/* ─── DAY HEADERS ─── */
+.day-header{
+  text-align:center;
+  font-size:11px;font-weight:700;
+  letter-spacing:1px;
+  color:var(--muted);
+  padding:8px 4px;
+}
+.day-header.sun{color:#ff9b9b;}
+.day-header.sat{color:var(--pink);}
+
+/* ─── CELL ─── */
+.cell{
+  border-radius:14px;
+  padding:8px 8px 10px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.06);
+  min-height:80px;
+  cursor:pointer;
+  transition:all .25s;
+  position:relative;
+  overflow:hidden;
+}
+.cell.empty{background:transparent;border-color:transparent;cursor:default;min-height:0;}
+.cell:not(.empty):hover{
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,179,230,.2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.cell.exam{
+  background:rgba(255,107,107,.08);
+  border-color:rgba(255,107,107,.25);
+}
+.cell.exam:hover{background:rgba(255,107,107,.15);}
+.cell.important{
+  background:rgba(255,217,61,.06);
+  border-color:rgba(255,217,61,.2);
+}
+.cell.important:hover{background:rgba(255,217,61,.12);}
+.cell.rest{
+  background:rgba(168,216,255,.06);
+  border-color:rgba(168,216,255,.2);
+}
+
+.cell-num{
+  font-size:13px;font-weight:900;
+  color:rgba(255,255,255,.5);
+  margin-bottom:4px;
+}
+.cell.exam .cell-num{color:var(--exam);}
+.cell.important .cell-num{color:var(--important);}
+.cell.rest .cell-num{color:var(--normal);}
+
+.cell-stars{font-size:10px;margin-bottom:2px;}
+.cell-preview{
+  font-size:10px;color:var(--muted);
+  line-height:1.5;
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.cell.exam .cell-preview{color:rgba(255,180,180,.8);}
+.cell.important .cell-preview{color:rgba(255,230,150,.8);}
+
+/* ─── EXAM BADGE ─── */
+.exam-badge{
+  position:absolute;top:6px;right:6px;
+  font-size:8px;font-weight:900;letter-spacing:.5px;
+  background:var(--exam);color:#fff;
+  padding:2px 6px;border-radius:999px;
+}
+
+/* ─── MODAL ─── */
+.overlay{
+  position:fixed;inset:0;z-index:100;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(12px);
+}
+.overlay.show{display:flex;}
+.modal{
+  width:90%;max-width:400px;
+  padding:28px 24px;
+  border-radius:24px;
+  background:rgba(15,6,28,.95);
+  border:1px solid rgba(255,179,230,.12);
+  animation:modalPop .35s cubic-bezier(.175,.885,.32,1.275) both;
+  box-shadow:0 40px 80px rgba(0,0,0,.8);
+  position:relative;
+}
+@keyframes modalPop{
+  from{transform:scale(.85) translateY(16px);opacity:0;}
+  to{transform:scale(1) translateY(0);opacity:1;}
+}
+.modal-date{
+  font-size:11px;letter-spacing:2px;color:var(--pink);opacity:.7;margin-bottom:6px;
+}
+.modal-num{
+  font-size:36px;font-weight:900;
+  background:linear-gradient(135deg,#fff,var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:4px;
+}
+.modal-stars{font-size:16px;margin-bottom:14px;}
+.modal-divider{
+  height:1px;background:rgba(255,255,255,.07);margin-bottom:14px;
+}
+.modal-tasks{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.modal-task{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:14px;line-height:1.5;color:rgba(255,255,255,.85);
+}
+.task-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--pink2);flex-shrink:0;margin-top:6px;
+}
+.task-dot.red{background:var(--exam);}
+.task-dot.gold{background:var(--important);}
+
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:none;
+  color:var(--muted);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.modal-close:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+.modal-tag{
+  display:inline-block;
+  font-size:10px;font-weight:700;letter-spacing:1px;
+  padding:3px 10px;border-radius:999px;margin-bottom:12px;
+}
+.tag-exam{background:rgba(255,107,107,.2);color:var(--exam);border:1px solid rgba(255,107,107,.3);}
+.tag-rest{background:rgba(168,216,255,.1);color:var(--normal);border:1px solid rgba(168,216,255,.2);}
+.tag-normal{background:rgba(255,179,230,.08);color:var(--pink);border:1px solid rgba(255,179,230,.15);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="back-btn" href="index.html">← กลับ</a>
+  <div class="page-tag">✦ MARCH SCHEDULE ✦</div>
+  <div class="page-title">ตารางมีนาคม 🌸</div>
+  <div class="page-sub">กดแต่ละวันเพื่อดูรายละเอียด</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--exam)"></div>สอบ final</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--important)"></div>งานส่ง/deadline</div>
+  <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,.2)"></div>ปกติ</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--normal)"></div>พัก</div>
+</div>
+
+<div class="cal-wrap">
+<div class="cal" id="cal"></div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="closeBtn">✕</button>
+    <div class="modal-date" id="mDate"></div>
+    <div class="modal-num" id="mNum"></div>
+    <div class="modal-stars" id="mStars"></div>
+    <div id="mTag"></div>
+    <div class="modal-divider"></div>
+    <ul class="modal-tasks" id="mTasks"></ul>
+  </div>
+</div>
+
+<script>
+const DAYS = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์"];
+
+// type: "exam" | "important" | "rest" | "normal"
+const DATA = {
+  3: { stars:"", type:"normal", tasks:[
+    {text:"16:30–16:45 Online herp", dot:"pink"},
+    {text:"herp clip @ univers", dot:"pink"},
+    {text:"ส่งชิ้นงาน herp", dot:"pink"},
+  ]},
+  4: { stars:"", type:"normal", tasks:[
+    {text:"Online analy 13:00 @ teams in line", dot:"pink"},
+  ]},
+  5: { stars:"", type:"normal", tasks:[
+    {text:"ทำสรุป herp", dot:"pink"},
+  ]},
+  6: { stars:"", type:"normal", tasks:[
+    {text:"ทำสรุป herp", dot:"pink"},
+  ]},
+  7: { stars:"", type:"important", tasks:[
+    {text:"Set-e", dot:"gold"},
+    {text:"ทำสรุป herp", dot:"gold"},
+    {text:"ทำรายงานแมลงหวี่", dot:"red"},
+  ]},
+  8: { stars:"⭐⭐", type:"important", tasks:[
+    {text:"ทบทวน genetics แมลงหวี่", dot:"gold"},
+    {text:"อ่าน genetics บท 1–2", dot:"gold"},
+  ]},
+  9: { stars:"", type:"normal", tasks:[
+    {text:"ทวน herp", dot:"pink"},
+    {text:"สรุป genetics 1–2", dot:"pink"},
+  ]},
+  10: { stars:"⭐⭐⭐", type:"exam", tasks:[
+    {text:"สอบ final Herp! 100 ข้อ", dot:"red"},
+    {text:"อ่าน genetics บท 3", dot:"pink"},
+  ]},
+  11: { stars:"", type:"normal", tasks:[
+    {text:"สรุป genetics 3", dot:"pink"},
+    {text:"อ่าน genetics บท 4–5", dot:"pink"},
+  ]},
+  12: { stars:"", type:"normal", tasks:[
+    {text:"Set-e", dot:"gold"},
+    {text:"สรุป genetics 4–5", dot:"pink"},
+  ]},
+  13: { stars:"", type:"normal", tasks:[
+    {text:"อ่าน genetics บท 6–7", dot:"pink"},
+    {text:"อ่าน analy", dot:"pink"},
+  ]},
+  14: { stars:"", type:"normal", tasks:[
+    {text:"สรุป genetics 6–7", dot:"pink"},
+    {text:"สรุป genetics lab 8–9–10", dot:"pink"},
+  ]},
+  15: { stars:"", type:"normal", tasks:[
+    {text:"ทวน genetics", dot:"pink"},
+    {text:"สรุป analy", dot:"pink"},
+  ]},
+  16: { stars:"", type:"normal", tasks:[
+    {text:"ทวน genetics & genetics lab", dot:"pink"},
+    {text:"สรุป analy", dot:"pink"},
+  ]},
+  17: { stars:"⭐⭐⭐⭐", type:"exam", tasks:[
+    {text:"final genetics & genetics lab", dot:"red"},
+    {text:"ทวน analy", dot:"pink"},
+  ]},
+  18: { stars:"⭐⭐⭐⭐", type:"exam", tasks:[
+    {text:"final analy chem", dot:"red"},
+  ]},
+  19: { stars:"", type:"rest", tasks:[
+    {text:"พัก 🛌", dot:"blue"},
+  ]},
+  20: { stars:"", type:"normal", tasks:[
+    {text:"อ่าน analy lab 1–5", dot:"pink"},
+  ]},
+  21: { stars:"", type:"normal", tasks:[
+    {text:"สรุป analy lab 1–5", dot:"pink"},
+  ]},
+  22: { stars:"", type:"normal", tasks:[
+    {text:"อ่าน analy lab 6–10", dot:"pink"},
+  ]},
+  23: { stars:"", type:"normal", tasks:[
+    {text:"สรุป analy lab 6–10", dot:"pink"},
+  ]},
+  24: { stars:"", type:"normal", tasks:[
+    {text:"ทวน analy lab", dot:"pink"},
+  ]},
+  25: { stars:"⭐⭐", type:"exam", tasks:[
+    {text:"final analy chem lab", dot:"red"},
+  ]},
+};
+
+const DOW = ["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัส","ศุกร์","เสาร์"];
+
+// Build calendar
+const cal = document.getElementById("cal");
+
+// Clear and build
+cal.innerHTML = "";
+
+// Headers
+DOW.forEach((d, i) => {
+  const h = document.createElement("div");
+  h.className = "day-header" + (i===0?" sun":i===6?" sat":"");
+  h.textContent = d;
+  cal.appendChild(h);
+});
+
+// 5 empties (Sun–Thu), March 1 = Friday... wait let's be accurate
+// From image: March 1 is under จันทร์ (Monday) col
+// So: Sun=empty, Mon=1, Tue=2 ...
+// Re-check: image row1: [img,img,3,4,5,6,7] meaning Sun&Mon have images, Tue=3
+// So March 1=Sun, 2=Mon, 3=Tue ✓
+// First row has NO prev month days — just 1,2 with images
+
+// 0 empties before March 1 (March 1 = Sunday)
+// March days 1–25 only, 26+ = ปิดเทอม
+for(let day=1; day<=25; day++){
+  const cell = makeCell(day, day);
+  cal.appendChild(cell);
+}
+
+// Day 26 onwards = ปิดเทอม — span rest of grid as a special cell
+const freeCell = document.createElement("div");
+freeCell.style.cssText = `
+  grid-column: span 7;
+  border-radius:20px;
+  background:linear-gradient(135deg,rgba(255,179,230,.08),rgba(168,216,255,.06));
+  border:1px solid rgba(255,179,230,.15);
+  padding:28px 20px;
+  text-align:center;
+  margin-top:4px;
+`;
+freeCell.innerHTML = `
+  <div style="font-size:22px;margin-bottom:8px;">🎉🌸✨</div>
+  <div style="font-size:16px;font-weight:900;color:var(--pink);margin-bottom:6px;">26 มีนาคม เป็นต้นไป</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.6);letter-spacing:1px;line-height:1.8;">อิสระเสรีภาพอยู่ตรงนั้น<br>จงตั้งใจสอบ! 💗</div>
+`;
+cal.appendChild(freeCell);
+
+function makeCell(num, key) {
+  const d = DATA[key];
+  const cell = document.createElement("div");
+  cell.className = "cell" + (d ? " "+d.type : "");
+
+  const numEl = document.createElement("div");
+  numEl.className = "cell-num";
+  numEl.textContent = num;
+  cell.appendChild(numEl);
+
+  if(d){
+    if(d.stars){
+      const s = document.createElement("div");
+      s.className = "cell-stars";
+      s.textContent = d.stars;
+      cell.appendChild(s);
+    }
+    if(d.type==="exam"){
+      const badge = document.createElement("div");
+      badge.className = "exam-badge";
+      badge.textContent = "FINAL";
+      cell.appendChild(badge);
+    }
+    const prev = document.createElement("div");
+    prev.className = "cell-preview";
+    prev.textContent = d.tasks.map(t=>t.text).join(" · ");
+    cell.appendChild(prev);
+
+    cell.onclick = () => openModal(num, key, d);
+  }
+  return cell;
+}
+
+function openModal(num, key, d) {
+  const dow = key <= 28
+    ? (key===27 ? "ศุกร์ 27 ก.พ." : "เสาร์ 28 ก.พ.")
+    : DOW[(key + 1) % 7]; // March 1=Sunday=(1+1)%7=2... let me calc properly
+
+  // March 1 = Sunday (index 0)
+  const dowIdx = (key - 1 + 0) % 7; // March 1 is Sunday
+  const dayName = key <= 28
+    ? (key===27 ? "ศุกร์ · 27 กุมภาพันธ์" : "เสาร์ · 28 กุมภาพันธ์")
+    : DOW[dowIdx] + " · " + key + " มีนาคม";
+
+  document.getElementById("mDate").textContent = dayName;
+  document.getElementById("mNum").textContent = key <= 28 ? key+" ก.พ." : key;
+  document.getElementById("mStars").textContent = d.stars || "";
+
+  const tagEl = document.getElementById("mTag");
+  if(d.type==="exam") tagEl.innerHTML = '<span class="modal-tag tag-exam">⚠️ สอบ FINAL</span>';
+  else if(d.type==="rest") tagEl.innerHTML = '<span class="modal-tag tag-rest">🛌 วันพัก</span>';
+  else tagEl.innerHTML = '<span class="modal-tag tag-normal">📅 กำหนดการ</span>';
+
+  const ul = document.getElementById("mTasks");
+  ul.innerHTML = "";
+  d.tasks.forEach(t => {
+    const li = document.createElement("li");
+    li.className = "modal-task";
+    li.innerHTML = `<div class="task-dot ${t.dot==="red"?"red":t.dot==="gold"?"gold":""}"></div><span>${t.text}</span>`;
+    ul.appendChild(li);
+  });
+
+  document.getElementById("overlay").classList.add("show");
+}
+
+document.getElementById("closeBtn").onclick = () => document.getElementById("overlay").classList.remove("show");
+document.getElementById("overlay").onclick = e => { if(e.target===document.getElementById("overlay")) document.getElementById("overlay").classList.remove("show"); };
+</script>
+</body>
+</html>
