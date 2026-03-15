@@ -36,6 +36,28 @@ html,body{
   #cursor, #cursor-trail { display: none; }
 }
 
+@media (max-width: 600px) {
+  .card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 16px;
+    width: 92%;
+  }
+  .body { text-align: center; }
+  .controls {
+    justify-content: center;
+  }
+  .btn {
+    font-size: 12px;
+    padding: 9px 14px;
+    cursor: pointer;
+  }
+  h1 { font-size: clamp(22px, 5vw, 40px); }
+  .lead { font-size: 12px; }
+  .icon { width: 72px; height: 72px; }
+}
+
 /* ─── CUSTOM CURSOR ─── */
 #cursor{
   position:fixed;
