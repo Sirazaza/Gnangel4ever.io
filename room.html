@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>Angel's Room 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:#1a0820;font-family:"Noto Sans Thai",system-ui;image-rendering:pixelated;}
+#wrap{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;}
+canvas{image-rendering:pixelated;image-rendering:crisp-edges;}
+#hud{position:fixed;top:0;left:0;right:0;z-index:50;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;pointer-events:none;}
+.back-btn{pointer-events:all;font-family:"Press Start 2P",monospace;font-size:7px;color:#ffb3e6;background:rgba(0,0,0,.5);border:1px solid #ff80c0;padding:6px 12px;border-radius:4px;text-decoration:none;letter-spacing:1px;transition:all .15s;}
+.back-btn:hover{background:rgba(255,80,180,.2);}
+.room-title{font-family:"Press Start 2P",monospace;font-size:7px;color:#ffd6f0;text-shadow:0 0 8px #ff80c0;}
+.music-badge{font-size:14px;}
+#dialog{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:min(88%,460px);background:#1a0828;border:3px solid #ff80c0;border-radius:8px;padding:12px 16px 12px 12px;z-index:100;display:none;box-shadow:0 0 0 1px #ff40a0, 4px 4px 0 #800040;image-rendering:auto;}
+#dialog.show{display:flex;gap:10px;align-items:flex-start;}
+#dialog-avatar{width:40px;height:40px;flex-shrink:0;border:2px solid #ff80c0;border-radius:4px;overflow:hidden;background:#300848;}
+#dialog-avatar img{width:100%;height:100%;object-fit:cover;}
+#dialog-body{flex:1;}
+#dialog-name{font-family:"Press Start 2P",monospace;font-size:6px;color:#ff80c0;margin-bottom:6px;letter-spacing:1px;}
+#dialog-text{font-size:12px;line-height:1.65;color:#ffe0f5;white-space:pre-line;}
+#dialog-close{position:absolute;top:6px;right:8px;background:none;border:none;font-family:"Press Start 2P",monospace;font-size:7px;color:#ff80c0;cursor:pointer;padding:2px 4px;}
+#dialog-close:hover{color:#fff;}
+#dialog-hint{font-family:"Press Start 2P",monospace;font-size:6px;color:#ff40a080;margin-top:6px;text-align:right;animation:blink 1s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+#prompt{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-family:"Press Start 2P",monospace;font-size:11px;color:#ffb3e6;background:rgba(0,0,0,.75);border:2px solid #ff80c080;padding:9px 18px;border-radius:4px;letter-spacing:1px;z-index:50;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap;}
+#prompt.show{opacity:1;}
+#sched{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(10,2,20,.85);backdrop-filter:blur(6px);}
+#sched.show{display:flex;}
+#sched-inner{width:90%;max-width:420px;background:#1a0828;border:3px solid #ff80c0;border-radius:8px;padding:20px;box-shadow:0 0 0 1px #ff40a0, 4px 4px 0 #800040;image-rendering:auto;}
+#sched-title{font-family:"Press Start 2P",monospace;font-size:8px;color:#ff80c0;margin-bottom:14px;text-shadow:0 0 8px #ff80c0;}
+.sched-row{display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:4px;margin-bottom:6px;font-size:12px;border:1px solid;}
+.sched-row.exam{background:rgba(255,60,80,.1);border-color:rgba(255,60,80,.3);color:#ffaaaa;}
+.sched-row.free{background:rgba(100,255,150,.07);border-color:rgba(100,255,150,.2);color:#aaffcc;}
+.sched-date{font-size:10px;color:rgba(255,255,255,.35);min-width:70px;}
+.sched-badge{margin-left:auto;font-family:"Press Start 2P",monospace;font-size:6px;background:rgba(255,60,80,.2);color:#ff8888;padding:2px 6px;border-radius:2px;}
+#sched-close{display:block;margin-top:14px;width:100%;font-family:"Press Start 2P",monospace;font-size:7px;background:#300848;border:2px solid #ff80c0;color:#ff80c0;padding:8px;border-radius:4px;cursor:pointer;letter-spacing:1px;}
+#sched-close:hover{background:rgba(255,80,180,.2);}
+
+/* ── QUIZ OVERLAY ── */
+#quiz{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(5,0,15,.9);backdrop-filter:blur(8px);}
+#quiz.show{display:flex;}
+#quiz-box{width:90%;max-width:480px;background:#1a0828;border:3px solid #ff80c0;border-radius:12px;padding:24px 20px;box-shadow:0 0 0 1px #ff40a0, 4px 4px 0 #800040;image-rendering:auto;}
+#quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+#quiz-num{font-family:"Press Start 2P",monospace;font-size:7px;color:#ff80c0;}
+#quiz-score-display{font-family:"Press Start 2P",monospace;font-size:7px;color:#ffd080;}
+#quiz-q{font-size:14px;line-height:1.7;color:#ffe0f5;margin-bottom:18px;min-height:60px;}
+#quiz-choices{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.quiz-choice{background:rgba(255,255,255,.04);border:2px solid rgba(255,179,230,.2);border-radius:8px;padding:10px 14px;font-size:13px;color:#ffe0f5;cursor:pointer;text-align:left;font-family:"Noto Sans Thai",system-ui;transition:all .2s;}
+.quiz-choice:hover{background:rgba(255,110,199,.15);border-color:#ff80c0;}
+.quiz-choice.correct{background:rgba(80,255,120,.15);border-color:#80ff90;color:#aaffcc;}
+.quiz-choice.wrong{background:rgba(255,60,80,.15);border-color:#ff6060;color:#ffaaaa;}
+.quiz-choice:disabled{cursor:default;pointer-events:none;}
+#quiz-feedback{font-size:13px;min-height:20px;color:#ffd080;margin-bottom:12px;text-align:center;}
+#quiz-next{display:none;width:100%;font-family:"Press Start 2P",monospace;font-size:7px;background:#300848;border:2px solid #ff80c0;color:#ff80c0;padding:10px;border-radius:6px;cursor:pointer;letter-spacing:1px;}
+#quiz-next:hover{background:rgba(255,80,180,.2);}
+#quiz-result{display:none;text-align:center;}
+#quiz-result-score{font-family:"Press Start 2P",monospace;font-size:16px;color:#ffd080;margin:12px 0;}
+#quiz-result-msg{font-size:14px;color:#ffe0f5;line-height:1.7;margin-bottom:16px;}
+#quiz-close{width:100%;font-family:"Press Start 2P",monospace;font-size:7px;background:#300848;border:2px solid #ff80c0;color:#ff80c0;padding:10px;border-radius:6px;cursor:pointer;letter-spacing:1px;}
+#quiz-close:hover{background:rgba(255,80,180,.2);}
+
+#ctrl{position:fixed;bottom:8px;right:10px;z-index:50;font-family:"Press Start 2P",monospace;font-size:6px;color:rgba(255,179,230,.2);line-height:1.9;text-align:right;pointer-events:none;}
+#joystick-wrap{position:fixed;bottom:28px;left:28px;z-index:60;display:none;}
+#joystick-base{width:88px;height:88px;border-radius:50%;background:rgba(255,179,230,.12);border:2px solid rgba(255,179,230,.3);position:relative;touch-action:none;}
+#joystick-stick{width:36px;height:36px;border-radius:50%;background:rgba(255,110,199,.45);border:2px solid rgba(255,179,230,.55);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+#btn-interact{position:fixed;bottom:28px;right:28px;z-index:60;width:58px;height:58px;border-radius:50%;background:rgba(255,110,199,.4);border:2px solid rgba(255,179,230,.5);color:#fff;font-size:13px;display:none;align-items:center;justify-content:center;font-family:"Press Start 2P",monospace;touch-action:none;cursor:pointer;flex-direction:column;gap:2px;}
+@media(hover:none)and(pointer:coarse){#joystick-wrap{display:block!important;}#btn-interact{display:flex!important;}#ctrl{display:none;}}
+</style>
+</head>
+<body>
+<div id="wrap"><canvas id="c"></canvas></div>
+<div id="joystick-wrap"><div id="joystick-base"><div id="joystick-stick"></div></div></div>
+<div id="btn-interact">E</div>
+<div id="hud">
+  <a class="back-btn" href="index.html">◀ BACK</a>
+  <div class="room-title">ANGEL'S ROOM ♥</div>
+  <div class="music-badge" id="music-badge">🔇</div>
+</div>
+<div id="prompt"></div>
+<div id="dialog">
+  <button id="dialog-close">✕</button>
+  <div id="dialog-avatar"><img src="sprites/front1.png"></div>
+  <div id="dialog-body">
+    <div id="dialog-name">ANGEL ♥</div>
+    <div id="dialog-text"></div>
+    <div id="dialog-hint">▼ กด E เพื่อปิด</div>
+  </div>
+</div>
+<div id="sched">
+  <div id="sched-inner">
+    <div id="sched-title">♥ MARCH SCHEDULE ♥</div>
+    <div class="sched-row exam"><span class="sched-date">10 มี.ค.</span><span>final Herp 100 ข้อ</span><span class="sched-badge">FINAL</span></div>
+    <div class="sched-row exam"><span class="sched-date">17 มี.ค.</span><span>final genetics & lab</span><span class="sched-badge">FINAL</span></div>
+    <div class="sched-row exam"><span class="sched-date">18 มี.ค.</span><span>final analy chem</span><span class="sched-badge">FINAL</span></div>
+    <div class="sched-row exam"><span class="sched-date">25 มี.ค.</span><span>final analy chem lab</span><span class="sched-badge">FINAL</span></div>
+    <div class="sched-row free"><span class="sched-date">26 มี.ค.→</span><span>อิสระเสรีภาพ! 🎉</span></div>
+    <a href="schedule.html" style="display:block;text-align:center;margin-top:10px;font-size:10px;color:#ffb3e6;text-decoration:none;">ดูตารางเต็ม →</a>
+    <button id="sched-close">CLOSE</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz">
+  <div id="quiz-box">
+    <div id="quiz-header">
+      <div id="quiz-num">ข้อ 1/5</div>
+      <div id="quiz-score-display">คะแนน: 0</div>
+    </div>
+    <div id="quiz-q"></div>
+    <div id="quiz-choices"></div>
+    <div id="quiz-feedback"></div>
+    <button id="quiz-next">ข้อถัดไป →</button>
+    <div id="quiz-special" style="display:none;text-align:center;position:relative;min-height:160px;padding:10px 0;">
+      <div style="font-size:22px;margin-bottom:8px;">🐱💗</div>
+      <div style="font-family:'Press Start 2P',monospace;font-size:9px;color:#ffd080;margin-bottom:20px;line-height:1.8;">Pen fan gun mai?</div>
+      <div style="display:flex;justify-content:center;gap:16px;align-items:center;min-height:60px;position:relative;">
+        <button id="special-yes" style="font-family:'Press Start 2P',monospace;font-size:12px;background:linear-gradient(135deg,#ff80c0,#ff40a0);border:none;color:#fff;padding:10px 20px;border-radius:8px;cursor:pointer;box-shadow:0 0 16px #ff80c060;transition:all .3s;">Yes 💗</button>
+        <button id="special-no" style="font-family:'Press Start 2P',monospace;font-size:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,179,230,.3);color:#ffe0f5;padding:10px 20px;border-radius:8px;cursor:pointer;position:relative;transition:all .2s;">No</button>
+      </div>
+    </div>
+    <div id="quiz-result">
+      <div id="quiz-result-score"></div>
+      <div id="quiz-result-msg"></div>
+      <button id="quiz-close">ปิด ✕</button>
+    </div>
+  </div>
+</div>
+
+<div id="ctrl">WASD / ↑↓←→ เดิน<br>E / SPACE interact</div>
+<audio id="bgm" loop><source src="melt with you (feat. Ccn) [1fZusKAxA4w].mp3" type="audio/mpeg"></audio>
+
+<script>
+const C=document.getElementById("c"), ctx=C.getContext("2d");
+const WW=480,WH=300; let SC=2;
+function resize(){
+  SC=Math.max(1,Math.floor(Math.min(innerWidth/WW,(innerHeight-40)/WH)));
+  C.width=WW;C.height=WH;C.style.width=WW*SC+"px";C.style.height=WH*SC+"px";
+  ctx.imageSmoothingEnabled=false;
+}
+resize();addEventListener("resize",resize);
+
+const DIRS=["front","back","left","right"],SPR={};
+DIRS.forEach(d=>{SPR[d]=[];for(let i=1;i<=4;i++){const img=new Image();img.ready=false;img.bad=false;img.onload=()=>{img.ready=true;};img.onerror=()=>{img.bad=true;};img.src=`sprites/${d}${i}.png`;SPR[d].push(img);}});
+
+const P={wall1:"#e8b8d0",wall2:"#d8a0bc",wallDark:"#c08098",floor1:"#f0d8e8",floor2:"#e4cce0",floorLine:"#d8bcd0",skirting:"#c08098",bedFrame:"#d06088",bedSheet:"#fff0f8",bedPillow:"#ffe0f0",bedBlanket:"#e878a8",bedBlanketD:"#c85888",wood:"#c07848",woodL:"#d88858",woodD:"#a05e30",spkBody:"#281838",spkGrill:"#402050",winFrame:"#d898b8",winSky:"#0c0828",winStar:"#ffffff",gold:"#f0c060"};
+function r(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+
+// ── CAT ANIMATION ──
+let catFrame=0,catTimer=0,catBlink=false,catBlinkTimer=0,catTailWag=0;
+
+function drawCat(x,y){
+  const c1="#e8903a",c2="#c87028",c3="#f5d0a0",nose="#ff7060",eye="#2a1a08";
+  // sleeping cat — นอนขดตัว
+
+  // body (แนวนอน)
+  r(x-18,y-4,36,14,c1);
+  r(x-16,y-2,32,10,c1);
+  // belly
+  r(x-12,y,24,8,c3);
+  // body stripes
+  r(x-10,y-3,2,12,c2);r(x-4,y-3,2,12,c2);r(x+2,y-3,2,12,c2);r(x+8,y-3,2,12,c2);
+
+  // หัว (วางบนอุ้งเท้า)
+  r(x-16,y-14,18,14,c1);
+  // head stripes
+  r(x-13,y-13,2,6,c2);r(x-9,y-13,2,6,c2);r(x-5,y-13,2,6,c2);
+  // ears (นอนราบ)
+  r(x-18,y-18,7,6,c1);r(x-16,y-17,4,4,"#e07060");
+  r(x-8,y-18,7,6,c1);r(x-6,y-17,4,4,"#e07060");
+
+  // ตาหลับ (เส้นโค้ง)
+  ctx.strokeStyle=eye;ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(x-12,y-9,3,Math.PI,0);ctx.stroke();
+  ctx.beginPath();ctx.arc(x-5,y-9,3,Math.PI,0);ctx.stroke();
+  // แก้มกลม (น่ารัก)
+  ctx.fillStyle="rgba(255,160,100,0.35)";
+  ctx.beginPath();ctx.arc(x-15,y-7,3,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(x-2,y-7,3,0,Math.PI*2);ctx.fill();
+
+  // จมูก
+  ctx.fillStyle=nose;
+  ctx.beginPath();ctx.moveTo(x-9,y-6);ctx.lineTo(x-11,y-4);ctx.lineTo(x-7,y-4);ctx.fill();
+  // ปาก
+  ctx.strokeStyle="#a05030";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x-9,y-4);ctx.lineTo(x-12,y-2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-9,y-4);ctx.lineTo(x-6,y-2);ctx.stroke();
+
+  // หนวด
+  ctx.strokeStyle="#e8d0b0";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x-12,y-5);ctx.lineTo(x-22,y-7);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-12,y-4);ctx.lineTo(x-22,y-3);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-6,y-5);ctx.lineTo(x+2,y-7);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-6,y-4);ctx.lineTo(x+2,y-3);ctx.stroke();
+
+  // อุ้งเท้า (พับไว้ใต้หัว)
+  r(x-18,y-2,8,6,c2);r(x-10,y-2,8,6,c1);
+  r(x-19,y+2,10,4,c3);r(x-11,y+2,10,4,c3);
+
+  // หางม้วน
+  ctx.strokeStyle=c2;ctx.lineWidth=5;ctx.lineCap="round";
+  const tw=Math.sin(Date.now()/600)*2;
+  ctx.beginPath();ctx.moveTo(x+18,y+2);
+  ctx.bezierCurveTo(x+26,y+tw,x+28,y-8+tw,x+22,y-12+tw);
+  ctx.stroke();
+  ctx.strokeStyle=c1;ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(x+18,y+2);
+  ctx.bezierCurveTo(x+26,y+tw,x+28,y-8+tw,x+22,y-12+tw);
+  ctx.stroke();
+
+  // shadow
+  ctx.save();ctx.globalAlpha=0.15;ctx.fillStyle="#400020";
+  ctx.beginPath();ctx.ellipse(x,y+10,22,5,0,0,Math.PI*2);ctx.fill();ctx.restore();
+
+  // bubble
+  if(catSpeakTimer>0){
+    ctx.save();ctx.imageSmoothingEnabled=true;
+    ctx.fillStyle="#fff8f0";
+    ctx.beginPath();ctx.roundRect(x-20,y-40,52,18,5);ctx.fill();
+    ctx.strokeStyle="#e08040";ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.roundRect(x-20,y-40,52,18,5);ctx.stroke();
+    ctx.fillStyle="#fff8f0";
+    ctx.beginPath();ctx.moveTo(x-8,y-22);ctx.lineTo(x-2,y-22);ctx.lineTo(x-5,y-18);ctx.fill();
+    ctx.fillStyle="#c06020";ctx.font="bold 9px sans-serif";
+    ctx.fillText("z z เมี้ยว~",x-18,y-27);
+    ctx.restore();
+  }
+}
+
+let catSpeakTimer=0;
+
+function updateCat(){
+  catTimer++;
+  if(catTimer>180){catTimer=0;catBlink=true;catBlinkTimer=8;}
+  if(catBlink){catBlinkTimer--;if(catBlinkTimer<=0)catBlink=false;}
+  if(catSpeakTimer>0) catSpeakTimer--;
+}
+
+function drawRoom(){
+  const ts=22;
+  for(let ty=0;ty*ts<WH;ty++) for(let tx=0;tx*ts<WW;tx++)
+    r(tx*ts,ty*ts,ts,ts,(tx+ty)%2===0?P.floor1:P.floor2);
+  ctx.strokeStyle=P.floorLine+"50";ctx.lineWidth=1;
+  for(let x=0;x<=WW;x+=ts){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,WH);ctx.stroke();}
+  for(let y=0;y<=WH;y+=ts){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(WW,y);ctx.stroke();}
+  const wallH=88;
+  for(let tx=0;tx*18<WW;tx++) r(tx*18,0,18,wallH,tx%2===0?"#f0c8dc":"#e8b8d0");
+  ctx.fillStyle="rgba(255,180,210,0.3)";
+  for(let x=14;x<WW;x+=28) for(let y=10;y<wallH-8;y+=22) ctx.fillRect(x,y,5,5);
+  r(0,wallH,WW,6,P.skirting);r(0,wallH+6,WW,2,"#b07090");r(0,wallH-2,WW,2,"#b07090");r(0,0,WW,3,"#b07090");
+  ctx.strokeStyle="#c8a0b8";ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(0,18);
+  for(let x=0;x<WW;x+=20) ctx.lineTo(x+10,24);
+  for(let x=20;x<WW;x+=20) ctx.lineTo(x,18);
+  ctx.stroke();
+  for(let x=10;x<WW;x+=20){r(x-2,22,5,5,"#fff8a0");ctx.fillStyle="rgba(255,248,100,0.25)";ctx.beginPath();ctx.arc(x,24,6,0,Math.PI*2);ctx.fill();}
+  ctx.fillStyle="rgba(255,140,190,0.25)";ctx.font="11px sans-serif";
+  for(let i=0;i<7;i++) ctx.fillText("♥",(100+i*40),52);
+  drawWindow(14,8,64,64);
+  drawShelf(310,10,128,66);
+  drawBed(10,92,108,82);
+  drawVase(122,148);
+  drawRug(130,162,140,62);
+  drawDesk(296,190,152,62);
+  drawSpeaker(248,12,26,46); // บนผนัง
+  drawBookPile(170,240);     // กองหนังสือ
+  drawDoor(44,238,48,62);
+  drawWallArt(110,12,72,54);
+}
+
+function drawWindow(x,y,w,h){
+  r(x,y,w,h,P.winFrame);r(x+3,y+3,w-6,h-6,P.winSky);
+  [[x+8,y+10],[x+20,y+16],[x+40,y+9],[x+32,y+26],[x+12,y+34],[x+50,y+38]].forEach(([sx,sy])=>{r(sx,sy,2,2,"#fff");});
+  r(x+w-18,y+10,12,12,"#ffd080");r(x+w-15,y+9,10,10,P.winSky);
+  r(x+3,y+h/2-1,w-6,3,P.winFrame);r(x+w/2-1,y+3,3,h-6,P.winFrame);
+  r(x-2,y+h,w+4,5,P.wallDark);
+  r(x-6,y-2,8,h+6,"#ffb3d9");r(x-4,y-2,4,h+6,"#ff90c8");
+  r(x+w-2,y-2,8,h+6,"#ffb3d9");r(x+w-2,y-2,4,h+6,"#ff90c8");
+}
+function drawShelf(x,y,w,h){
+  r(x-3,y+h-4,w+6,3,"#c890a8");r(x-2,y+h-6,w+4,4,P.wood);r(x-2,y+h-8,w+4,3,P.woodL);
+  const cols=["#ff6b9d","#ffd080","#80c8ff","#d0a8ff","#80ffcc","#ff9ec8","#ffcc80"],bws=[10,8,13,9,11,8,12];
+  let bx=x+4;
+  cols.forEach((c,i)=>{if(bx+bws[i]>x+w-4)return;const bh=32+Math.sin(i*1.4)*8;r(bx,y+h-10-bh,bws[i],bh,c);r(bx,y+h-10-bh,bws[i],3,"#ffffff55");bx+=bws[i]+3;});
+  r(x+w-22,y+4,16,h-14,"#ffeef5");r(x+w-20,y+6,12,h-18,"#e8c8d8");
+  ctx.fillStyle="#ff80c0";ctx.font="8px sans-serif";ctx.fillText("♥",x+w-17,y+h-12);
+}
+function drawBed(x,y,w,h){
+  r(x,y,w,22,P.bedFrame);r(x+4,y+3,w-8,16,"#e06090");
+  ctx.fillStyle="#ff90c0";ctx.font="10px sans-serif";ctx.fillText("♥",x+w/2-5,y+16);
+  r(x+5,y-10,10,14,P.bedFrame);r(x+w-15,y-10,10,14,P.bedFrame);
+  r(x,y+22,6,h-22,P.bedFrame);r(x+w-6,y+22,6,h-22,P.bedFrame);
+  r(x+6,y+22,w-12,h-30,P.bedSheet);
+  r(x+10,y+26,w/2-16,16,P.bedPillow);r(x+10,y+27,w/2-16,6,"#fff8");
+  r(x+w/2+2,y+26,w/2-16,16,P.bedPillow);r(x+w/2+2,y+27,w/2-16,6,"#fff8");
+  r(x+6,y+h-22,w-12,16,P.bedBlanket);r(x+6,y+h-16,w-12,6,P.bedBlanketD);
+  ctx.fillStyle="#ffffff45";ctx.font="8px sans-serif";ctx.fillText("★  ★  ★",x+12,y+h-10);
+  r(x,y+h-6,w,6,P.bedFrame);r(x+4,y+h,w-8,3,"#00000018");
+}
+function drawVase(x,y){
+  r(x-7,y,14,18,"#d8a0b8");r(x-5,y+2,10,14,"#e8b8cc");r(x-8,y+14,16,6,"#c890a8");r(x-3,y-2,6,4,"#d8a0b8");
+  ctx.strokeStyle="#60a840";ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(x-2,y);ctx.lineTo(x-6,y-20);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y-24);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+2,y);ctx.lineTo(x+5,y-18);ctx.stroke();
+  ctx.fillStyle="#70b848";
+  ctx.beginPath();ctx.ellipse(x-7,y-14,5,3,-.5,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(x+4,y-10,4,2,.4,0,Math.PI*2);ctx.fill();
+  const fc=["#ff80c0","#ffb3e6","#ff60a0","#ffd0e8","#ff90b0"];
+  [[x-6,y-22],[x,y-26],[x+5,y-20],[x-3,y-16],[x+2,y-12]].forEach(([fx,fy],i)=>{
+    ctx.fillStyle=fc[i%fc.length];
+    for(let a=0;a<5;a++){const rad=a*Math.PI*2/5;ctx.beginPath();ctx.ellipse(fx+Math.cos(rad)*4,fy+Math.sin(rad)*4,3,2,rad,0,Math.PI*2);ctx.fill();}
+    r(fx-2,fy-2,4,4,"#fff080");
+  });
+}
+function drawRug(x,y,w,h){
+  r(x,y,w,h,"#ffaad0");
+  for(let i=0;i<w;i+=6){r(x+i,y+h,3,5,"#ff90c0");r(x+i,y-5,3,5,"#ff90c0");}
+  ctx.strokeStyle="#e07898";ctx.lineWidth=3;ctx.strokeRect(x+5,y+5,w-10,h-10);
+  ctx.strokeStyle="#ff90b8";ctx.lineWidth=1;ctx.strokeRect(x+10,y+10,w-20,h-20);
+  ctx.fillStyle="#ff80b0";ctx.font="13px sans-serif";
+  ctx.fillText("✿",x+18,y+h/2+5);ctx.fillText("♥",x+w/2-6,y+h/2+5);ctx.fillText("✿",x+w-32,y+h/2+5);
+}
+function drawDesk(x,y,w,h){
+  r(x+4,y+h,7,7,P.woodD);r(x+w-11,y+h,7,7,P.woodD);r(x,y+8,w,h-8,P.wood);r(x,y,w,10,P.woodL);
+  const mx=x+10,my=y-50;
+  r(mx,my,62,44,P.spkBody);r(mx+4,my+4,54,32,"#081830");r(mx+4,my+4,54,9,"#102848");
+  r(mx+8,my+17,6,6,"#ff80c0");r(mx+20,my+15,4,4,"#80c8ff");r(mx+34,my+18,6,5,"#ffd080");r(mx+46,my+16,4,6,"#80ffcc");
+  r(mx+22,my+44,18,5,P.spkBody);r(mx+16,my+49,30,4,P.spkBody);
+  r(x+w-42,y-4,28,16,"#fff8fc");
+  for(let i=0;i<3;i++) r(x+w-40,y-3+i*5,24,3,"#ffc0d8");
+  r(x+w-22,y-18,18,20,"#ff9ec8");
+  r(x+w-20,y-26,3,12,"#ff4060");r(x+w-15,y-24,3,10,"#ffd080");r(x+w-10,y-22,3,8,"#80c8ff");
+}
+function drawSpeaker(x,y,w,h){
+  r(x+2,y,w-4,h,P.spkBody);r(x,y+4,w,h-8,P.spkBody);r(x+4,y+4,w-8,h-8,P.spkGrill);
+  r(x+w/2-8,y+h/2-8,16,16,P.spkBody);r(x+w/2-5,y+h/2-5,10,10,P.spkGrill);r(x+w/2-2,y+h/2-2,4,4,P.spkBody);
+  r(x+w-6,y+4,4,4,musicOn?"#60ff80":"#604070");
+  if(musicOn){ctx.fillStyle="#ffb3e6";ctx.font="bold 10px sans-serif";ctx.fillText("♪",x+w+3,y+14);ctx.fillText("♫",x+w+2,y+28);}
+}
+function drawWallArt(x,y,w,h){
+  r(x-3,y-3,w+6,h+6,"#c8906c");r(x,y,w,h,"#fff0f5");r(x+8,y+8,w-16,h-16,"#ffe0ee");
+  ctx.fillStyle="#ffb3e6";ctx.font="11px sans-serif";
+  ctx.fillText("🌙",x+8,y+28);ctx.fillText("✨",x+28,y+18);ctx.fillText("★",x+48,y+32);
+  r(x-3,y-3,6,6,"#a06040");r(x+w-3,y-3,6,6,"#a06040");r(x-3,y+h-3,6,6,"#a06040");r(x+w-3,y+h-3,6,6,"#a06040");
+}
+function drawBookPile(x,y){
+  // หนังสือกำลังเปิด (top-down view)
+  const t = Date.now()/1200;
+  const glow = 0.5 + 0.3*Math.sin(t);
+
+  // glow underneath
+  ctx.save();ctx.globalAlpha=0.15*glow;ctx.fillStyle="#ffd080";
+  ctx.beginPath();ctx.ellipse(x,y+4,32,8,0,0,Math.PI*2);ctx.fill();ctx.restore();
+
+  // spine (กลาง)
+  r(x-2,y-28,4,32,"#c07848");
+
+  // left page
+  ctx.save();
+  ctx.fillStyle="#fff8f0";
+  ctx.beginPath();
+  ctx.moveTo(x-2,y-28);
+  ctx.lineTo(x-28,y-24);
+  ctx.lineTo(x-30,y+4);
+  ctx.lineTo(x-2,y+4);
+  ctx.closePath();ctx.fill();
+  // left page lines
+  ctx.strokeStyle="#e0c8b0";ctx.lineWidth=1;
+  for(let i=0;i<5;i++){
+    const ly=y-20+i*6;
+    ctx.beginPath();ctx.moveTo(x-4,ly);ctx.lineTo(x-26,ly+1);ctx.stroke();
+  }
+  // left page slight crease
+  ctx.strokeStyle="#d4b898";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x-2,y-28);ctx.lineTo(x-2,y+4);ctx.stroke();
+  ctx.restore();
+
+  // right page
+  ctx.save();
+  ctx.fillStyle="#fff8f0";
+  ctx.beginPath();
+  ctx.moveTo(x+2,y-28);
+  ctx.lineTo(x+28,y-24);
+  ctx.lineTo(x+30,y+4);
+  ctx.lineTo(x+2,y+4);
+  ctx.closePath();ctx.fill();
+  // right page lines
+  ctx.strokeStyle="#e0c8b0";ctx.lineWidth=1;
+  for(let i=0;i<5;i++){
+    const ly=y-20+i*6;
+    ctx.beginPath();ctx.moveTo(x+4,ly);ctx.lineTo(x+26,ly+1);ctx.stroke();
+  }
+  ctx.restore();
+
+  // cover hint (ขอบหนังสือ)
+  ctx.strokeStyle="#c07848";ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(x-28,y-24);ctx.lineTo(x-30,y+4);ctx.lineTo(x-2,y+4);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+28,y-24);ctx.lineTo(x+30,y+4);ctx.lineTo(x+2,y+4);ctx.stroke();
+
+  // spine shadow
+  ctx.fillStyle="#00000020";
+  ctx.beginPath();ctx.moveTo(x-2,y-28);ctx.lineTo(x+2,y-28);ctx.lineTo(x+2,y+4);ctx.lineTo(x-2,y+4);ctx.closePath();ctx.fill();
+
+  // sparkle เล็กๆ
+  ctx.save();ctx.globalAlpha=0.6+0.4*Math.sin(t*1.5);
+  ctx.fillStyle="#ffd080";ctx.font="8px sans-serif";
+  ctx.fillText("✨",x+20,y-22);ctx.restore();
+
+  // shadow ล่าง
+  ctx.save();ctx.globalAlpha=0.12;ctx.fillStyle="#400020";
+  ctx.beginPath();ctx.ellipse(x,y+6,30,5,0,0,Math.PI*2);ctx.fill();ctx.restore();
+}
+function drawDoor(x,y,w,h){
+  r(x-4,y-4,w+8,h+8,P.woodD);r(x,y,w,h,P.wood);
+  const hh=Math.floor(h/2);
+  r(x+4,y+4,w-8,hh-8,P.woodL);ctx.strokeStyle=P.woodD;ctx.lineWidth=1;ctx.strokeRect(x+5,y+5,w-10,hh-10);
+  r(x+4,y+hh+4,w-8,hh-8,P.woodL);ctx.strokeRect(x+5,y+hh+5,w-10,hh-10);
+  r(x+w-8,y+hh-3,5,7,P.gold);
+}
+
+// ── PLAYER ──
+const SPR_W={front:52,back:52,left:58,right:58};
+const SPR_H={front:68,back:68,left:68,right:68};
+const player={x:200,y:260,speed:1.5,dir:"front",frame:0,ftimer:0,frate:9,moving:false,hw:14,hh:8};
+
+function drawPlayer(){
+  const frames=SPR[player.dir],img=frames&&frames[player.frame];
+  const dw=SPR_W[player.dir],dh=SPR_H[player.dir];
+  const cx=Math.round(player.x),cy=Math.round(player.y);
+  const offY={front:0,back:0,left:12,right:12};
+  ctx.save();ctx.globalAlpha=0.2;ctx.fillStyle="#501030";
+  ctx.beginPath();ctx.ellipse(cx,cy,player.hw+3,3,0,0,Math.PI*2);ctx.fill();ctx.restore();
+  if(!img||!img.ready||img.bad){r(cx-6,cy-22,12,12,"#ff80c0");r(cx-7,cy-10,14,11,"#ffb3e6");r(cx-5,cy,4,6,"#ff80c0");r(cx+1,cy,4,6,"#ff80c0");return;}
+  ctx.drawImage(img,Math.round(cx-dw/2),cy-dh+offY[player.dir],dw,dh);
+}
+
+// cat position — นอนบนพรม
+const CAT={x:200,y:200};
+
+const WALLS=[
+  [0,0,WW,2],[0,WH-2,WW,2],[0,0,2,WH],[WW-2,0,2,WH],
+  [0,0,WW,90],      // back wall
+  [10,88,108,86],   // bed
+  [296,192,150,60], // desk only (speaker wall removed)
+];
+const DOOR={x:40,y:234,w:52,h:66};
+function inDoor(nx,ny){return nx>DOOR.x&&nx<DOOR.x+DOOR.w&&ny>DOOR.y&&ny<DOOR.y+DOOR.h;}
+function collides(nx,ny){
+  const l=nx-player.hw,rr=nx+player.hw,t=ny-player.hh,b=ny+player.hh;
+  return WALLS.some(([wx,wy,ww,wh])=>l<wx+ww&&rr>wx&&t<wy+wh&&b>wy);
+}
+
+// ── QUIZ DATA ──
+const QUIZ=[
+  {q:"Mitosis มีกี่ระยะหลัก?",choices:["2 ระยะ","4 ระยะ","6 ระยะ","8 ระยะ"],ans:1,exp:"Mitosis มี 4 ระยะ: Prophase, Metaphase, Anaphase, Telophase"},
+  {q:"DNA replication เกิดขึ้นในระยะใดของ Cell cycle?",choices:["G1 phase","S phase","G2 phase","M phase"],ans:1,exp:"DNA replication เกิดใน S phase (Synthesis phase) ของ Interphase"},
+  {q:"Organelle ใดที่ทำหน้าที่สังเคราะห์ ATP ใน Aerobic respiration?",choices:["Ribosome","Golgi apparatus","Mitochondria","Lysosome"],ans:2,exp:"Mitochondria เป็น powerhouse ของเซลล์ ผลิต ATP ผ่าน oxidative phosphorylation"},
+  {q:"Hardy-Weinberg equilibrium ต้องการเงื่อนไขข้อใด?",choices:["มี natural selection","มี mutation สูง","ประชากรขนาดใหญ่ไม่มี selection","Gene flow สูง"],ans:2,exp:"H-W equilibrium ต้องการ: large population, random mating, no mutation, no selection, no gene flow"},
+  {q:"Codon ใดเป็น Start codon ใน mRNA?",choices:["UAA","UAG","AUG","UGA"],ans:2,exp:"AUG เป็น Start codon และยังเป็น codon สำหรับ Methionine (Met)"},
+  {q:"ในกระบวนการ Meiosis เกิดการ crossing over ในระยะใด?",choices:["Prophase I","Metaphase I","Anaphase II","Telophase I"],ans:0,exp:"Crossing over เกิดใน Prophase I ระหว่าง homologous chromosomes"},
+  {q:"Enzyme ใดตัดสาย DNA ณ ตำแหน่งจำเพาะ?",choices:["DNA polymerase","RNA polymerase","Restriction enzyme","Ligase"],ans:2,exp:"Restriction enzyme (restriction endonuclease) ตัด DNA ณ recognition site จำเพาะ"},
+  {q:"ถ้าพ่อแม่มีจีโนไทป์ Aa × Aa ลูกที่มีฟีโนไทป์ recessive มีโอกาสกี่%?",choices:["25%","50%","75%","100%"],ans:0,exp:"Aa × Aa → AA:Aa:aa = 1:2:1 ดังนั้น aa (recessive) มีโอกาส 25%"},
+  {q:"PCR ย่อมาจากอะไร?",choices:["Protein Chain Reaction","Polymerase Chain Reaction","Phosphate Chain Reaction","Polymer Cell Reaction"],ans:1,exp:"PCR = Polymerase Chain Reaction ใช้ขยาย DNA ใน vitro"},
+  {q:"ข้อใดเป็นฟังก์ชันหลักของ Golgi apparatus?",choices:["สังเคราะห์ ATP","ย่อยสลาย organelle เก่า","ปรับแต่งและส่งออก protein","สังเคราะห์ DNA"],ans:2,exp:"Golgi apparatus ปรับแต่ง (modify) เรียงลำดับ และส่งออก protein ที่สังเคราะห์จาก ER"},
+];
+
+let quizIdx=0,quizScore=0,quizAnswered=false;
+
+// special last question state
+let yesSize=14, noEscaped=0;
+
+function startQuiz(){
+  quizIdx=0;quizScore=0;quizAnswered=false;
+  yesSize=14;noEscaped=0;
+  document.getElementById("quiz-result").style.display="none";
+  document.getElementById("quiz-choices").style.display="flex";
+  document.getElementById("quiz-q").style.display="block";
+  document.getElementById("quiz-header").style.display="flex";
+  document.getElementById("quiz-next").style.display="none";
+  document.getElementById("quiz-special").style.display="none";
+  renderQuiz();
+  document.getElementById("quiz").classList.add("show");
+}
+
+function renderQuiz(){
+  if(quizIdx>=QUIZ.length){
+    // all 10 answered — show special question
+    showSpecialQ();
+    return;
+  }
+  const q=QUIZ[quizIdx];
+  document.getElementById("quiz-num").textContent=`ข้อ ${quizIdx+1}/${QUIZ.length}`;
+  document.getElementById("quiz-score-display").textContent=`คะแนน: ${quizScore}`;
+  document.getElementById("quiz-q").textContent=q.q;
+  document.getElementById("quiz-feedback").textContent="";
+  document.getElementById("quiz-next").style.display="none";
+  quizAnswered=false;
+  const cc=document.getElementById("quiz-choices");
+  cc.innerHTML="";
+  q.choices.forEach((c,i)=>{
+    const btn=document.createElement("button");
+    btn.className="quiz-choice";btn.textContent=`${["A","B","C","D"][i]}. ${c}`;
+    btn.onclick=()=>answerQuiz(i,btn);
+    cc.appendChild(btn);
+  });
+}
+
+function answerQuiz(i,btn){
+  if(quizAnswered)return;
+  quizAnswered=true;
+  const q=QUIZ[quizIdx];
+  const btns=document.querySelectorAll(".quiz-choice");
+  btns.forEach(b=>b.disabled=true);
+  if(i===q.ans){
+    btn.classList.add("correct");quizScore++;
+    document.getElementById("quiz-feedback").textContent="✓ ถูกต้อง! "+q.exp;
+    document.getElementById("quiz-feedback").style.color="#80ff90";
+  } else {
+    btn.classList.add("wrong");btns[q.ans].classList.add("correct");
+    document.getElementById("quiz-feedback").textContent="✗ ผิด — "+q.exp;
+    document.getElementById("quiz-feedback").style.color="#ff8080";
+  }
+  document.getElementById("quiz-score-display").textContent=`คะแนน: ${quizScore}`;
+  document.getElementById("quiz-next").style.display="block";
+  document.getElementById("quiz-next").textContent=quizIdx<QUIZ.length-1?"ข้อถัดไป →":"คำถามพิเศษ 💗";
+}
+
+document.getElementById("quiz-next").onclick=()=>{
+  quizIdx++;
+  renderQuiz();
+};
+
+// ── SPECIAL QUESTION ──
+function showSpecialQ(){
+  document.getElementById("quiz-choices").style.display="none";
+  document.getElementById("quiz-q").style.display="none";
+  document.getElementById("quiz-feedback").textContent="";
+  document.getElementById("quiz-next").style.display="none";
+  document.getElementById("quiz-result").style.display="none";
+  document.getElementById("quiz-header").style.display="none";
+  document.getElementById("quiz-special").style.display="block";
+  yesSize=14; noEscaped=0;
+  updateSpecialBtns();
+}
+
+function updateSpecialBtns(){
+  const yesBtn=document.getElementById("special-yes");
+  const noBtn=document.getElementById("special-no");
+  yesBtn.style.fontSize=yesSize+"px";
+  yesBtn.style.padding=`${8+yesSize/4}px ${14+yesSize/3}px`;
+  // move No button to random spot
+  const box=document.getElementById("quiz-special");
+  const bw=box.offsetWidth||420, bh=box.offsetHeight||300;
+  const nx=Math.floor(Math.random()*(bw-80));
+  const ny=Math.floor(Math.random()*(bh-40));
+  noBtn.style.position="absolute";
+  noBtn.style.left=nx+"px";
+  noBtn.style.top=ny+"px";
+}
+
+setTimeout(()=>{
+  const noBtn=document.getElementById("special-no");
+  const yesBtn=document.getElementById("special-yes");
+  if(noBtn){
+    const escape=()=>{
+      noEscaped++;yesSize=Math.min(yesSize+3,60);
+      // move No button randomly within the quiz box
+      const box=document.getElementById("quiz-box");
+      const bw=box.offsetWidth||420, bh=box.offsetHeight||300;
+      const nx=Math.floor(20+Math.random()*(bw-100));
+      const ny=Math.floor(10+Math.random()*(bh-60));
+      noBtn.style.position="absolute";
+      noBtn.style.left=nx+"px"; noBtn.style.top=ny+"px";
+      noBtn.style.zIndex="5";
+      // grow Yes button
+      yesBtn.style.fontSize=yesSize+"px";
+      yesBtn.style.padding=`${8+yesSize/4}px ${14+yesSize/3}px`;
+      yesBtn.style.boxShadow=`0 0 ${yesSize}px #ff80c080`;
+    };
+    noBtn.addEventListener("mouseover",escape);
+    noBtn.addEventListener("touchstart",(e)=>{e.preventDefault();escape();},{passive:false});
+  }
+  if(yesBtn){
+    yesBtn.addEventListener("click",()=>{
+      document.getElementById("quiz-special").style.display="none";
+      document.getElementById("quiz-result").style.display="block";
+      document.getElementById("quiz-result-score").textContent="💗";
+      document.getElementById("quiz-result-msg").textContent="Yeahh!! Pen jing mai? ;-;\n\n(แหะๆ อย่าโกรดเลยนะ\nขอโทด ไม่ได้อยากทำให้\nลำบากใจ ทำเล่นๆ ;-; )";
+    });
+  }
+},100);
+
+function showResult(){
+  document.getElementById("quiz-choices").style.display="none";
+  document.getElementById("quiz-q").style.display="none";
+  document.getElementById("quiz-header").style.display="none";
+  document.getElementById("quiz-feedback").textContent="";
+  document.getElementById("quiz-next").style.display="none";
+  const res=document.getElementById("quiz-result");
+  res.style.display="block";
+  document.getElementById("quiz-result-score").textContent=`${quizScore} / ${QUIZ.length}`;
+  const msgs=["ลองใหม่นะ สู้ๆ! 💪","พยายามต่อไปนะ 🌸","โอเคนะ ทบทวนอีกหน่อย 📚","เก่งมากเลย! 🌟","เพอร์เฟกต์! แมวขอปรบมือ 🐱✨","เก่งมาก!","ดีมาก 🌸","ผ่านได้สบาย","เกือบเต็ม!","เพอร์เฟกต์! 🎉"];
+  document.getElementById("quiz-result-msg").textContent=msgs[Math.min(quizScore,9)];
+}
+document.getElementById("quiz-close").onclick=()=>document.getElementById("quiz").classList.remove("show");
+
+// ── INTERACTABLES ──
+const ITEMS=[
+  {label:"🛏️ เตียงนอน — กด E",   zone:{x:10,y:86,w:120,h:100},fn:doBed},
+  {label:"📚 โต๊ะเรียน — กด E",   zone:{x:258,y:182,w:200,h:88},fn:doDesk},
+  {label:"🎵 ลำโพง — กด E", zone:{x:232,y:8,w:58,h:110}, fn:doSpeaker},
+  {label:"📖 ชั้นหนังสือ — กด E", zone:{x:302,y:76,w:136,h:58},fn:doShelf},
+  {label:"📚 กองหนังสือ — กด E",  zone:{x:140,y:210,w:64,h:50},  fn:doBookPile},
+  {label:"🐱 แซลมี่ — กด E",      zone:{x:CAT.x-30,y:CAT.y-40,w:60,h:60},fn:doCat},
+];
+
+function doBookPile(){ showDialog("ฟังก์ชันยังทำไม่เสร็จ 🚧\n(coming soon...)"); }
+function doCat(){
+  catSpeakTimer=90;
+  startQuiz();
+}
+function doShelf(){showDialog(["หนังสือเยอะจัง... เจิ้ลอ่านครบแล้วยัง? 📚","สู้ๆนะ อ่านหนังสือเยอะขนาดนี้เก่งมากเลย 🌸","หนังสือเล่มไหนยากที่สุดอะ ;-;"][Math.floor(Math.random()*3)]);}
+function doBed(){showDialog(["เตียงนี้จะทําให้เทอฝันดี!!!","เตียงชมพูเพิ่มดาเมจ!","ขอให้พน.เจิ้ลตื่นมาและสดใส","I luv u ;-; kub","gn my angela"][Math.floor(Math.random()*5)]);}
+function doDesk(){closeAll();document.getElementById("sched").classList.add("show");}
+function doSpeaker(){
+  if(musicOn){bgm.pause();musicOn=false;document.getElementById("music-badge").textContent="🔇";showDialog("ปิดเพลงแล้วนะ 🔇");}
+  else{bgm.play().catch(()=>{});musicOn=true;document.getElementById("music-badge").textContent="🎵";showDialog("เปิดเพลงแล้ว 🎵\nmelt with you ~ 🌸");}
+}
+
+let nearItem=null,musicOn=false;
+const bgm=document.getElementById("bgm");
+
+function checkNear(){
+  const {x,y}=player;nearItem=null;
+  for(const it of ITEMS){
+    const z=it.zone;
+    if(x>z.x-20&&x<z.x+z.w+20&&y>z.y-20&&y<z.y+z.h+20){nearItem=it;break;}
+  }
+  const pr=document.getElementById("prompt");
+  if(nearItem){pr.textContent=nearItem.label;pr.classList.add("show");}
+  else pr.classList.remove("show");
+}
+function tryInteract(){
+  if(document.getElementById("quiz").classList.contains("show"))return;
+  if(document.getElementById("dialog").classList.contains("show")){closeAll();return;}
+  if(nearItem)nearItem.fn();
+}
+function showDialog(t){document.getElementById("dialog-text").textContent=t;document.getElementById("dialog").classList.add("show");}
+function closeAll(){document.getElementById("dialog").classList.remove("show");document.getElementById("sched").classList.remove("show");}
+document.getElementById("dialog-close").onclick=closeAll;
+document.getElementById("sched-close").onclick=closeAll;
+document.getElementById("sched").onclick=e=>{if(e.target===document.getElementById("sched"))closeAll();};
+
+const K={};
+addEventListener("keydown",e=>{
+  K[e.key]=true;
+  if(e.key==="e"||e.key==="E"||e.key===" ")tryInteract();
+  if(e.key==="Escape"){closeAll();document.getElementById("quiz").classList.remove("show");}
+  if(e.key===" ")e.preventDefault();
+});
+addEventListener("keyup",e=>{K[e.key]=false;});
+
+const jBase=document.getElementById("joystick-base"),jStick=document.getElementById("joystick-stick"),btnE=document.getElementById("btn-interact");
+let jActive=false,jDx=0,jDy=0;const JR=26;
+function joyMove(e){if(!jActive)return;const rect=jBase.getBoundingClientRect();const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;const t=e.touches?e.touches[0]:e;let dx=t.clientX-cx,dy=t.clientY-cy;const d=Math.hypot(dx,dy);if(d>JR){dx=dx/d*JR;dy=dy/d*JR;}jDx=dx/JR;jDy=dy/JR;jStick.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;}
+function joyEnd(){jActive=false;jDx=0;jDy=0;jStick.style.transform="translate(-50%,-50%)";}
+jBase.addEventListener("touchstart",e=>{e.preventDefault();jActive=true;joyMove(e);},{passive:false});
+jBase.addEventListener("touchmove",e=>{e.preventDefault();joyMove(e);},{passive:false});
+jBase.addEventListener("touchend",()=>joyEnd());
+jBase.addEventListener("mousedown",e=>{jActive=true;joyMove(e);});
+addEventListener("mousemove",e=>{if(jActive)joyMove(e);});
+addEventListener("mouseup",()=>{if(jActive)joyEnd();});
+btnE.addEventListener("touchstart",e=>{e.preventDefault();tryInteract();},{passive:false});
+btnE.addEventListener("mousedown",e=>{e.preventDefault();tryInteract();});
+
+let last=0;
+function loop(ts){const dt=Math.min(ts-last,32);last=ts;update();render();requestAnimationFrame(loop);}
+function update(){
+  let dx=0,dy=0;
+  if(K["ArrowLeft"]||K["a"]||K["A"])dx=-player.speed;
+  if(K["ArrowRight"]||K["d"]||K["D"])dx=player.speed;
+  if(K["ArrowUp"]||K["w"]||K["W"])dy=-player.speed;
+  if(K["ArrowDown"]||K["s"]||K["S"])dy=player.speed;
+  if(Math.abs(jDx)>0.15)dx=jDx*player.speed;
+  if(Math.abs(jDy)>0.15)dy=jDy*player.speed;
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  player.moving=dx!==0||dy!==0;
+  if(player.moving){if(Math.abs(dx)>=Math.abs(dy))player.dir=dx<0?"left":"right";else player.dir=dy<0?"back":"front";}
+  if(dx){const nx=player.x+dx;if(!collides(nx,player.y))player.x=nx;}
+  if(dy){const ny=player.y+dy;if(!collides(player.x,ny))player.y=ny;}
+  if(inDoor(player.x,player.y)){window.location.href="index.html";return;}
+  if(player.moving){player.ftimer++;if(player.ftimer>=player.frate){player.ftimer=0;player.frame=(player.frame+1)%4;}}
+  else{player.frame=0;player.ftimer=0;}
+  updateCat();
+  checkNear();
+}
+function render(){
+  ctx.clearRect(0,0,WW,WH);
+  drawRoom();
+  drawCat(CAT.x,CAT.y);
+  drawPlayer();
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
