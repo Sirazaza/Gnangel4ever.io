@@ -181,6 +181,57 @@ hr.section-divider { border: none; border-top: 0.5px solid #d3d1c7; margin: 16px
   .bullet { font-size: 12px; }
   .qa-q, .qa-a, .step-body, .worked-q, .worked-step { font-size: 12px; }
 }
+
+/* ===== TABLET / IPAD ===== */
+@media(min-width: 601px) and (max-width: 1024px) {
+  /* Content wider, better use of space */
+  .content { max-width: 780px; padding: 1.5rem 1.25rem 3rem; }
+
+  /* Nav - bigger touch targets */
+  .tab-btn { font-size: 13px; padding: 13px 14px; min-height: 46px; }
+
+  /* Cards - slightly more padding */
+  .card { padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+  .card-title { font-size: 15px; }
+
+  /* Compare grid - 2 columns on iPad (same as desktop) */
+  .compare-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Tables - no need to scroll on iPad */
+  table { display: table; overflow-x: visible; }
+  th { font-size: 13px; padding: 8px 10px; }
+  td { font-size: 13px; padding: 8px 10px; }
+
+  /* Formula blocks */
+  .fblock { padding: 12px 16px; }
+
+  /* Body text */
+  body { font-size: 15px; }
+  .bullet { font-size: 14px; }
+  .qa-q { font-size: 14px; }
+  .qa-a { font-size: 14px; }
+  .worked-q { font-size: 14px; }
+  .worked-step { font-size: 13px; }
+  .worked-ans { font-size: 14px; }
+
+  /* Steps */
+  .step-num { min-width: 28px; height: 28px; font-size: 12px; }
+  .step-body { font-size: 14px; }
+
+  /* Page header */
+  .page-header h1 { font-size: 19px; }
+  .page-header p { font-size: 13px; }
+
+  /* MathJax - bigger on iPad */
+  mjx-container { font-size: 15px !important; }
+}
+
+/* iPad landscape */
+@media(min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .content { max-width: 900px; }
+  .tab-btn { font-size: 13px; padding: 13px 16px; }
+  body { font-size: 15px; }
+}
 </style>
 </head>
 <body>
