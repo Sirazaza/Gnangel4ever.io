@@ -64,10 +64,10 @@ canvas{image-rendering:pixelated;image-rendering:crisp-edges;}
 #quiz-close:hover{background:rgba(255,80,180,.2);}
 
 #ctrl{position:fixed;bottom:8px;right:10px;z-index:50;font-family:"Press Start 2P",monospace;font-size:6px;color:rgba(255,179,230,.2);line-height:1.9;text-align:right;pointer-events:none;}
-#joystick-wrap{position:fixed;bottom:28px;left:28px;z-index:60;display:none;}
-#joystick-base{width:88px;height:88px;border-radius:50%;background:rgba(255,179,230,.12);border:2px solid rgba(255,179,230,.3);position:relative;touch-action:none;}
-#joystick-stick{width:36px;height:36px;border-radius:50%;background:rgba(255,110,199,.45);border:2px solid rgba(255,179,230,.55);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
-#btn-interact{position:fixed;bottom:28px;right:28px;z-index:60;width:58px;height:58px;border-radius:50%;background:rgba(255,110,199,.4);border:2px solid rgba(255,179,230,.5);color:#fff;font-size:13px;display:none;align-items:center;justify-content:center;font-family:"Press Start 2P",monospace;touch-action:none;cursor:pointer;flex-direction:column;gap:2px;}
+#joystick-wrap{position:fixed;bottom:24px;left:20px;z-index:60;display:none;}
+#joystick-base{width:110px;height:110px;border-radius:50%;background:rgba(255,179,230,.15);border:2px solid rgba(255,179,230,.35);position:relative;touch-action:none;}
+#joystick-stick{width:46px;height:46px;border-radius:50%;background:rgba(255,110,199,.5);border:2px solid rgba(255,179,230,.6);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+#btn-interact{position:fixed;bottom:36px;right:24px;z-index:60;width:72px;height:72px;border-radius:50%;background:rgba(255,110,199,.45);border:2px solid rgba(255,179,230,.6);color:#fff;font-size:14px;display:none;align-items:center;justify-content:center;font-family:"Press Start 2P",monospace;touch-action:none;cursor:pointer;flex-direction:column;gap:2px;box-shadow:0 4px 20px rgba(255,80,180,.3);}
 @media(hover:none)and(pointer:coarse){#ctrl{display:none;}}
 </style>
 </head>
@@ -679,7 +679,7 @@ if(navigator.maxTouchPoints>0||'ontouchstart' in window){
 } else {
   window.addEventListener("touchstart",showJoystick,{once:true});
 }
-let jActive=false,jDx=0,jDy=0;const JR=26;
+let jActive=false,jDx=0,jDy=0;const JR=38;
 function joyMove(e){if(!jActive)return;const rect=jBase.getBoundingClientRect();const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;const t=e.touches?e.touches[0]:e;let dx=t.clientX-cx,dy=t.clientY-cy;const d=Math.hypot(dx,dy);if(d>JR){dx=dx/d*JR;dy=dy/d*JR;}jDx=dx/JR;jDy=dy/JR;jStick.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;}
 function joyEnd(){jActive=false;jDx=0;jDy=0;jStick.style.transform="translate(-50%,-50%)";}
 jBase.addEventListener("touchstart",e=>{e.preventDefault();jActive=true;joyMove(e);},{passive:false});
@@ -699,8 +699,8 @@ function update(){
   if(K["ArrowRight"]||K["d"]||K["D"])dx=player.speed;
   if(K["ArrowUp"]||K["w"]||K["W"])dy=-player.speed;
   if(K["ArrowDown"]||K["s"]||K["S"])dy=player.speed;
-  if(Math.abs(jDx)>0.15)dx=jDx*player.speed;
-  if(Math.abs(jDy)>0.15)dy=jDy*player.speed;
+  if(Math.abs(jDx)>0.1)dx=jDx*player.speed*2.2;
+  if(Math.abs(jDy)>0.1)dy=jDy*player.speed*2.2;
   if(dx&&dy){dx*=0.707;dy*=0.707;}
   player.moving=dx!==0||dy!==0;
   if(player.moving){if(Math.abs(dx)>=Math.abs(dy))player.dir=dx<0?"left":"right";else player.dir=dy<0?"back":"front";}
