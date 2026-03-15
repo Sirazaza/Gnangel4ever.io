@@ -526,12 +526,25 @@ function answerQuiz(i,btn){
   }
   document.getElementById("quiz-score-display").textContent=`คะแนน: ${quizScore}`;
   document.getElementById("quiz-next").style.display="block";
-  document.getElementById("quiz-next").textContent=quizIdx<QUIZ.length-1?"ข้อถัดไป →":"คำถามพิเศษ 💗";
+  if(quizIdx===QUIZ.length-1){
+    // ข้อสุดท้าย
+    document.getElementById("quiz-next").textContent = quizScore===QUIZ.length-1&&i===q.ans ? "🎉 ดูผลลัพธ์พิเศษ!" : "ดูผลลัพธ์ →";
+  } else {
+    document.getElementById("quiz-next").textContent="ข้อถัดไป →";
+  }
 }
 
 document.getElementById("quiz-next").onclick=()=>{
   quizIdx++;
-  renderQuiz();
+  if(quizIdx>=QUIZ.length){
+    if(quizScore===QUIZ.length){
+      showSpecialQ(); // ตอบถูกหมด → special question
+    } else {
+      showResult(); // ตอบไม่ครบ → ผลลัพธ์ปกติ
+    }
+  } else {
+    renderQuiz();
+  }
 };
 
 // ── SPECIAL QUESTION ──
