@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สรุป Analytical Chemistry — Final</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$'],['\\[','\\]']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sarabun','Segoe UI',sans-serif; background: #f5f4f0; color: #2c2c2a; font-size: 15px; line-height: 1.7; }
+.nav { background: #fff; border-bottom: 0.5px solid #d3d1c7; position: sticky; top: 0; z-index: 100; overflow-x: auto; white-space: nowrap; }
+.nav-inner { display: inline-flex; padding: 0 1rem; }
+.tab-btn { font-size: 13px; font-weight: 500; padding: 13px 18px; border: none; background: none; cursor: pointer; color: #888780; border-bottom: 2px solid transparent; transition: all .2s; white-space: nowrap; }
+.tab-btn:hover { color: #2c2c2a; }
+.tab-btn.active { color: #2c2c2a; border-bottom-color: #2c2c2a; }
+.page-header { background: #fff; border-bottom: 0.5px solid #d3d1c7; padding: 1.25rem 1.5rem; }
+.page-header h1 { font-size: 20px; font-weight: 600; }
+.page-header p { font-size: 13px; color: #888780; margin-top: 2px; }
+.content { display: none; max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+.content.active { display: block; }
+.card { background: #fff; border-radius: 12px; border: 0.5px solid #d3d1c7; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+.card-title { font-size: 15px; font-weight: 600; color: #2c2c2a; padding-left: 10px; margin-bottom: 12px; }
+.card-title.uv    { border-left: 3px solid #7F77DD; }
+.card-title.flu   { border-left: 3px solid #1D9E75; }
+.card-title.chrom { border-left: 3px solid #BA7517; }
+.card-title.aas   { border-left: 3px solid #D85A30; }
+.section-sub { font-size: 13px; font-weight: 600; color: #888780; text-transform: uppercase; letter-spacing: .05em; margin: 14px 0 6px; }
+.bullet { font-size: 14px; color: #5f5e5a; margin: 5px 0 5px 14px; }
+.bullet b { color: #2c2c2a; font-weight: 600; }
+.sub { margin-left: 30px !important; }
+.sub2 { margin-left: 46px !important; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+th { background: #f1efe8; color: #2c2c2a; font-weight: 600; padding: 8px 12px; border-bottom: 1px solid #d3d1c7; text-align: left; }
+td { padding: 8px 12px; border-bottom: 0.5px solid #eeece6; color: #5f5e5a; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+.qa-box { background: #f5f4f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+.qa-q { font-size: 14px; font-weight: 600; color: #2c2c2a; margin-bottom: 5px; }
+.qa-a { font-size: 14px; color: #5f5e5a; line-height: 1.7; }
+.worked { background: #fff; border: 1px solid #d3d1c7; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+.worked-q { font-size: 14px; font-weight: 600; color: #2c2c2a; margin-bottom: 8px; }
+.worked-step { font-size: 13px; color: #5f5e5a; margin: 4px 0 4px 12px; line-height: 1.8; }
+.worked-ans { font-size: 14px; font-weight: 600; color: #085041; background: #e1f5ee; border-radius: 6px; padding: 6px 12px; margin-top: 8px; display: inline-block; }
+.fblock { border-radius: 10px; padding: 14px 20px; margin: 10px 0; }
+.fblock.purple { background: #eeedfe; border: 1px solid #AFA9EC; }
+.fblock.green  { background: #e1f5ee; border: 1px solid #5DCAA5; }
+.fblock.amber  { background: #faeeda; border: 1px solid #EF9F27; }
+.fblock.coral  { background: #faece7; border: 1px solid #F0997B; }
+.fblock .flabel { font-size: 12px; font-weight: 600; letter-spacing: .05em; margin-bottom: 6px; }
+.fblock.purple .flabel { color: #534AB7; }
+.fblock.green  .flabel { color: #0F6E56; }
+.fblock.amber  .flabel { color: #854F0B; }
+.fblock.coral  .flabel { color: #993C1D; }
+.frow { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.25rem; }
+.ccard { border-radius: 12px; padding: 1.1rem 1.25rem; }
+.ccard.a { background: #e1f5ee; border: 0.5px solid #5DCAA5; }
+.ccard.b { background: #eeedfe; border: 0.5px solid #AFA9EC; }
+.ccard.c { background: #faeeda; border: 0.5px solid #EF9F27; }
+.ccard.d { background: #faece7; border: 0.5px solid #F0997B; }
+.ccard-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+.ccard.a .ccard-title { color: #085041; }
+.ccard.b .ccard-title { color: #26215C; }
+.ccard.c .ccard-title { color: #412402; }
+.ccard.d .ccard-title { color: #4A1B0C; }
+.ccard .row { font-size: 13px; color: #444441; margin: 4px 0; line-height: 1.6; }
+.steps { display: flex; flex-direction: column; gap: 8px; }
+.step { display: flex; gap: 12px; align-items: flex-start; }
+.step-num { min-width: 28px; height: 28px; border-radius: 50%; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; flex-shrink: 0; }
+.step-body { font-size: 14px; color: #5f5e5a; padding-top: 4px; }
+.step-body b { color: #2c2c2a; }
+.hl { border-radius: 12px; padding: 1.1rem 1.25rem; border: 0.5px solid; margin-bottom: 1.25rem; }
+.hl.purple { background: #eeedfe; border-color: #AFA9EC; }
+.hl.green  { background: #e1f5ee; border-color: #5DCAA5; }
+.hl.amber  { background: #faeeda; border-color: #EF9F27; }
+.hl.coral  { background: #faece7; border-color: #F0997B; }
+.hl-title  { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+.hl.purple .hl-title,.hl.purple .bullet { color: #3C3489; }
+.hl.green  .hl-title,.hl.green  .bullet { color: #0F6E56; }
+.hl.amber  .hl-title,.hl.amber  .bullet { color: #633806; }
+.hl.coral  .hl-title,.hl.coral  .bullet { color: #712B13; }
+.hl .bullet b { color: inherit; }
+.tag-red { display: inline-block; font-size: 11px; background: #fcebeb; color: #a32d2d; border-radius: 4px; padding: 1px 8px; margin-left: 6px; font-weight: 500; vertical-align: middle; }
+.tag-blue { display: inline-block; font-size: 11px; background: #e6f1fb; color: #185FA5; border-radius: 4px; padding: 1px 8px; margin-left: 6px; font-weight: 500; vertical-align: middle; }
+hr.section-divider { border: none; border-top: 0.5px solid #d3d1c7; margin: 16px 0; }
+@media(max-width:600px){ .compare-grid{grid-template-columns:1fr;} .tab-btn{padding:12px 10px;font-size:12px;} }
+</style>
+</head>
+<body>
+<div class="page-header">
+  <h1>📘 สรุป Analytical Chemistry</h1>
+  <p>Final Exam · 18 มี.ค. 2568 · UV-Vis · Fluorescence · Chromatography · GC · HPLC · AAS/AES</p>
+</div>
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="tab-btn active" onclick="show('uvvis',this)">1 · UV-Vis</button>
+    <button class="tab-btn" onclick="show('flu',this)">2 · Fluorescence</button>
+    <button class="tab-btn" onclick="show('chrom',this)">3 · Chromatography</button>
+    <button class="tab-btn" onclick="show('gc',this)">4 · GC</button>
+    <button class="tab-btn" onclick="show('hplc',this)">5 · HPLC</button>
+    <button class="tab-btn" onclick="show('aas',this)">6 · AAS &amp; AES</button>
+    <button class="tab-btn" onclick="show('lab3',this)">Lab 3 · ความกระด้าง</button>
+    <button class="tab-btn" onclick="show('lab4',this)">Lab 4 · ไอโอดีน</button>
+    <button class="tab-btn" onclick="show('lab6',this)">Lab 6 · ไนเตรต</button>
+    <button class="tab-btn" onclick="show('lab7',this)">Lab 7 · Conductometry</button>
+    <button class="tab-btn" onclick="show('lab8',this)">Lab 8 · เหล็กใน Spec</button>
+    <button class="tab-btn" onclick="show('lab9',this)">Lab 9 · Ethanol GC</button>
+    <button class="tab-btn" onclick="show('lab10',this)">Lab 10 · Paracetamol HPLC</button>
+  </div>
+</nav>
+
+<!-- ===== TAB 1: UV-VIS ===== -->
+<div id="uvvis" class="content active">
+
+  <div class="card">
+    <div class="card-title uv">หลักการพื้นฐาน</div>
+    <div class="bullet">• <b>UV-Vis Spectrophotometry</b> = เทคนิควิเคราะห์ที่อาศัยการดูดกลืนแสงของรังสี UV (190–380 nm) และ Visible (380–800 nm)</div>
+    <div class="bullet">• <b>Colorimetry</b> = วิเคราะห์สีจากการดูดกลืนแสงในช่วง visible เท่านั้น (ไม่รวม UV)</div>
+    <div class="bullet">• เกิดจากการเปลี่ยนระดับพลังงานของ <b>valence electrons</b>: ground state → excited state</div>
+    <div class="bullet">• พลังงานรวมของโมเลกุล: $E_{total} = E_{el} + E_{rot} + E_{vib}$</div>
+    <div class="bullet">• แสงมีสมบัติเป็นทั้งคลื่นและอนุภาค (photon / quanta) — $E = h\nu = \frac{hc}{\\lambda} = hc\\bar{\nu}$</div>
+    <div class="section-sub">ลำดับ Electronic Transition จากง่าย → ยาก</div>
+    <div class="fblock purple">
+      <div class="flabel">ง่ายที่สุด → ยากที่สุด (พลังงานน้อย → มาก)</div>
+      $$n \rightarrow \\pi^* \;>\; \\pi \rightarrow \\pi^* \;>\; n \rightarrow \\sigma^* \;>\; \\sigma \rightarrow \\pi^* \;>\; \\sigma \rightarrow \\sigma^*$$
+    </div>
+    <table>
+      <tr><th>ชนิด bond</th><th>ความหมาย</th><th>ตัวอย่าง</th></tr>
+      <tr><td>$\\sigma$ bonding</td><td>พันธะเดี่ยว</td><td>C–C, C–H</td></tr>
+      <tr><td>$\\pi$ bonding</td><td>พันธะคู่หรือพันธะสาม</td><td>C=C, C≡C</td></tr>
+      <tr><td>$n$ bonding</td><td>อิเล็กตรอนคู่โดดเดี่ยว</td><td>O, N, S, halogen</td></tr>
+    </table>
+    <div class="bullet" style="margin-top:10px">• การดูดกลืนแสงของโมเลกุลเกิดในช่วง <b>ความยาวคลื่นที่กว้าง</b> เพราะมีการสั่นและการหมุนของโมเลกุลร่วมด้วย</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">Chromophore & Auxochrome</div>
+    <div class="section-sub">Chromophore</div>
+    <div class="bullet">• หมู่ที่มีพันธะคู่ ดูดกลืนรังสี UV-Vis ได้ → เกิดสัญญาณ แบ่งเป็น 3 ประเภท:</div>
+    <div class="bullet sub">1. Multiple bond ระหว่าง 2 อะตอมที่<b>ไม่มี</b> $e^-$ คู่โดดเดี่ยว เช่น C=C, C≡C → $\\pi \rightarrow \\pi^*$</div>
+    <div class="bullet sub">2. Multiple bond ที่อะตอมหนึ่ง<b>มี</b> $e^-$ คู่โดดเดี่ยว เช่น C=O → $n \rightarrow \\pi^*$ และ $\\pi \rightarrow \\pi^*$</div>
+    <div class="bullet sub">3. Benzene ring → aromatic → ให้ <b>3 absorption band</b> (E₂, B, K band)</div>
+    <div class="bullet">• เมื่อ chromophore เกิด <b>conjugation</b> กัน → $\\lambda_{max}$ เพิ่มขึ้น (red shift) เพราะ energy gap ลดลง</div>
+    <hr class="section-divider">
+    <div class="section-sub">Auxochrome — 4 ชนิด</div>
+    <div class="bullet">• หมู่ที่ไม่ดูดแสงเอง แต่เมื่อเกาะ chromophore จะเปลี่ยนค่าการดูดกลืน</div>
+    <table>
+      <tr><th>ชื่อ</th><th>ผลต่อ $\\lambda$</th><th>ผลต่อ $A$</th><th>ตัวอย่าง</th></tr>
+      <tr><td><b>Bathochromic (red shift)</b></td><td>↑ มากขึ้น</td><td>—</td><td>เติม –OH, –NH₂, conjugation เพิ่ม</td></tr>
+      <tr><td><b>Hypsochromic (blue shift)</b></td><td>↓ ลดลง</td><td>—</td><td>polar solvent + $n \rightarrow \\pi^*$</td></tr>
+      <tr><td><b>Hyperchromic</b></td><td>—</td><td>↑ มากขึ้น</td><td>เพิ่ม conjugation</td></tr>
+      <tr><td><b>Hypochromic</b></td><td>—</td><td>↓ ลดลง</td><td>steric effect, twist ของ chromophore</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">Beer–Lambert Law</div>
+    <div class="fblock purple">
+      <div class="flabel">Beer's Law</div>
+      $$A = \varepsilon b c = \\log\frac{P_0}{P} = -\\log T$$
+    </div>
+    <table>
+      <tr><th>ตัวแปร</th><th>ความหมาย</th><th>หน่วย</th></tr>
+      <tr><td>$A$</td><td>Absorbance — ไม่มีหน่วย</td><td>—</td></tr>
+      <tr><td>$\varepsilon$</td><td>Molar absorptivity — ค่าจำเพาะของสารแต่ละชนิด</td><td>L·mol⁻¹·cm⁻¹</td></tr>
+      <tr><td>$b$</td><td>ความกว้างเซลล์ (path length)</td><td>cm</td></tr>
+      <tr><td>$c$</td><td>ความเข้มข้น</td><td>mol/L</td></tr>
+      <tr><td>$T$</td><td>Transmittance = $P/P_0$</td><td>—</td></tr>
+      <tr><td>$a$</td><td>Absorptivity (ใช้เมื่อ $c$ ไม่เป็น mol/L)</td><td>L·g⁻¹·cm⁻¹</td></tr>
+    </table>
+    <div class="section-sub">เงื่อนไขการใช้ Beer's Law</div>
+    <div class="bullet sub">1. แสงต้องเป็น <b>monochromatic radiation</b></div>
+    <div class="bullet sub">2. สารละลายต้อง<b>เจือจาง</b></div>
+    <div class="bullet sub">3. สารละลายต้องเป็น<b>เนื้อเดียวกัน</b> (homogeneous)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">ผลของตัวทำละลาย (Solvent Effect)</div>
+    <table>
+      <tr><th>Transition</th><th>ตัวทำละลายมีขั้ว → กลไก</th><th>Shift</th></tr>
+      <tr><td>$n \rightarrow \\pi^*$</td><td>ตัวทำละลายเกิด H-bond กับ lone pair → stabilize ground state → ต้องใช้พลังงานมากขึ้น</td><td><b>Blue shift</b> ($\\lambda$ ↓)</td></tr>
+      <tr><td>$\\pi \rightarrow \\pi^*$</td><td>Excited state มีขั้วมากกว่า ground state → ตัวทำละลายจับ excited state → stabilize excited state → พลังงานลด</td><td><b>Red shift</b> ($\\lambda$ ↑)</td></tr>
+    </table>
+    <div class="bullet" style="margin-top:10px">• <b>Steric effect:</b> ค่า $\varepsilon_{max}$ แปรผกผันกับ $\\lambda_{max}$ — chromophore ถูกบิดเบี้ยว → ลดการ conjugation</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">การดูดกลืนแสงของโลหะแทรนซิชัน & Charge Transfer</div>
+    <div class="bullet">• โลหะแทรนซิชันแถวที่ 1–2 ดูดกลืนแสงช่วง <b>visible</b> (absorption band กว้าง) จากการเปลี่ยน $e^-$ ใน <b>d-orbitals</b></div>
+    <div class="bullet">• เมื่อโลหะเกิด complex → d-orbitals แยกระดับพลังงาน:</div>
+    <div class="bullet sub">– <b>Octahedral</b>: coordinate กับ ligand 6 ตัว → $d$ แยกเป็น $e_g$ และ $t_{2g}$</div>
+    <div class="bullet sub">– <b>Tetrahedral</b>: coordinate 4 ตัว → การแยกน้อยกว่า octahedral</div>
+    <div class="bullet sub">– <b>Square planar</b>: การแยก d-orbitals ต่างออกไปตามสนามไฟฟ้า</div>
+    <div class="bullet">• ขนาดพลังงาน $\Delta E \\propto$ ligand field strength และ $\Delta E \\propto \frac{1}{\\lambda}$</div>
+    <div class="bullet">• <b>Charge-Transfer Absorption:</b> เกิดปฏิกิริยา redox ภายในตัวเอง อยู่ที่ excited state เช่น Fe(III) + SCN⁻ → สีแดง ผันกลับได้</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">ข้อจำกัดของ Beer's Law</div>
+    <div class="section-sub">ความเบี่ยงเบนทางเคมี (Chemical Deviation)</div>
+    <div class="bullet sub">1. <b>pH</b> — สมดุลเคมีเปลี่ยน → ต้องควบคุมด้วย buffer</div>
+    <div class="bullet sub">2. <b>ความเข้มข้นสูง</b> — $e^-$ ของโมเลกุลข้างเคียงรบกวนกัน → $A$ ลดลงจากที่ควรจะเป็น</div>
+    <div class="bullet sub">3. <b>อุณหภูมิสูง</b> → red shift</div>
+    <div class="bullet sub">4. <b>ตัวทำละลายมีขั้ว</b> → red shift หรือ blue shift แล้วแต่ transition</div>
+    <div class="bullet sub">5. <b>Fluorescence</b> — บางสารเกิด fluorescence ทำให้ $A$ วัดได้ต่ำกว่าจริง</div>
+    <div class="section-sub">ความเบี่ยงเบนทางเครื่องมือ (Instrumental Deviation)</div>
+    <div class="bullet sub">1. <b>Polychromatic light</b> — Beer's law ระบุว่าต้องใช้ monochromatic → เกิด error</div>
+    <div class="bullet sub">2. <b>Slit กว้าง</b> — ยิ่งกว้าง ยิ่งได้แสงหลาย $\\lambda$ → $A$ น้อยลง</div>
+    <div class="bullet sub">3. <b>Stray light</b> — แสงจากที่อื่นรั่วเข้ามา → $A$ น้อยลง ผิดพลาดมากที่สุดที่ความเข้มข้นสูง</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">ส่วนประกอบเครื่อง UV-Vis Spectrophotometer</div>
+    <table>
+      <tr><th>ส่วน</th><th>รายละเอียด</th></tr>
+      <tr><td><b>1. แหล่งกำเนิดแสง</b></td><td>• <b>หลอด H₂/Deuterium</b> = UV: 185–375 nm<br>• <b>หลอด Tungsten (W)</b> = Visible+NIR: 320–2500 nm</td></tr>
+      <tr><td><b>2. Monochromator</b></td><td>• <b>Filter</b> = ใช้กับ colorimeter (ง่ายแต่ rough)<br>• <b>Prism</b> = หักเห — เลิกใช้แล้ว<br>• <b>Grating</b> (นิยมที่สุด): Transmission / Reflection (Diffraction) / Echelle</td></tr>
+      <tr><td><b>3. เซลล์ใส่สาร</b></td><td>• แก้ว = visible เท่านั้น (ดูดกลืน UV)<br>• Silica / Quartz = UV + visible (ใช้ได้ทั้งคู่)</td></tr>
+      <tr><td><b>4. Detector</b></td><td>• Photovoltaic cell = visible เท่านั้น<br>• Phototube = ปล่อย $e^-$ เมื่อแสงตกกระทบ<br>• <b>Photomultiplier</b> = $e^-$ ชน dynode → เพิ่มขึ้น, ใช้ได้ 290–900 nm<br>• Silicon diode = กระแสแปรผันตรงกับแสง<br>• <b>Photodiode Array (PDA)</b> = วัดหลาย $\\lambda$ พร้อมกัน</td></tr>
+      <tr><td><b>5. ระบบประมวลผล</b></td><td>แปลงสัญญาณไฟฟ้า → แสดงผล $A$ หรือ %$T$</td></tr>
+    </table>
+    <div class="section-sub">แบบของเครื่อง</div>
+    <div class="bullet sub">• <b>Single beam</b> = ลำแสงเดียว วัด sample และ blank แยกกัน</div>
+    <div class="bullet sub">• <b>Double beam</b> = แยกแสงเป็น 2 ลำ วัด sample vs reference พร้อมกัน → แม่นยำกว่า</div>
+    <div class="bullet sub">• <b>Dynode feedback system</b> = ความเร็วและความถูกต้องสูงมาก</div>
+    <div class="bullet sub">• <b>Diode array</b> = วัดได้ทุก $\\lambda$ พร้อมกัน ได้ spectrum ทั้งหมดในครั้งเดียว</div>
+    <div class="bullet sub">• <b>Optical fiber probe</b> = วัดได้แค่ visible</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">Q&A เน้นข้อสอบ <span class="tag-red">🔥 ออกแน่</span></div>
+    <div class="qa-box"><div class="qa-q">Q: เงื่อนไขการใช้ Beer's Law?</div><div class="qa-a">A: 1) แสง monochromatic &nbsp;2) สารละลายเจือจาง &nbsp;3) สารละลายเนื้อเดียวกัน</div></div>
+    <div class="qa-box"><div class="qa-q">Q: $n \rightarrow \\pi^*$ + polar solvent → shift แบบใด? ทำไม?</div><div class="qa-a">A: <b>Blue shift</b> — ตัวทำละลายมีขั้วเกิด H-bond กับ lone pair → stabilize ground state → ต้องใช้พลังงานมากขึ้น → $\\lambda$ สั้นลง</div></div>
+    <div class="qa-box"><div class="qa-q">Q: $\\pi \rightarrow \\pi^*$ + polar solvent → shift แบบใด? ทำไม?</div><div class="qa-a">A: <b>Red shift</b> — excited state มีขั้วมากกว่า ground state → ตัวทำละลายจับ excited state → stabilize excited state → พลังงานลด → $\\lambda$ ยาวขึ้น</div></div>
+    <div class="qa-box"><div class="qa-q">Q: conjugation เพิ่มขึ้น → ผล?</div><div class="qa-a">A: $\\lambda_{max}$ เพิ่มขึ้น (red shift) + $\varepsilon$ เพิ่มขึ้น (hyperchromic) เพราะ energy gap ระหว่าง ground–excited state ลดลง</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมเซลล์แก้วใช้กับ UV ไม่ได้?</div><div class="qa-a">A: เนื้อแก้วดูดกลืน UV เองทำให้ $P_0$ ที่แท้จริงลดลง → $A$ ที่วัดได้สูงกว่าจริง → ต้องใช้ Quartz หรือ Silica แทน</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Grating 3 แบบต่างกันอย่างไร?</div><div class="qa-a">A: 1) <b>Transmission grating</b> — ไม่ค่อยใช้แล้ว &nbsp;2) <b>Reflection/Diffraction grating</b> — สะท้อนแสงจากพื้นผิวที่เป็นร่อง (นิยมมากที่สุด) &nbsp;3) <b>Echelle grating</b> — ระยะห่างระหว่างร่องใหญ่มาก มุมรับแสงสูงมาก ความละเอียดสูง</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Photomultiplier ทำงานอย่างไร?</div><div class="qa-a">A: แสงตกกระทบ photocathode → ปล่อย $e^-$ → $e^-$ วิ่งชน dynode แต่ละตัว → ผลิต $e^-$ เพิ่มเป็นทวีคูณ → กระแสสุดท้ายขยายมากกว่าเดิมมาก → sensitivity สูง</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1: สารละลายมี $A = 0.450$ วัดด้วยเซลล์กว้าง 1.00 cm ความเข้มข้น $2.00 \times 10^{-4}$ mol/L จงหา $\varepsilon$</div>
+      <div class="worked-step">จาก $A = \varepsilon b c$</div>
+      <div class="worked-step">$\varepsilon = \dfrac{A}{bc} = \dfrac{0.450}{1.00 \times 2.00 \times 10^{-4}}$</div>
+      <div class="worked-ans">$\varepsilon = 2250 \text{ L·mol}^{-1}\text{·cm}^{-1}$</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: ถ้า $\varepsilon = 1500$, $b = 2.00$ cm ต้องการ $A = 0.600$ ต้องใช้ความเข้มข้นเท่าใด?</div>
+      <div class="worked-step">$c = \dfrac{A}{\varepsilon b} = \dfrac{0.600}{1500 \times 2.00}$</div>
+      <div class="worked-ans">$c = 2.00 \times 10^{-4}$ mol/L</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: $A = 0.300$ จงหา %Transmittance</div>
+      <div class="worked-step">$A = -\\log T \Rightarrow T = 10^{-A} = 10^{-0.300} = 0.501$</div>
+      <div class="worked-ans">%$T = 50.1\%$</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: สาร X ใน MeOH (polar) วัดได้ $\lambda_{max} = 340$ nm เมื่อเปลี่ยนเป็น hexane (nonpolar) $\lambda_{max}$ เปลี่ยนเป็น 360 nm บอก transition type และ shift</div>
+      <div class="worked-step">polar solvent → nonpolar: ถ้า $\lambda$ เพิ่ม (340→360) = red shift เมื่อเปลี่ยนไป nonpolar</div>
+      <div class="worked-step">polar solvent ทำให้ $\lambda$ สั้นลง → transition นี้เป็น $\pi \rightarrow \pi^*$ (polar solvent ทำ red shift แต่ nonpolar ทำ blue shift สำหรับ $n \rightarrow \pi^*$)</div>
+      <div class="worked-ans">$\pi \rightarrow \pi^*$ transition — polar solvent → red shift, nonpolar → blue shift</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 5: สาร A มี $\varepsilon = 10000$, สาร B มี $\varepsilon = 200$ ทั้งคู่ความเข้มข้น $10^{-4}$ M, $b = 1$ cm วัด A รวม = 1.020 ถ้า A แท้ของ A = 1.000 จงหา A ที่ stray light ทำให้เกิด error กี่ %?</div>
+      <div class="worked-step">A จริงของ A = $\varepsilon \times b \times c = 10000 \times 1 \times 10^{-4} = 1.000$</div>
+      <div class="worked-step">A ที่วัดได้ = 1.020 แต่จริงๆ = 1.000 → error = (1.020−1.000)/1.000 × 100%</div>
+      <div class="worked-ans">%error = 2.0% (เกิดจาก stray light หรือ background absorption)</div>
+    </div>
+  </div>
+
+  <div class="hl purple">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• $A = \varepsilon bc = -\\log T$ — $A$ แปรผันตรงกับ $c$ เฉพาะสารละลายเจือจาง</div>
+    <div class="bullet">• $n \rightarrow \\pi^*$ + polar = <b>Blue shift</b> / $\\pi \rightarrow \\pi^*$ + polar = <b>Red shift</b></div>
+    <div class="bullet">• Conjugation↑ → $\\lambda$↑ (Red shift) + $\varepsilon$↑ (Hyperchromic)</div>
+    <div class="bullet">• เซลล์แก้ว = visible เท่านั้น / Quartz = UV + visible</div>
+    <div class="bullet">• Grating นิยมที่สุด — Prism เลิกใช้แล้ว</div>
+    <div class="bullet">• Double beam ดีกว่า single beam เพราะวัด sample vs reference พร้อมกัน</div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: FLUORESCENCE ===== -->
+<div id="flu" class="content">
+
+  <div class="compare-grid">
+    <div class="ccard a">
+      <div class="ccard-title">💚 Fluorescence</div>
+      <div class="row">• $S_1 \rightarrow S_0$ (singlet → singlet)</div>
+      <div class="row">• เร็ว: $10^{-8}$ – $10^{-5}$ วินาที</div>
+      <div class="row">• หยุดทันทีที่ตัดแหล่งกระตุ้น</div>
+      <div class="row">• เกิดบ่อยกว่า ความเข้มสูงกว่า</div>
+      <div class="row">• เช่น สีย้อม, วิตามิน B, คลอโรฟิลล์</div>
+    </div>
+    <div class="ccard b">
+      <div class="ccard-title">💜 Phosphorescence</div>
+      <div class="row">• $T_1 \rightarrow S_0$ (triplet → singlet)</div>
+      <div class="row">• ช้า: $10^{-4}$ – $10$ วินาที</div>
+      <div class="row">• ยังปล่อยแสงหลังตัดแหล่งกระตุ้น</div>
+      <div class="row">• เกิดน้อยกว่า ความเข้มต่ำกว่า</div>
+      <div class="row">• เช่น สีเรืองแสงในที่มืด</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">ชนิดของการเปล่งแสง (Luminescence)</div>
+    <table>
+      <tr><th>แหล่งพลังงานกระตุ้น</th><th>ชื่อการเปล่งแสง</th></tr>
+      <tr><td>Photon (แสง)</td><td>Photoluminescence → แบ่งเป็น Fluorescence และ Phosphorescence</td></tr>
+      <tr><td>ปฏิกิริยาเคมี</td><td>Chemiluminescence (เช่น Bioluminescence — หิ่งห้อย)</td></tr>
+      <tr><td>อนุภาคที่มีพลังงานสูง</td><td>Radioluminescence</td></tr>
+      <tr><td>ความร้อน</td><td>Thermoluminescence</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">กระบวนการ Photoluminescence — Jablonski Diagram</div>
+    <div class="fblock green" style="padding:12px 16px;margin-bottom:12px">
+      <div class="flabel">Multiplicity</div>
+      $M = 2S + 1 \quad \Rightarrow \quad \text{Singlet (S): } M=1,\ \text{Triplet (T): } M=3$
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num" style="background:#1D9E75">1</div><div class="step-body"><b>Absorption</b> — ดูด photon: $S_0 \rightarrow S_1$ หรือ $S_2$ — เกิดเร็วมาก (~$10^{-15}$ s)</div></div>
+      <div class="step"><div class="step-num" style="background:#5DCAA5">2</div><div class="step-body"><b>Vibrational Relaxation</b> — สูญเสียพลังงานจากการสั่น ลงสู่ระดับ $v=0$ ของ $S_1$ → $\\lambda$ ของ emission ยาวกว่า $\\lambda$ ของ excitation (Stokes shift)</div></div>
+      <div class="step"><div class="step-num" style="background:#888780">IC</div><div class="step-body"><b>Internal Conversion (IC)</b> — $S_2 \rightarrow S_1$ โดยไม่ปล่อยแสง ส่งพลังงานเป็นความร้อน</div></div>
+      <div class="step"><div class="step-num" style="background:#1D9E75">F</div><div class="step-body"><b>Fluorescence</b> — $S_1 \rightarrow S_0$ ปล่อย photon ออกมา (เร็ว $10^{-8}$–$10^{-5}$ s)</div></div>
+      <div class="step"><div class="step-num" style="background:#7F77DD">ISC</div><div class="step-body"><b>Intersystem Crossing (ISC)</b> — $S_1 \rightarrow T_1$ spin กลับทิศ (forbidden transition) เกิดช้า → ถ้า ISC มาก = fluorescence น้อย</div></div>
+      <div class="step"><div class="step-num" style="background:#7F77DD">P</div><div class="step-body"><b>Phosphorescence</b> — $T_1 \rightarrow S_0$ ปล่อย photon (ช้ามาก $10^{-4}$–$10$ s)</div></div>
+      <div class="step"><div class="step-num" style="background:#888780">Q</div><div class="step-body"><b>External Conversion / Quenching</b> — ส่งพลังงานให้ตัวทำละลายหรือโมเลกุลอื่น ไม่ปล่อยแสง → ลดความเข้มของ fluorescence</div></div>
+    </div>
+    <div class="bullet" style="margin-top:10px">• <b>Stokes shift</b> = $\\lambda$ ของ emission &gt; $\\lambda$ ของ excitation เสมอ เพราะสูญเสียพลังงานจากการสั่นก่อน</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">Quantum Efficiency ($\Phi_F$)</div>
+    <div class="fblock green">
+      <div class="flabel">Quantum Efficiency / Quantum Yield</div>
+      $$\Phi_F = \frac{k_F}{k_{IC} + k_{ISC} + k_F + k_Q[Q]}$$
+    </div>
+    <table>
+      <tr><th>ตัวแปร</th><th>ความหมาย</th></tr>
+      <tr><td>$k_F$</td><td>อัตราคงที่ของ fluorescence</td></tr>
+      <tr><td>$k_{IC}$</td><td>อัตราคงที่ของ internal conversion</td></tr>
+      <tr><td>$k_{ISC}$</td><td>อัตราคงที่ของ intersystem crossing</td></tr>
+      <tr><td>$k_Q[Q]$</td><td>อัตราคงที่ของ quenching × ความเข้มข้น quencher</td></tr>
+    </table>
+    <div class="section-sub">เงื่อนไขที่ทำให้ $\Phi_F$ สูง</div>
+    <div class="bullet sub">1. $k_F$ มาก → $\\pi \rightarrow \\pi^*$ ให้ molar absorptivity มากกว่า $n \rightarrow \\pi^*$ ถึง 100–1000 เท่า</div>
+    <div class="bullet sub">2. $k_{ISC}$ น้อย → ISC เกิดน้อย = โมเลกุลไม่ "หนีไป" เป็น triplet state</div>
+    <div class="bullet sub">3. โครงสร้าง <b>rigid</b> (วงแหวน aromatic แข็งแรง) → ลดการสูญเสียพลังงานจากการหมุน/สั่น</div>
+    <div class="bullet sub">4. หมู่ที่เกาะวง benzene: หมู่ให้ $e^-$ → Φ↑ / หมู่ดึง $e^-$ → Φ↓</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">ตัวแปรที่มีผลต่อความเข้ม Fluorescence</div>
+    <table>
+      <tr><th>ตัวแปร</th><th>กลไก</th><th>ผล</th></tr>
+      <tr><td><b>อุณหภูมิ ↑</b></td><td>collision ระหว่างโมเลกุลมากขึ้น → quenching เพิ่ม</td><td>ความเข้ม ↓</td></tr>
+      <tr><td><b>ความหนืด ↑ / อุณหภูมิ ↓</b></td><td>collision น้อยลง → quenching ลด</td><td>ความเข้ม ↑</td></tr>
+      <tr><td><b>pH เปลี่ยน</b></td><td>เปลี่ยนโครงสร้างโมเลกุล → เปลี่ยนชนิด transition</td><td>ผลมาก</td></tr>
+      <tr><td><b>O₂ ในสารละลาย</b></td><td>เกิด oxidation กับสารที่ให้ fluorescence</td><td>ความเข้ม ↓</td></tr>
+      <tr><td><b>พันธะไฮโดรเจน</b></td><td>ลด $\Phi_F$ โดยทั่วไป</td><td>ความเข้ม ↓</td></tr>
+      <tr><td><b>ความเข้มข้นสูงเกิน</b></td><td>Self-quenching + Self-absorption</td><td>ความเข้ม ↓ (กราฟ nonlinear)</td></tr>
+      <tr><td><b>$n \rightarrow \\pi^*$ + polar</b></td><td>ดู solvent effect UV-Vis</td><td>$\\lambda$ ↓ (blue shift)</td></tr>
+      <tr><td><b>$\\pi \rightarrow \\pi^*$ + polar</b></td><td>ดู solvent effect UV-Vis</td><td>$\\lambda$ ↑ (red shift)</td></tr>
+    </table>
+    <div class="section-sub">Self-quenching vs Self-absorption</div>
+    <div class="bullet sub">• <b>Self-quenching</b> = ความเข้มข้นสูงมาก → โมเลกุลชนกัน → ส่งพลังงานให้กัน → ไม่ปล่อยแสง</div>
+    <div class="bullet sub">• <b>Self-absorption</b> = โมเลกุลดูดกลืนแสง fluorescence ที่ปล่อยออกมาเอง → ความเข้มลด</div>
+    <div class="bullet sub">• ทั้งสองอย่างทำให้กราฟ $I_F$ vs $c$ เบี่ยงเบนจากเส้นตรงเมื่อความเข้มข้นสูงเกินไป</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">Quenching vs Inner-Filter Effect</div>
+    <table>
+      <tr><th>ประเภท</th><th>กลไก</th><th>ผล</th></tr>
+      <tr><td><b>Static quenching</b></td><td>สารเจือปน (ground state) จับกับโมเลกุล → เกิด non-fluorescent complex</td><td>ลด $\Phi_F$</td></tr>
+      <tr><td><b>Dynamic quenching</b></td><td>สารเจือปนชนกับโมเลกุลใน excited state → ดึงพลังงานออก</td><td>ลด $\Phi_F$</td></tr>
+      <tr><td><b>Inner-filter ($I_a$)</b></td><td>สารตัวอย่างดูดกลืนแสงที่ใช้กระตุ้น → แสงไม่ถึงโมเลกุล</td><td>ลดความเข้มโดยตรง</td></tr>
+      <tr><td><b>Inner-filter ($I_b$)</b></td><td>สารตัวอย่างดูดกลืนแสง emission ก่อนถึง detector</td><td>ลดความเข้มโดยตรง</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">การวิเคราะห์หาปริมาณด้วย Fluorescence</div>
+    <div class="bullet">• <b>วิธีหาปริมาณโดยตรง</b> = วัด $I_F$ เปรียบเทียบกับ calibration curve มาตรฐาน</div>
+    <div class="bullet">• <b>วิธีหาปริมาณโดยอ้อม</b> = ใช้กับสารที่ไม่ให้ fluorescence เอง → ทำปฏิกิริยากับ reagent ที่ให้ fluorescence แล้วค่อยวัด</div>
+    <div class="bullet">• <b>วิธีทำให้เกิดการเปลี่ยนแปลงโมเลกุล</b> = derivatization → เปลี่ยนโครงสร้างให้ fluorescent ได้</div>
+    <div class="bullet">• <b>วิธีทำให้เกิดสารเชิงซ้อน</b> = สาร + metal ion → complex → fluorescence เพิ่มขึ้น</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">ส่วนประกอบเครื่อง Fluorescence Spectrophotometer</div>
+    <table>
+      <tr><th>ส่วน</th><th>รายละเอียด</th></tr>
+      <tr><td><b>แหล่งกำเนิดแสง</b></td><td>• <b>Xenon lamp</b> (250–700 nm) — นิยม เพราะ continuous spectrum<br>• <b>Mercury-arc lamp</b> — ใช้กับ filter เพราะแสงคงที่และเข้ม</td></tr>
+      <tr><td><b>Monochromator</b></td><td>• ใช้ <b>2 ตัว</b> เป็น grating วาง <b>90°</b> ระหว่างกัน<br>• ตัวแรก = เลือก excitation $\\lambda$ / ตัวที่สอง = เลือก emission $\\lambda$<br>• slit แคบ → resolution ↑ → แยกสเปกตรัมได้คมชัด</td></tr>
+      <tr><td><b>เซลล์</b></td><td>Quartz เพื่อให้ UV ผ่านได้</td></tr>
+      <tr><td><b>Detector</b></td><td>Photomultiplier tube 2 ตัว<br>• ตัวที่ 1: วัด fluorescence<br>• ตัวที่ 2: ทำ spectral correction</td></tr>
+    </table>
+    <div class="bullet" style="margin-top:8px">• <b>UV-Vis</b> ใช้ monochromator <b>1 ตัว</b> / <b>Fluorescence</b> ใช้ <b>2 ตัว วาง 90°</b></div>
+    <div class="bullet">• วาง 90° เพื่อไม่ให้แสงกระตุ้นตรงไปยัง detector โดยตรง</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">Q&A เน้นข้อสอบ <span class="tag-red">🔥 ออกแน่</span></div>
+    <div class="qa-box"><div class="qa-q">Q: Fluorescence vs Phosphorescence ต่างกันอย่างไร?</div><div class="qa-a">A: Flu = $S_1 \rightarrow S_0$ เร็ว ($10^{-8}$–$10^{-5}$ s) หยุดทันทีเมื่อตัดแสง / Phos = $T_1 \rightarrow S_0$ ช้า ($10^{-4}$–$10$ s) ผ่าน ISC → ยังปล่อยแสงต่อหลังตัดแสง</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ISC คืออะไร? เกี่ยวข้องกับอะไร?</div><div class="qa-a">A: $S_1 \rightarrow T_1$ โดย spin กลับทิศ (forbidden transition) เกิดช้า → นำไปสู่ <b>Phosphorescence</b> ถ้า ISC มาก → Fluorescence น้อยลง เพราะโมเลกุลแยกออกไปเป็น triplet state แทน</div></div>
+    <div class="qa-box"><div class="qa-q">Q: $\Phi_F$ สูงต้องเป็นอย่างไร?</div><div class="qa-a">A: $k_F$ มาก (transition แบบ $\\pi \rightarrow \\pi^*$) + $k_{ISC}$ น้อย + โครงสร้าง rigid + ไม่มี $e^-$-withdrawing group บน benzene</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม Fluorescence ต้องใช้ Monochromator 2 ตัว?</div><div class="qa-a">A: ตัวแรกเลือก excitation $\\lambda$ / ตัวที่สองเลือก emission $\\lambda$ โดยวาง 90° เพื่อป้องกันแสงกระตุ้นตกกระทบ detector โดยตรง — ถ้า UV-Vis ต้องการวัดเฉพาะ absorption จึงใช้แค่ 1 ตัว</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Self-quenching vs Self-absorption ต่างกันอย่างไร?</div><div class="qa-a">A: ทั้งคู่เกิดเมื่อความเข้มข้นสูงเกิน — Self-quenching: โมเลกุลในสถานะกระตุ้นชนกับโมเลกุลอื่น → ส่งพลังงานให้กัน ไม่ปล่อยแสง / Self-absorption: โมเลกุลดูดกลืนแสง emission ที่ตัวเองปล่อยออกมา</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title flu">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1: สาร A มี $\Phi_F = 0.80$, $k_F = 2.0 \times 10^8$ s⁻¹ จงหา $k_{IC} + k_{ISC} + k_Q[Q]$ (รวมทุก deactivation นอกจาก $k_F$)</div>
+      <div class="worked-step">\[ \Phi_F = \frac{k_F}{k_F + k_{others}} \Rightarrow 0.80 = \frac{2.0 \times 10^8}{2.0 \times 10^8 + k_{others}} \]</div>
+      <div class="worked-step">$k_{others} = 2.0\times10^8(1/0.80 - 1) = 2.0\times10^8 \times 0.25$</div>
+      <div class="worked-ans">$k_{others} = 5.0 \times 10^7$ s⁻¹</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: สาร B มี $\lambda_{excitation} = 350$ nm แต่ $\lambda_{emission} = 420$ nm อธิบาย Stokes shift และคำนวณผลต่างพลังงาน</div>
+      <div class="worked-step">Stokes shift = $\lambda_{em} - \lambda_{ex}$ = 420 − 350 = 70 nm</div>
+      <div class="worked-step">พลังงานสูญเสีย = $hc(1/\lambda_{ex} - 1/\lambda_{em})$ = สูญเสียไปกับ vibrational relaxation</div>
+      <div class="worked-ans">Stokes shift = 70 nm → พลังงาน emission ต่ำกว่า excitation เสมอ (ตาม Stokes law)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: เมื่ออุณหภูมิเพิ่มจาก 25°C เป็น 50°C ความเข้ม fluorescence ลด 30% อธิบายทำไม</div>
+      <div class="worked-step">อุณหภูมิ↑ → การชนระหว่างโมเลกุลมากขึ้น → External conversion / Dynamic quenching เพิ่ม</div>
+      <div class="worked-step">→ $k_Q[Q]$ เพิ่ม → ตัวส่วนใน $\Phi_F$ เพิ่ม → $\Phi_F$ ลด → ความเข้มลด 30%</div>
+      <div class="worked-ans">อุณหภูมิ↑ → quenching↑ → $\Phi_F$↓ → ความเข้ม fluorescence↓</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: ทำไม Fluorescence ถึงวัด emission ที่ 90° กับแสงกระตุ้น?</div>
+      <div class="worked-step">ถ้าวัดตรงแนวแสงกระตุ้น → แสงกระตุ้นที่ไม่ถูกดูดกลืนจะตรงไปยัง detector โดยตรง → background สูงมาก → sensitivity ต่ำ</div>
+      <div class="worked-step">วัดที่ 90° → แสงกระตุ้นไม่ถึง detector → วัดได้เฉพาะ fluorescence emission → S/N สูงกว่า UV-Vis มาก</div>
+      <div class="worked-ans">90° = ลด background จากแสงกระตุ้น → sensitivity สูงกว่า UV-Vis 100–1000 เท่า</div>
+    </div>
+  </div>
+      <div class="card">
+    <div class="card-title flu">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1: สาร A มี $\Phi_F = 0.80$, $k_F = 2.0 \times 10^8$ s⁻¹ จงหา $k_{others} = k_{IC} + k_{ISC} + k_Q[Q]$</div>
+      <div class="worked-step">\[ 0.80 = \frac{2.0 \times 10^8}{2.0 \times 10^8 + k_{others}} \Rightarrow k_{others} = 2.0\times10^8 \times \frac{1-0.80}{0.80} \]</div>
+      <div class="worked-ans">$k_{others} = 5.0 \times 10^7$ s⁻¹</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: $\lambda_{ex} = 350$ nm, $\lambda_{em} = 420$ nm จงหา Stokes shift และอธิบาย</div>
+      <div class="worked-step">Stokes shift = 420 − 350 = 70 nm</div>
+      <div class="worked-step">สาเหตุ: โมเลกุลสูญเสียพลังงานไปกับ vibrational relaxation ก่อน emit → $\lambda_{em}$ ยาวกว่า $\lambda_{ex}$ เสมอ</div>
+      <div class="worked-ans">Stokes shift = 70 nm</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: เปรียบ sensitivity: Fluorescence วัด quinine sulfate ได้ที่ $10^{-9}$ g/mL ส่วน UV-Vis วัดได้ที่ $10^{-6}$ g/mL Fluorescence sensitive กว่ากี่เท่า?</div>
+      <div class="worked-step">sensitive กว่า = $10^{-6} / 10^{-9}$</div>
+      <div class="worked-ans">Fluorescence sensitive กว่า UV-Vis <b>1000 เท่า</b> เพราะวัดที่ background ต่ำกว่า (90°)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: ถ้าเติม quencher [Q] = 0.01 M ทำให้ $\Phi_F$ ลดจาก 0.80 เป็น 0.50 จงหา $k_Q$ (กำหนด $k_F + k_{IC} + k_{ISC} = 3.0 \times 10^8$ s⁻¹)</div>
+      <div class="worked-step">$0.50 = k_F/(3.0\times10^8 + k_Q \times 0.01)$ และรู้ว่า $k_F = 0.80 \times 3.0\times10^8 / (1) = 2.4\times10^8$</div>
+      <div class="worked-step">$0.50 = 2.4\times10^8/(3.0\times10^8 + 0.01k_Q)$ → $3.0\times10^8 + 0.01k_Q = 4.8\times10^8$</div>
+      <div class="worked-ans">$k_Q = 1.8 \times 10^{10}$ L·mol⁻¹·s⁻¹</div>
+    </div>
+  </div>
+  <div class="hl green">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• Flu = เร็ว $S_1 \rightarrow S_0$ / Phos = ช้า $T_1 \rightarrow S_0$ ผ่าน ISC</div>
+    <div class="bullet">• อุณหภูมิ↑ → Flu↓ / ความหนืด↑ → Flu↑</div>
+    <div class="bullet">• ความเข้มข้นสูงเกิน → Self-quenching + Self-absorption → กราฟ nonlinear</div>
+    <div class="bullet">• Fluorescence ใช้ Monochromator 2 ตัว วาง 90° / UV-Vis ใช้ 1 ตัว</div>
+    <div class="bullet">• Stokes shift = $\\lambda_{emission}$ เสมอ &gt; $\\lambda_{excitation}$</div>
+  </div>
+</div>
+
+<!-- ===== TAB 3: CHROMATOGRAPHY ===== -->
+<div id="chrom" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Chromatography คืออะไร? <span class="tag-red">นิยามออกข้อสอบ!</span></div>
+    <div class="bullet">• <b>นิยาม:</b> เทคนิคการแยกโดยใช้ความแตกต่างของ<b>อัตราการเคลื่อนที่</b>ของแต่ละองค์ประกอบในของผสมบน<b>เฟสคงที่ (stationary phase)</b> ภายใต้การพาของ<b>เฟสเคลื่อนที่ (mobile phase)</b> ซึ่งได้ผลเป็น <b>chromatogram</b></div>
+    <div class="section-sub">ศัพท์สำคัญ</div>
+    <table>
+      <tr><th>คำศัพท์</th><th>ความหมาย</th></tr>
+      <tr><td><b>Stationary phase (SP)</b></td><td>เฟสคงที่ (ของแข็งหรือของเหลวเคลือบบนของแข็ง)</td></tr>
+      <tr><td><b>Mobile phase (MP)</b></td><td>เฟสเคลื่อนที่ (ก๊าซหรือของเหลว)</td></tr>
+      <tr><td><b>Elution</b></td><td>การนำสารออกจากคอลัมน์โดยใช้ eluent</td></tr>
+      <tr><td><b>Eluate</b></td><td>สารตัวอย่างที่ถูกชะออกมาจากคอลัมน์</td></tr>
+      <tr><td><b>Eluent</b></td><td>สารที่ใช้ชะสารตัวอย่างออกจากคอลัมน์</td></tr>
+      <tr><td><b>Solid support</b></td><td>ของแข็งที่ช่วยยึดเฟสคงที่ของเหลว เช่น SiO₂, graphite</td></tr>
+      <tr><td><b>$t_R$ (retention time)</b></td><td>เวลาที่สารใช้ผ่านคอลัมน์ทั้งหมด</td></tr>
+      <tr><td><b>$t_M$ / $t_0$ (dead time)</b></td><td>เวลาที่สารซึ่งไม่จับ SP ใช้ผ่านคอลัมน์ = เวลาของ MP เอง</td></tr>
+      <tr><td><b>$t'_R$ (adjusted)</b></td><td>$t'_R = t_R - t_M$ = เวลาที่สารอยู่กับ SP จริง ๆ</td></tr>
+      <tr><td><b>$K_D$ (Distribution coefficient)</b></td><td>ค่าจำเพาะของสาร ขึ้นกับชนิด SP, MP, และอุณหภูมิ — ยิ่งสูง ไหลช้า</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">การจำแนกประเภท Chromatography</div>
+    <table>
+      <tr><th>ประเภท</th><th>SP</th><th>MP</th><th>กลไก</th></tr>
+      <tr><td><b>Gas-liquid (GLC)</b></td><td>ของเหลวเคลือบบนของแข็ง</td><td>ก๊าซ</td><td>Partition</td></tr>
+      <tr><td><b>Gas-solid (GSC)</b></td><td>ของแข็ง</td><td>ก๊าซ</td><td>Adsorption</td></tr>
+      <tr><td><b>Liquid-liquid (LLC)</b></td><td>ของเหลวบน support</td><td>ของเหลว</td><td>Partition</td></tr>
+      <tr><td><b>Liquid-solid (LSC)</b></td><td>ของแข็ง</td><td>ของเหลว</td><td>Adsorption</td></tr>
+      <tr><td><b>Ion exchange</b></td><td>Ion exchange resin</td><td>ของเหลว</td><td>Ion exchange</td></tr>
+      <tr><td><b>Size exclusion</b></td><td>Polymer porous</td><td>ของเหลว</td><td>Partition/Sieving</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">สูตรสำคัญ — Retention & Separation</div>
+    <div class="fblock amber">
+      <div class="flabel">Retention Factor ($k'$) — วัดว่าสาร elute ช้าแค่ไหน</div>
+      $$k' = \frac{t_R - t_M}{t_M} = \frac{m_s}{m_m}$$
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">Linear Flow Velocity</div>
+      $$\\bar{u} = \frac{L}{t_R}$$
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">Selectivity Factor ($\\alpha \\geq 1$ เสมอ — คำนวณจากสารที่ออกช้า / เร็ว)</div>
+      $$\\alpha = \frac{K_B}{K_A} = \frac{k'_B}{k'_A} = \frac{t_r(B) - t_M}{t_r(A) - t_M}$$
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">Resolution ($R_s \\geq 1.5$ = แยกสมบูรณ์)</div>
+      $$R_s = \frac{2(t_2 - t_1)}{W_1 + W_2} = \frac{\\sqrt{N}}{4}\left(\frac{\\alpha - 1}{\\alpha}\right)\left(\frac{k'}{k'+1}\right)$$
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">ทฤษฎีเพลต (Plate Theory) <span class="tag-red">ออก 1 ข้อแน่นอน!</span></div>
+    <div class="bullet">• <b>คอลัมน์ดี</b> = $N$ <b>มาก</b> และ $H$ <b>น้อย</b></div>
+    <div class="fblock amber">
+      <div class="flabel">จำนวน Theoretical Plates (N) และ Plate Height (H)</div>
+      $$N = \frac{L}{H} = 16\left(\frac{t_R}{W_b}\right)^2 = 5.54\left(\frac{t_R}{W_h}\right)^2$$
+    </div>
+    <div class="bullet">• $W_b$ = ความกว้างฐานพีค = $4\\sigma$ &nbsp;|&nbsp; $W_h$ = ความกว้างที่ครึ่งความสูง = $2.354\\sigma$</div>
+    <div class="bullet">• $H = \\sigma^2 / L$ — ยิ่ง $H$ น้อย พีคยิ่งแคบ ประสิทธิภาพยิ่งดี</div>
+    <div class="section-sub">Peak Asymmetry Factor ($A_s = B/A$)</div>
+    <div class="bullet sub">• $A_s$ = 0.9–1.1 → <b>Gaussian peak</b> (ดีที่สุด)</div>
+    <div class="bullet sub">• $A_s$ &gt; 1.1 → <b>Tailing peak</b> — เกิดจาก SP (มี active sites มากเกิน)</div>
+    <div class="bullet sub">• $A_s$ &lt; 0.9 → <b>Fronting peak</b> — เกิดจาก MP (ฉีดสารมากเกินไปหรือ overloading)</div>
+    <div class="bullet" style="margin-top:8px">• Tailing peak → หา peak area ยาก, บ่งบอกว่าคอลัมน์และระบบการแยกไม่ดี</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Van Deemter Equation <span class="tag-red">ออกแน่!</span></div>
+    <div class="fblock amber">
+      <div class="flabel">Van Deemter Equation — อธิบายสาเหตุที่ทำให้ H เพิ่มขึ้น</div>
+      $$H = A + \frac{B}{u} + C_S u + C_M u$$
+    </div>
+    <table>
+      <tr><th>เทอม</th><th>ชื่อ</th><th>กลไก</th><th>วิธีลด H</th></tr>
+      <tr><td>$A$</td><td>Eddy Diffusion</td><td>สารเดินทางผ่าน packing ต่างทาง → ออกมาต่างเวลา</td><td>ลดขนาด packing ให้เล็กและสม่ำเสมอ</td></tr>
+      <tr><td>$B/u$</td><td>Longitudinal Diffusion</td><td>สารแพร่จาก $c$ สูง → ต่ำ ตามแนวคอลัมน์</td><td>เพิ่มอัตราการไหล $u$</td></tr>
+      <tr><td>$C_S u$</td><td>SP Mass Transfer</td><td>สารเคลื่อนที่เข้า-ออก SP ช้า ถ้า SP หนา</td><td>ทำ SP ให้บางลง</td></tr>
+      <tr><td>$C_M u$</td><td>MP Mass Transfer</td><td>สารไหลผ่านอนุภาค packing ต่างๆ ความเร็วต่างกัน</td><td>ลดขนาดอนุภาค / คอลัมน์เล็กลง</td></tr>
+    </table>
+    <div class="bullet" style="margin-top:8px">• ที่ $u$ ต่ำ: $B/u$ ครอบงำ (longitudinal diffusion สำคัญ) / ที่ $u$ สูง: $Cu$ ครอบงำ (mass transfer สำคัญ)</div>
+    <div class="bullet">• $u_{opt}$ = อัตราการไหลที่ $H$ น้อยที่สุด (ได้จากจุดต่ำสุดของกราฟ $H$ vs $u$)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&A เน้นข้อสอบ <span class="tag-red">🔥 ออกแน่</span></div>
+    <div class="qa-box"><div class="qa-q">Q: จงนิยาม Chromatography</div><div class="qa-a">A: เทคนิคการแยกโดยใช้ความแตกต่างของอัตราการเคลื่อนที่ของแต่ละองค์ประกอบในของผสมบนเฟสคงที่ ภายใต้การพาของเฟสเคลื่อนที่ ได้ผลเป็นโครมาโทแกรม</div></div>
+    <div class="qa-box"><div class="qa-q">Q: คอลัมน์ที่ดีควรมี $N$ และ $H$ อย่างไร?</div><div class="qa-a">A: $N$ <b>มาก</b> (เพลตมาก) และ $H$ <b>น้อย</b> (เพลตบาง) — $H = L/N$ ดังนั้นคอลัมน์ยาว $N$ มากกว่า แต่ $H$ ไม่จำเป็นต้องน้อยกว่า</div></div>
+    <div class="qa-box"><div class="qa-q">Q: $R_s < 1.5$ หมายความว่าอะไร? แก้ยังไง?</div><div class="qa-a">A: พีค 2 พีคยังไม่แยกสมบูรณ์ → ปรับ $N$ (เพิ่มความยาว/ลด packing size), $\\alpha$ (เปลี่ยน SP หรือ MP), หรือ $k'$ (ปรับอุณหภูมิหรือ MP composition)</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Tailing peak เกิดจากอะไร?</div><div class="qa-a">A: $A_s > 1.1$ เกิดจาก stationary phase มี active sites มากเกิน หรือ packing ไม่สม่ำเสมอ → ทำให้ peak area คำนวณยาก</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Van Deemter ที่ $u$ ต่ำ ควรลด $H$ ด้วยวิธีใด?</div><div class="qa-a">A: ที่ $u$ ต่ำ เทอม $B/u$ (longitudinal diffusion) ครอบงำ → ควรเพิ่มอัตราการไหล $u$ ขึ้น</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1: คอลัมน์ยาว 30 cm, $t_R = 15.0$ min, $W_b = 1.5$ min จงหา N และ H</div>
+      <div class="worked-step">\[ N = 16\left(\frac{t_R}{W_b}\right)^2 = 16\left(\frac{15.0}{1.5}\right)^2 = 16 \times 100 = 1600 \]</div>
+      <div class="worked-step">\[ H = \frac{L}{N} = \frac{30}{1600} = 0.01875 \text{ cm} \]</div>
+      <div class="worked-ans">N = 1600 plates, H = 0.01875 cm</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: สาร A: $t_R = 8.0$ min, สาร B: $t_R = 10.0$ min, $t_M = 1.0$ min, $W_1 = 1.2$ min, $W_2 = 1.4$ min จงหา $k'_A$, $k'_B$, $\alpha$ และ $R_s$</div>
+      <div class="worked-step">$k'_A = (8.0-1.0)/1.0 = 7.0$ &nbsp;&nbsp; $k'_B = (10.0-1.0)/1.0 = 9.0$</div>
+      <div class="worked-step">$\alpha = k'_B/k'_A = 9.0/7.0 = 1.29$</div>
+      <div class="worked-step">\[ R_s = \frac{2(10.0-8.0)}{1.2+1.4} = \frac{4.0}{2.6} = 1.54 \]</div>
+      <div class="worked-ans">$k'_A = 7.0$, $k'_B = 9.0$, $\alpha = 1.29$, $R_s = 1.54$ (แยกสมบูรณ์ เพราะ ≥ 1.5)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: $t_R = 12.0$ min, $W_h = 0.80$ min จงหา N</div>
+      <div class="worked-step">\[ N = 5.54\left(\frac{t_R}{W_h}\right)^2 = 5.54\left(\frac{12.0}{0.80}\right)^2 = 5.54 \times 225 \]</div>
+      <div class="worked-ans">N = 1247 plates</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: ต้องการ $R_s = 2.0$ จาก $R_s = 1.0$ โดยเพิ่ม N อย่างเดียว ต้องเพิ่ม N กี่เท่า? และต้องยืดคอลัมน์กี่เท่า?</div>
+      <div class="worked-step">จาก $R_s \propto \sqrt{N}$ → ถ้า $R_s$ เพิ่ม 2 เท่า → N ต้องเพิ่ม $2^2 = 4$ เท่า</div>
+      <div class="worked-step">และเนื่องจาก $N \propto L$ → ต้องยืดคอลัมน์ 4 เท่าด้วย</div>
+      <div class="worked-ans">เพิ่ม N และ L อีก 4 เท่า</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 5 (Peak asymmetry): พีคมี A = 0.8 cm, B = 1.2 cm (วัดที่ 10% ของความสูง) จงหา $A_s$ และระบุว่าเป็น peak แบบใด</div>
+      <div class="worked-step">$A_s = B/A = 1.2/0.8 = 1.5$</div>
+      <div class="worked-ans">$A_s = 1.5 > 1.1$ → Tailing peak (ปัญหาจาก SP)</div>
+    </div>
+  </div>
+
+<!-- ===== TAB 4: GC ===== -->
+</div>
+
+<div id="gc" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Gas Chromatography (GC) คืออะไร?</div>
+    <div class="bullet">• เทคนิคที่ต้องเปลี่ยนสถานะสารให้เป็น<b>แก๊ส</b>ก่อน แล้วพา MP (แก๊ส) ผ่านคอลัมน์ที่มี SP</div>
+    <div class="bullet">• ใช้กับสารที่ระเหยได้ (boiling point &lt; 400°C) เท่านั้น</div>
+    <div class="compare-grid" style="margin-top:12px">
+      <div class="ccard c">
+        <div class="ccard-title">GLC (Gas-Liquid)</div>
+        <div class="row">• SP = ของเหลวเคลือบบนของแข็ง</div>
+        <div class="row">• กลไก = Partition ระหว่าง gas–liquid</div>
+        <div class="row">• ใช้แยกสารได้หลากหลาย (นิยมกว่า)</div>
+      </div>
+      <div class="ccard d">
+        <div class="ccard-title">GSC (Gas-Solid)</div>
+        <div class="row">• SP = ของแข็ง</div>
+        <div class="row">• กลไก = Adsorption</div>
+        <div class="row">• ใช้แยกสารโมเลกุลเล็ก เช่น แก๊ส</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">ส่วนประกอบเครื่อง GC</div>
+    <div class="section-sub">1. แก๊สพา (Carrier Gas)</div>
+    <div class="bullet sub">• ต้องไม่ทำปฏิกิริยากับสารตัวอย่าง, การแพร่น้อย, น้ำหนักโมเลกุลต่ำ, บริสุทธิ์สูง</div>
+    <div class="bullet sub">• ควรผ่าน <b>molecular sieve (trap)</b> ก่อนเพื่อกำจัดความชื้น</div>
+    <div class="bullet sub">• ตัวอย่าง: He (sensitivity ดีที่สุดกับ TCD), N₂, H₂, Ar</div>
+    <div class="section-sub">2. ส่วนฉีดสาร (Injector)</div>
+    <div class="bullet sub">• อุณหภูมิต้อง<b>น้อยกว่าอุณหภูมิสูงสุดที่ SP ทนได้</b> เพื่อไม่ให้ SP สลายตัว</div>
+    <div class="bullet sub">• อุณหภูมิต้องสูงพอให้สารระเหยทันที (biasanya 50°C เหนือ bp ของสาร)</div>
+    <div class="section-sub">3. คอลัมน์ (วางในตู้อบ)</div>
+    <table>
+      <tr><th>ชนิด</th><th>ขนาด</th><th>วัสดุ</th><th>หมายเหตุ</th></tr>
+      <tr><td><b>Capillary</b></td><td>2–50 m, ID 0.1–0.75 mm</td><td>ไม่มีสนิม, แก้ว, silica fused, Teflon</td><td>นิยมที่สุด — WCOT (Wall-Coated Open Tubular)</td></tr>
+      <tr><td><b>Packed</b></td><td>2–3 m</td><td>สแตนเลส, แก้ว</td><td>มีของแข็งบรรจุภายใน</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Stationary Phase ใน GC <span class="tag-red">ข้อสอบให้ระบุว่า SP แบบไหน!</span></div>
+    <div class="section-sub">Solid Phase</div>
+    <div class="bullet sub">• ใช้แยกสารโมเลกุลเล็ก เช่น ก๊าซ</div>
+    <div class="section-sub">Liquid Phase — แบ่งตามขั้ว</div>
+    <table>
+      <tr><th>ขั้ว</th><th>ตัวอย่าง SP</th><th>ช่วงอุณหภูมิ</th><th>แยกตาม</th></tr>
+      <tr><td><b>ไม่มีขั้ว</b></td><td>100% dimethylpolysiloxane<br>dimethylphenylpolysiloxane</td><td>–60 ถึง 325°C</td><td>Boiling point (volatility)</td></tr>
+      <tr><td><b>สารมัธยันต์</b></td><td>cyanopropylphenyl polysiloxane<br>50% phenyl methylpolysiloxane</td><td>–20 ถึง 280°C</td><td>Boiling point + ขั้ว</td></tr>
+      <tr><td><b>มีขั้ว</b></td><td>Polyethylene glycol (PEG / Carbowax)<br>polyethyleneglycol-TPA modified</td><td>60 ถึง 220°C</td><td>Boiling point + ความแรงพันธะมีขั้ว</td></tr>
+    </table>
+    <div class="bullet" style="margin-top:8px">• Polymer liquid phase: Siloxane, Arylene, PEG</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">GC Detectors <span class="tag-red">ออกข้อสอบ!</span></div>
+    <table>
+      <tr><th>Detector</th><th>หลักการ</th><th>ใช้กับ</th><th>Detection limit</th></tr>
+      <tr><td><b>FID</b></td><td>เผาสารใน H₂/Air → ผลิต $e^-$ และ ion → วัดกระแส</td><td>Hydrocarbons (selective)</td><td>0.2 pg/s</td></tr>
+      <tr><td><b>TCD</b></td><td>วัดการเปลี่ยนแปลงการนำความร้อนของ gas</td><td>Universal (ทุกสาร)</td><td>500 pg/mL</td></tr>
+      <tr><td><b>ECD</b></td><td>$^{63}$Ni ปล่อย $\\beta$ ray → สร้าง $e^-$ → halogen จับ $e^-$ → วัดการลดลงของ $e^-$</td><td>Halogenated compounds</td><td>5 fg/s</td></tr>
+      <tr><td><b>NPD</b></td><td>Flame + alkali bead → ionize N, P เฉพาะ</td><td>N, P compounds</td><td>0.1 pg/s (P)</td></tr>
+      <tr><td><b>MSD (Mass Spec)</b></td><td>แตก molecule → วัด $m/z$</td><td>Universal + selective</td><td>0.25–100 pg</td></tr>
+      <tr><td><b>FPD</b></td><td>เผา → วัด emission ที่ specific $\\lambda$</td><td>S, P compounds</td><td>10–100 pg (S)</td></tr>
+    </table>
+    <div class="section-sub">FID — อธิบายหลักการ (ข้อสอบ!)</div>
+    <div class="bullet sub">• FID = <b>Flame Ionization Detector</b></div>
+    <div class="bullet sub">• ชื่อมีคำว่า "ionization" → มี $e^-$ เกี่ยวข้อง</div>
+    <div class="bullet sub">• เมื่อสารไฮโดรคาร์บอนเข้มข้นสูงถูกเผาในเปลวไฟ H₂/Air → ผลิต ion และ $e^-$ ออกมา</div>
+    <div class="bullet sub">• ยิ่งความเข้มข้นสูง → สัญญาณ (กระแส) ยิ่งมาก</div>
+    <div class="bullet sub">• <b>Selective</b> กับ hydrocarbons เท่านั้น — ไม่ตอบสนองต่อ H₂O, CO₂, SO₂</div>
+    <div class="section-sub">ECD — หลักการ</div>
+    <div class="bullet sub">• $^{63}$Ni เป็น radioactive source ปล่อย $\\beta$ ray ($e^-$ พลังงานสูง)</div>
+    <div class="bullet sub">• $e^-$ จาก $\\beta$ ray ชน carrier gas → ผลิต $e^-$ อิสระ → วัดได้เป็น baseline current</div>
+    <div class="bullet sub">• เมื่อ halogenated compound เข้ามา → halogen จับ $e^-$ → current ลดลง → peak ปรากฏ</div>
+    <div class="bullet sub">• ยิ่งมี halogen มาก ยิ่ง sensitive</div>
+    <div class="section-sub">TCD — หลักการ</div>
+    <div class="bullet sub">• วัดการเปลี่ยนแปลงการนำความร้อน (thermal conductivity) ของ gas ที่ออกจากคอลัมน์</div>
+    <div class="bullet sub">• <b>Universal detector</b> — ตรวจวัดได้ทุกสาร (รวม H₂O, CO₂)</div>
+    <div class="bullet sub">• sensitivity ต่ำกว่า FID และ ECD</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Burners & Type of Flame</div>
+    <div class="bullet">• Burner นิยมใช้ <b>Laminar Flow Burner</b> เพราะควบคุมอุณหภูมิได้ดีกว่า</div>
+    <table>
+      <tr><th>ชนิด Flame</th><th>อุณหภูมิ</th><th>หมายเหตุ</th></tr>
+      <tr><td>Acetylene-air</td><td>~2300°C</td><td>นิยมที่สุดในการวิเคราะห์ทั่วไป</td></tr>
+      <tr><td>Acetylene-oxygen</td><td>~3100°C</td><td><b>ร้อนที่สุด</b> — ใช้กับธาตุที่ต้องการอุณหภูมิสูง</td></tr>
+      <tr><td>Acetylene-N₂O</td><td>~2900°C</td><td>ใช้กับ refractory elements เช่น Al, Ti</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&A เน้นข้อสอบ <span class="tag-red">🔥 ออกแน่</span></div>
+    <div class="qa-box"><div class="qa-q">Q: อธิบายหลักการทำงานของ FID</div><div class="qa-a">A: FID = Flame Ionization Detector ชื่อมี ionization → $e^-$ เกี่ยวข้อง เมื่อ HC เข้มข้นสูงถูกเผาในเปลวไฟ H₂/Air → ผลิต ion + $e^-$ → วัดกระแส ยิ่งเข้มข้นมาก สัญญาณยิ่งมาก Selective กับ HC เท่านั้น</div></div>
+    <div class="qa-box"><div class="qa-q">Q: SP ไม่มีขั้ว vs มีขั้ว ดูจากอะไร? แยกตามอะไร?</div><div class="qa-a">A: ไม่มีขั้ว = dimethylpolysiloxane → แยกตาม <b>boiling point</b> / มีขั้ว = PEG → แยกตาม bp + <b>ความแรงพันธะมีขั้ว</b> / cyanopropyl, phenyl = สารมัธยันต์</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ECD ใช้กับสารอะไร? ทำไม?</div><div class="qa-a">A: <b>Halogenated compounds</b> — เพราะ $^{63}$Ni ปล่อย $\\beta$ ray สร้าง $e^-$ อิสระ เมื่อ halogen (มี electronegativity สูง) เข้ามาจับ $e^-$ → current ลด → วัดการลดลงนั้น sensitivity ดีมาก (fg range)</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมต้องผ่านแก๊สพาผ่าน molecular sieve?</div><div class="qa-a">A: เพื่อกำจัดความชื้นและ impurities ออกจากแก๊สพา ซึ่งอาจรบกวน detector หรือทำให้ SP เสื่อมสภาพ</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Capillary column vs Packed column ต่างกันอย่างไร?</div><div class="qa-a">A: Capillary = ยาว 2–50 m, ผนังเคลือบ SP → N สูงกว่า resolution ดีกว่า แต่ sample load น้อย / Packed = ยาว 2–3 m, บรรจุ packing ภายใน → N น้อยกว่า แต่ใส่ sample ได้มากกว่า</div></div>
+  </div>
+
+    <div class="card">
+    <div class="card-title chrom">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1: GC แยกสาร X (bp 78°C) และสาร Y (bp 120°C) บน SP ไม่มีขั้ว สารใดออกก่อน?</div>
+      <div class="worked-step">SP ไม่มีขั้ว → แยกตาม boiling point → bp ต่ำ = ระเหยง่าย = ออกก่อน</div>
+      <div class="worked-ans">สาร X (bp 78°C) ออกก่อน</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: ใช้ FID วัด ethanol ได้ peak area = 45,200 counts และ n-propanol (IS) peak area = 38,600 counts จงหา ratio สำหรับ calibration</div>
+      <div class="worked-step">ratio = $A_{ethanol}/A_{IS}$ = 45200/38600</div>
+      <div class="worked-ans">ratio = 1.171</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: Calibration curve ของ GC-FID ได้ y = 0.0596x (ratio vs %ethanol) ถ้า sample มี ratio = 0.894 จงหา %ethanol</div>
+      <div class="worked-step">0.894 = 0.0596 × x → x = 0.894/0.0596</div>
+      <div class="worked-ans">%ethanol = 15.0% v/v</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: ECD ตรวจจับ chlorpyrifos (organochlorine pesticide) ได้ดีกว่า FID เพราะอะไร?</div>
+      <div class="worked-step">Chlorpyrifos มี Cl หลายอะตอม → ECD จับ Cl (halogen) ได้ดีมาก → sensitivity ระดับ fg/s</div>
+      <div class="worked-step">FID ไม่ selective กับ halogen → background สูง → LOD แย่กว่า ECD มาก</div>
+      <div class="worked-ans">ECD selective และ sensitive กว่า FID สำหรับ halogenated compounds</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 5: ถ้า Van Deemter ให้ H = 0.10 + 2.0/u + 0.050u mm จงหา u ที่ให้ H ต่ำสุด (u_opt)</div>
+      <div class="worked-step">dH/du = 0 → $-B/u^2 + C = 0$ → $u_{opt} = \sqrt{B/C} = \sqrt{2.0/0.050}$</div>
+      <div class="worked-ans">$u_{opt} = \sqrt{40} \approx 6.3$ cm/s</div>
+    </div>
+  </div>
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• FID = เผา → $e^-$ → กระแส (HC) / TCD = ความร้อน (universal) / ECD = $e^-$ จาก $^{63}$Ni (halogen)</div>
+    <div class="bullet">• SP ไม่มีขั้ว = dimethylpolysiloxane / SP มีขั้ว = PEG / Capillary ยาว 2–50 m (WCOT)</div>
+    <div class="bullet">• Acetylene-oxygen = ร้อนที่สุด / Acetylene-air = นิยมที่สุด / Laminar Flow Burner = ควบคุมได้ดี</div>
+  </div>
+</div>
+
+<!-- ===== TAB 5: HPLC ===== -->
+<div id="hplc" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Liquid Chromatography (LC) & HPLC</div>
+    <div class="bullet">• <b>LC</b> = MP เป็นของเหลว ใช้กับสารที่ระเหยได้ยากหรือ thermally labile</div>
+    <div class="bullet">• <b>Classical LC</b> = ไหลด้วยแรงโน้มถ่วง ช้า / <b>HPLC</b> = ใช้ high pressure pump ดัน MP ผ่าน packing ขนาดเล็ก → เร็วและ resolution สูง</div>
+    <div class="compare-grid" style="margin-top:12px">
+      <div class="ccard c">
+        <div class="ccard-title">Normal Phase</div>
+        <div class="row">• <b>SP = มีขั้วสูง</b> (silica, alumina)</div>
+        <div class="row">• <b>MP = ไม่มีขั้ว</b> (hexane, DCM)</div>
+        <div class="row">• สารไม่มีขั้วออกก่อน</div>
+        <div class="row">• ใช้น้อยกว่า reversed phase</div>
+      </div>
+      <div class="ccard d">
+        <div class="ccard-title">Reversed Phase (นิยมมากกว่า)</div>
+        <div class="row">• <b>SP = ไม่มีขั้ว</b> (C18, C8)</div>
+        <div class="row">• <b>MP = มีขั้ว</b> (MeOH/water, ACN/water)</div>
+        <div class="row">• สารมีขั้วออกก่อน</div>
+        <div class="row">• นิยมมากที่สุดในปัจจุบัน</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">กลไกการแยก</div>
+    <table>
+      <tr><th>ประเภท</th><th>กลไก</th><th>SP</th></tr>
+      <tr><td><b>Partition (Liquid-Liquid)</b></td><td>ของเหลว SP เกาะ solid support แน่น — Normal / Reversed phase</td><td>C18, C8, silica</td></tr>
+      <tr><td><b>Adsorption (Liquid-Solid)</b></td><td>SP มีขั้วสูง เกิดพันธะ H กับสาร</td><td>Silica, alumina</td></tr>
+      <tr><td><b>Ion Exchange</b></td><td>แลกเปลี่ยน ion กับ resin</td><td>Ion exchange resin</td></tr>
+      <tr><td><b>Size Exclusion</b></td><td>แยกตามขนาดโมเลกุล — ใหญ่ออกก่อน</td><td>Porous polymer</td></tr>
+      <tr><td><b>Affinity</b></td><td>จับกับ ligand จำเพาะ เช่น antibody–antigen</td><td>Specific ligand</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">ส่วนประกอบเครื่อง HPLC</div>
+    <table>
+      <tr><th>ส่วน</th><th>รายละเอียด</th></tr>
+      <tr><td><b>1. Reservoir</b></td><td>ภาชนะบรรจุ MP ไล่อากาศด้วย <b>degasser</b> หรือ purge ด้วยแก๊สเฉื่อย (He, N₂) — 2 mode:<br>• <b>Isocratic</b> = ใช้ MP composition เดียวตลอด (ง่าย ใช้กับสารที่ $k'$ ใกล้กัน)<br>• <b>Gradient elution</b> = เปลี่ยน MP composition ระหว่างการวิเคราะห์ (ดีกับสารที่ $k'$ ต่างกันมาก)</td></tr>
+      <tr><td><b>2. Pump</b></td><td>ปั๊มลูกสูบแบบ reciprocating — ควบคุมอัตราการไหลด้วยความเร็วลูกสูบ ต้องทนแรงดันสูง (up to 6000 psi)</td></tr>
+      <tr><td><b>3. Injector</b></td><td><b>Microsampling valve</b> — ป้องกัน MP คั่งกับ sample — ฉีดได้ขณะ MP ไหลอยู่</td></tr>
+      <tr><td><b>4. คอลัมน์</b></td><td>มี <b>Guard column</b> ต่อก่อนคอลัมน์หลักเพื่อกรองอนุภาคและสารปนเปื้อน ยืดอายุคอลัมน์หลัก</td></tr>
+      <tr><td><b>5. Detector</b></td><td>ดูตารางด้านล่าง</td></tr>
+    </table>
+    <div class="section-sub">Detector ใน HPLC</div>
+    <table>
+      <tr><th>Detector</th><th>หลักการ</th><th>ประเภท</th></tr>
+      <tr><td><b>UV-Vis fixed $\\lambda$</b></td><td>วัดที่ $\\lambda$ เดียวที่ตั้งไว้</td><td>Selective</td></tr>
+      <tr><td><b>UV-Vis variable $\\lambda$</b></td><td>ปรับ $\\lambda$ ได้แต่วัดทีละ $\\lambda$</td><td>Selective</td></tr>
+      <tr><td><b>PDA (Photodiode Array)</b></td><td>วัดได้หลาย $\\lambda$ พร้อมกัน → ได้ spectrum เต็ม</td><td>Selective</td></tr>
+      <tr><td><b>Fluorescence</b></td><td>วัด emission หลัง excitation</td><td>Selective (sensitive มาก)</td></tr>
+      <tr><td><b>Refractive Index (RI)</b></td><td>วัดการเปลี่ยนแปลง refractive index ของ MP</td><td>General (bulk property)</td></tr>
+      <tr><td><b>MS</b></td><td>วัด $m/z$ ของ fragment</td><td>Universal + selective</td></tr>
+    </table>
+    <div class="bullet" style="margin-top:8px">• Signal/Noise ควร &gt; 3 สำหรับการตรวจวัด</div>
+    <div class="bullet">• <b>Selective</b> = วัดเฉพาะ solute / <b>General (bulk)</b> = วัด MP + solute รวมกัน → ไม่สามารถใช้กับ gradient elution ได้</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&A เน้นข้อสอบ <span class="tag-red">🔥 ออกแน่</span></div>
+    <div class="qa-box"><div class="qa-q">Q: Normal phase vs Reversed phase ต่างกันอย่างไร?</div><div class="qa-a">A: Normal = SP มีขั้ว MP ไม่มีขั้ว สารไม่มีขั้วออกก่อน / Reversed = SP ไม่มีขั้ว MP มีขั้ว สารมีขั้วออกก่อน — Reversed phase นิยมมากกว่าเพราะใช้ aqueous MP ได้</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Isocratic vs Gradient elution ต่างกันอย่างไร?</div><div class="qa-a">A: Isocratic = MP เดียวตลอด (ง่ายกว่า ใช้เมื่อ $k'$ ของสารใกล้กัน) / Gradient = เปลี่ยน MP composition ระหว่างรัน (ดีเมื่อสารมี $k'$ ต่างกันมาก หรือ sample ซับซ้อน)</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม RI detector ถึงใช้กับ gradient elution ไม่ได้?</div><div class="qa-a">A: RI detector วัด bulk property ของ MP รวมกับ solute เมื่อ MP เปลี่ยน composition → RI ของ MP เองเปลี่ยน → baseline drift → วัดไม่ได้</div></div>
+    <div class="qa-box"><div class="qa-q">Q: PDA ดีกว่า Fixed $\\lambda$ detector อย่างไร?</div><div class="qa-a">A: PDA วัดได้หลาย $\\lambda$ พร้อมกัน → ได้ full spectrum ของแต่ละ peak → ยืนยัน purity ของ peak ได้ / Fixed วัดได้แค่ $\\lambda$ เดียวที่ตั้งไว้</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Guard column มีหน้าที่อะไร? สำคัญอย่างไร?</div><div class="qa-a">A: กรองอนุภาคและสารปนเปื้อนก่อนเข้าคอลัมน์หลัก → ยืดอายุคอลัมน์หลักซึ่งราคาแพง — ต้องเปลี่ยน guard column บ่อยกว่าคอลัมน์หลัก</div></div>
+  </div>
+
+    <div class="card">
+    <div class="card-title chrom">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1: HPLC แยก paracetamol (มีขั้ว) และ caffeine (มีขั้วน้อย) บน C18 ด้วย MeOH:H₂O 50:50 สารใดออกก่อน?</div>
+      <div class="worked-step">Reversed phase: SP = C18 (ไม่มีขั้ว) → สารมีขั้วมากกว่า จับ C18 ได้น้อยกว่า → ออกก่อน</div>
+      <div class="worked-ans">Paracetamol (มีขั้วมากกว่า) ออกก่อน caffeine</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: $t_R$(paracetamol) = 5.2 min, $t_M$ = 1.0 min จงหา $k'$</div>
+      <div class="worked-step">\[ k' = \frac{t_R - t_M}{t_M} = \frac{5.2 - 1.0}{1.0} = 4.2 \]</div>
+      <div class="worked-ans">$k' = 4.2$ (อยู่ในช่วง 2–10 = ดี)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: ปัจจุบันใช้ MeOH:H₂O = 50:50 ได้ $k' = 4.2$ ถ้าเปลี่ยนเป็น 30:70 $k'$ จะเป็นอย่างไร?</div>
+      <div class="worked-step">MeOH ลด → MP มีขั้วมากขึ้น → สารมีขั้วออกช้าลง → $k'$ เพิ่มขึ้น</div>
+      <div class="worked-ans">$k'$ เพิ่มขึ้น (สาร retain บน C18 นานขึ้น → $t_R$ เพิ่ม)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: Calibration curve ของ paracetamol: peak area = 5000 × c (µg/mL) ถ้า sample 0.020 g ละลายใน 25 mL แล้ววัด peak area = 38,500 จงหา mg paracetamol/tablet (tablet หนัก 0.625 g)</div>
+      <div class="worked-step">c = 38500/5000 = 7.70 µg/mL = 0.00770 mg/mL</div>
+      <div class="worked-step">mg ใน 25 mL = 0.00770 × 25 = 0.1925 mg (มาจาก 0.020 g tablet)</div>
+      <div class="worked-step">mg/tablet = 0.1925 × (0.625/0.020)</div>
+      <div class="worked-ans">≈ 6.02 mg? → คำนวณ scale up: mg/tablet = 0.1925/0.020 × 0.625 × 1000 = <b>601.6 mg/tablet</b></div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 5: เหตุใด HPLC จึงเหมาะกว่า GC สำหรับการวิเคราะห์ยา เช่น paracetamol?</div>
+      <div class="worked-step">GC: สารต้องระเหยได้และทนความร้อน → paracetamol (mp 169°C) จะสลายตัวที่อุณหภูมิสูง</div>
+      <div class="worked-step">HPLC: ใช้ liquid MP อุณหภูมิห้อง → สารไม่สลาย → วิเคราะห์ยาได้โดยตรง</div>
+      <div class="worked-ans">HPLC เหมาะกว่าเพราะ paracetamol thermally labile / ระเหยยาก</div>
+    </div>
+  </div>
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• Normal = SP มีขั้ว / Reversed = SP ไม่มีขั้ว (C18) + MP มีขั้ว (นิยมมากกว่า)</div>
+    <div class="bullet">• Gradient elution: ดีกับสารที่ $k'$ ต่างกันมาก / Isocratic: ง่ายกว่า ใช้ MP เดียว</div>
+    <div class="bullet">• RI detector ใช้กับ gradient ไม่ได้ (bulk property)</div>
+    <div class="bullet">• PDA = วัดหลาย $\\lambda$ พร้อมกัน ดีที่สุดใน UV-Vis detectors</div>
+    <div class="bullet">• Guard column = ปกป้องคอลัมน์หลัก</div>
+  </div>
+</div>
+
+<!-- ===== TAB 6: AAS & AES ===== -->
+<div id="aas" class="content">
+
+  <div class="compare-grid">
+    <div class="ccard c">
+      <div class="ccard-title">🔴 AAS (Atomic Absorption)</div>
+      <div class="row">• วัด<b>การดูดกลืนแสง</b>ของอะตอม</div>
+      <div class="row">• ใช้ความร้อน → atomize เป็นอะตอมเสรี</div>
+      <div class="row">• ใช้ได้กับ 99.98% ของธาตุทั้งหมด</div>
+      <div class="row">• Beer's Law ใช้ได้ ($A$ vs $c$)</div>
+      <div class="row">• ต้องมี HCL เป็น light source</div>
+      <div class="row">• มีความแม่น เที่ยง sensitivity สูง</div>
+    </div>
+    <div class="ccard d">
+      <div class="ccard-title">🟠 AES (Atomic Emission)</div>
+      <div class="row">• วัด<b>การคายพลังงาน</b>ของอะตอม</div>
+      <div class="row">• ใช้ความร้อน → excite → คายพลังงาน</div>
+      <div class="row">• ใช้ได้เฉพาะอะตอมใน excited state</div>
+      <div class="row">• Beer's Law ใช้ไม่ได้ ($I$ vs $c$)</div>
+      <div class="row">• ไม่ต้องมี light source</div>
+      <div class="row">• Block diagram คล้าย AAS แต่ขาด light source</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title aas">หลักการ AAS</div>
+    <div class="bullet">• วิเคราะห์ได้เฉพาะ<b>อะตอมโลหะ</b> — ทำได้ทั้งเชิงคุณภาพและปริมาณ แต่ปริมาณวิเคราะห์ดีกว่า</div>
+    <div class="bullet">• แต่ละธาตุมีระดับพลังงานจำเพาะ → ความยาวคลื่นแสงที่ดูดกลืนต่างกัน → ใช้ระบุธาตุได้</div>
+    <div class="bullet">• ทำให้ธาตุเป็น<b>อะตอมเสรี (free atom)</b> โดยให้ความร้อน — อุณหภูมิพอเหมาะ ถ้าสูงเกินจะเกิด ionization → error</div>
+    <div class="bullet">• $\Delta E$ สูง → กระตุ้นยาก ต้องการอุณหภูมิสูง / $\Delta E$ ต่ำ → กระตุ้นง่าย</div>
+    <div class="bullet">• ค่า $A$ แปรผันตรงกับความเข้มข้น → ได้กราฟเส้นตรง (Beer's law)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title aas">Boltzmann Equation (AES)</div>
+    <div class="fblock coral">
+      <div class="flabel">Boltzmann Equation — บอกสัดส่วนอะตอมใน excited state</div>
+      $$\frac{N_j}{N_0} = \frac{g_j}{g_0} \\cdot e^{-\Delta E / kT}$$
+    </div>
+    <table>
+      <tr><th>ตัวแปร</th><th>ความหมาย</th></tr>
+      <tr><td>$N_j$, $N_0$</td><td>จำนวนอะตอมใน excited state และ ground state ตามลำดับ</td></tr>
+      <tr><td>$g_j$, $g_0$</td><td>statistical weight (degeneracy) ของ excited และ ground state</td></tr>
+      <tr><td>$k$</td><td>Boltzmann constant = $1.38 \times 10^{-23}$ J/K</td></tr>
+      <tr><td>$T$</td><td>อุณหภูมิสัมบูรณ์ (K)</td></tr>
+      <tr><td>$\Delta E$</td><td>ผลต่างพลังงานระหว่าง excited และ ground state</td></tr>
+    </table>
+    <div class="bullet" style="margin-top:8px">• อุณหภูมิ↑ → $N_j/N_0$↑ → signal AES↑</div>
+    <div class="bullet">• $\Delta E$ น้อย (ธาตุที่กระตุ้นง่าย) → $N_j/N_0$ สูงกว่า</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title aas">ส่วนประกอบเครื่อง AAS</div>
+    <table>
+      <tr><th>ส่วน</th><th>รายละเอียด</th></tr>
+      <tr><td><b>1. Light Source</b></td><td>• <b>HCL (Hollow Cathode Lamp)</b> = หลอด Pyrex/Quartz บรรจุ Ne หรือ Ar ที่ความดันต่ำ cathode เคลือบด้วยโลหะที่ต้องการตรวจ<br>ขั้นตอน: <b>Sputtering</b> (ขั้ว cathode หลุดออกมา) → <b>Excitation</b> (ชนกัน กระตุ้น) → <b>Emission</b> (ปล่อยรังสีจำเพาะ)<br>• <b>EDL (Electrodeless Discharge Lamp)</b> = ทำจาก Quartz ใช้คลื่นวิทยุสร้างสนามแม่เหล็ก ความเข้มแสงสูงกว่า HCL เหมาะกับ <b>As, Se, Hg</b></td></tr>
+      <tr><td><b>2. Atomizer</b></td><td>ดูตารางถัดไป</td></tr>
+      <tr><td><b>3. Monochromator</b></td><td>Prism (หักเห) หรือ <b>Grating</b> (ใช้ slit ต่างมุม)</td></tr>
+      <tr><td><b>4. Detector</b></td><td>• Phototube = ปล่อย $e^-$ จาก photosensitive cathode → anode<br>• <b>Photomultiplier</b> = $e^-$ ชน dynode → ทวีคูณ sensitivity สูง</td></tr>
+      <tr><td><b>5. ระบบประมวลผล</b></td><td>Data system + read-out units</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title aas">Atomizer — 3 วิธีทำให้เป็นอะตอมเสรี</div>
+    <div class="section-sub">1. Flame Atomization</div>
+    <div class="bullet sub">• สารตัวอย่างต้องเป็นสารละลายเนื้อเดียวกัน</div>
+    <div class="bullet sub">• ขั้นตอน: <b>Nebulization</b> (เปลี่ยนเป็น aerosol) → <b>Droplet precipitation</b> (หยดใหญ่ตกไปทิ้ง) → <b>Mixing</b> (ผสมแก๊สเชื้อเพลิง) → <b>Desolvation</b> (ระเหยตัวทำละลาย) → <b>Compound deposition</b> (เกิดอะตอมเสรี)</div>
+    <div class="bullet sub">• ชนิด Nebulizer: Concentric Tube (ไม่หนืด), Cross-flow (เกลือสูง), Fritted-disk, <b>Babington</b> (ความหนืดสูงมาก)</div>
+    <div class="section-sub">2. Electrothermal / Furnace (Flameless)</div>
+    <div class="bullet sub">• ใช้ graphite tube ให้ความร้อน — sensitivity ดีกว่า flame 10–1000 เท่า ใช้กับ sample ปริมาณน้อย</div>
+    <div class="bullet sub">• 3 ขั้นตอน:</div>
+    <div class="bullet sub2">• <b>Drying</b> (~110°C) = ระเหยตัวทำละลาย</div>
+    <div class="bullet sub2">• <b>Ashing</b> (350–1200°C) = กำจัดสารอินทรีย์และอนินทรีย์ที่ไม่ต้องการ เหลือแต่สารอนินทรีย์เสถียร</div>
+    <div class="bullet sub2">• <b>Atomization</b> (2000–3000°C) = ให้ความร้อนสูงสุด → เกิดอะตอมเสรี, ความสูงพีค ∝ ปริมาณธาตุ</div>
+    <div class="section-sub">3. Hydride Generation</div>
+    <div class="bullet sub">• เปลี่ยนธาตุให้เป็น hydride gas ก่อน (เช่น AsH₃, SeH₂, SnH₄)</div>
+    <div class="bullet sub">• เหมาะกับ <b>As, Se, Pb, Sn, Bi, Ge, Te</b> ที่ต้องการอุณหภูมิสูงมากในการ atomize</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title aas">Interference Effects & วิธีวิเคราะห์ปริมาณ</div>
+    <div class="section-sub">ประเภท Interference</div>
+    <table>
+      <tr><th>ประเภท</th><th>กลไก</th><th>วิธีแก้</th></tr>
+      <tr><td><b>Chemical</b></td><td>Anion จับกับโลหะ → ได้สารที่ต้องการตรวจน้อยลง</td><td>กำจัดก่อน + เติม releasing agent (เกลืออิ่มตัว)</td></tr>
+      <tr><td><b>Spectral</b></td><td>ปนเปื้อน → ดูดกลืนแสงอื่นที่ไม่ต้องการ</td><td>ใช้ slit แคบลง หรือเลือก $\\lambda$ อื่น</td></tr>
+      <tr><td><b>Matrix</b></td><td>Flame อุณหภูมิต่ำ → อะตอมอื่น (background) ดูดกลืนแสงได้</td><td>Background correction</td></tr>
+    </table>
+    <div class="section-sub">วิธีวิเคราะห์ปริมาณ</div>
+    <div class="bullet sub">• <b>Calibration curve</b> = ใช้เมื่อไม่มีสิ่งรบกวน → วัด $A$ ของ standard หลายความเข้มข้น → plot กราฟ → หา $c$ ของ sample</div>
+    <div class="bullet sub">• <b>Standard Addition</b> = ใช้เมื่อมี matrix interference → เติม standard ลงใน sample โดยตรง → กราฟ extrapolate → หา $c$</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title aas">Q&A เน้นข้อสอบ <span class="tag-red">🔥 ออกแน่</span></div>
+    <div class="qa-box"><div class="qa-q">Q: AAS vs AES ต่างกันอย่างไร?</div><div class="qa-a">A: AAS = วัดการ<b>ดูดกลืน</b>แสง ต้องมี HCL, Beer's law ใช้ได้, ใช้กับ 99.98% ของธาตุ / AES = วัดการ<b>คายพลังงาน</b> ไม่มี HCL, Beer's law ใช้ไม่ได้, ใช้ได้เฉพาะ excited state atoms</div></div>
+    <div class="qa-box"><div class="qa-q">Q: HCL ทำงานอย่างไร?</div><div class="qa-a">A: 1) <b>Sputtering</b> — ไอออนของ fill gas (Ne/Ar) ชน cathode ที่เคลือบโลหะ → โลหะหลุดออกมาเป็น vapor &nbsp;2) <b>Excitation</b> — โลหะ vapor ชนกับ fill gas → กระตุ้น &nbsp;3) <b>Emission</b> — ปล่อยรังสีที่ความยาวคลื่นจำเพาะของธาตุนั้น</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Furnace atomization ดีกว่า Flame อย่างไร?</div><div class="qa-a">A: sensitivity ดีกว่า 10–1000 เท่า ใช้กับ sample ปริมาณน้อย (µL) แต่ช้ากว่า และมี memory effect มากกว่า — มี 3 ขั้น: Drying → Ashing → Atomization</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมต้องทำ Ashing stage ก่อน Atomization?</div><div class="qa-a">A: เพื่อกำจัดสารอินทรีย์และอนินทรีย์ที่ไม่ต้องการออกก่อน เหลือเฉพาะโลหะที่ต้องการวิเคราะห์ → ลด matrix interference ใน atomization stage</div></div>
+    <div class="qa-box"><div class="qa-q">Q: Standard Addition ใช้เมื่อไหร่? แตกต่างจาก Calibration curve อย่างไร?</div><div class="qa-a">A: ใช้เมื่อมี <b>matrix interference</b> ที่ทำให้ slope ของ calibration curve เปลี่ยน — Standard Addition เติม known amount ของ standard ลงใน sample โดยตรง → กำจัด matrix effect ได้ → extrapolate กราฟ → หา $c$ ของ sample</div></div>
+    <div class="qa-box"><div class="qa-q">Q: EDL เหมาะกับธาตุใด? ทำไม?</div><div class="qa-a">A: <b>As, Se, Hg</b> — เพราะธาตุเหล่านี้ต้องการ line intensity สูงมากสำหรับ sensitivity ที่ดี HCL ให้ intensity ไม่พอ แต่ EDL ใช้คลื่นวิทยุ → ให้ intensity สูงกว่า HCL มาก</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title aas">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1 (Calibration curve): วัด A ของ Fe standard ได้: 0 ppm → A=0.000, 2 ppm → A=0.120, 4 ppm → A=0.240, 6 ppm → A=0.360 จงหาสมการ calibration curve แล้วหา ppm ของ sample ที่ A = 0.210</div>
+      <div class="worked-step">slope = 0.360/6 = 0.060 A/ppm → A = 0.060 × c</div>
+      <div class="worked-step">c = 0.210 / 0.060</div>
+      <div class="worked-ans">c = 3.50 ppm</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2 (Standard Addition): Sample มี A = 0.320 เมื่อเติม standard 10 µg/mL ลงใน sample ได้ A = 0.480 จงหา c ของ sample</div>
+      <div class="worked-step">slope = ΔA/Δc = (0.480 − 0.320)/10 = 0.016 A per µg/mL</div>
+      <div class="worked-step">c = A(sample)/slope = 0.320/0.016</div>
+      <div class="worked-ans">c = 20 µg/mL</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3 (Standard Addition หลายจุด): Sample A = 0.280, เติม std 5 µg/mL → A = 0.350, เติม std 10 µg/mL → A = 0.420 จงหา c ของ sample</div>
+      <div class="worked-step">plot A vs c_added → slope = (0.420−0.280)/10 = 0.014, intercept = 0.280</div>
+      <div class="worked-step">x-intercept (c ของ sample) = −intercept/slope = −0.280/0.014</div>
+      <div class="worked-ans">c = 20 µg/mL</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: Furnace AAS วัด Pb ใน blood จาก atomization peak height ∝ c ถ้า standard 50 µg/L ให้ peak = 0.480 และ sample ให้ peak = 0.192 จงหา Pb ใน blood</div>
+      <div class="worked-step">c(sample) = 0.192/0.480 × 50</div>
+      <div class="worked-ans">c = 20 µg/L</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 5 (เปรียบเทียบ AAS vs AES): ทำไม AAS ใช้ได้กับธาตุ 99.98% แต่ AES ใช้ได้แค่บางธาตุ?</div>
+      <div class="worked-step">AAS: ธาตุส่วนใหญ่อยู่ใน ground state → ดูดกลืนแสงได้ถ้าให้แสงที่ถูกความยาวคลื่น → ทำได้เกือบทุกธาตุ</div>
+      <div class="worked-step">AES: ต้องการธาตุใน excited state → ขึ้นกับอุณหภูมิ flame ตาม Boltzmann → ที่ flame อุณหภูมิปกติมีธาตุใน excited state น้อยมาก → sensitive เฉพาะธาตุที่ $\Delta E$ ต่ำ (กระตุ้นง่าย)</div>
+      <div class="worked-ans">AAS ดีกว่า AES สำหรับ quantitative analysis ส่วนใหญ่</div>
+    </div>
+  </div>
+
+  <div class="hl coral">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• AAS = ดูดกลืน มี HCL Beer's law ใช้ได้ / AES = คายพลังงาน ไม่มี HCL</div>
+    <div class="bullet">• HCL: Sputtering → Excitation → Emission (3 ขั้น)</div>
+    <div class="bullet">• Furnace: Drying → Ashing → Atomization / sensitivity ดีกว่า flame มาก</div>
+    <div class="bullet">• Hydride = As, Se, Pb / EDL = As, Se, Hg / Acetylene-oxygen = ร้อนที่สุด</div>
+    <div class="bullet">• Standard Addition = ใช้เมื่อมี matrix interference</div>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- ===== LAB 3: ความกระด้างน้ำ ===== -->
+<div id="lab3" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Lab 3 · ความกระด้างของน้ำ — EDTA Complexometric Titration</div>
+    <div class="section-sub">หลักการ</div>
+    <div class="bullet">• <b>Complexometric titration</b> = การไทเทรตโดยสร้างสารประกอบเชิงซ้อน (complex) ระหว่าง metal ion กับ chelating agent</div>
+    <div class="bullet">• <b>EDTA</b> (Ethylenediaminetetraacetic acid) = chelating agent ที่จับกับ Ca²⁺ และ Mg²⁺ ในอัตราส่วน <b>1:1 เสมอ</b> ไม่ว่าประจุจะเป็นเท่าไหร่</div>
+    <div class="bullet">• <b>ความกระด้างของน้ำ</b> = ปริมาณ Ca²⁺ และ Mg²⁺ ที่ละลายในน้ำ วัดเป็น mg/L CaCO₃</div>
+    <div class="section-sub">ทำไม pH ต้องเป็น 10?</div>
+    <div class="bullet">• ถ้า pH ต่ำ → EDTA จะ protonate → จับกับ Ca²⁺ ได้น้อยลง → ค่าต่ำกว่าจริง</div>
+    <div class="bullet">• ถ้า pH สูงเกิน → Ca²⁺ และ Mg²⁺ จะตกตะกอนเป็น Ca(OH)₂ และ Mg(OH)₂ → ค่าต่ำกว่าจริง</div>
+    <div class="bullet">• pH 10 ด้วย <b>NH₃/NH₄Cl buffer</b> = จุดที่ EDTA จับ Ca²⁺ และ Mg²⁺ ได้สมบูรณ์ที่สุด</div>
+    <div class="section-sub">Indicator — Eriochrome Black T (EBT)</div>
+    <div class="bullet">• ก่อนจุดยุติ: EBT จับกับ Ca²⁺/Mg²⁺ → สี <b>แดงองุ่น</b></div>
+    <div class="bullet">• จุดยุติ: EDTA แย่ง Ca²⁺/Mg²⁺ จาก EBT → EBT อิสระ → สี <b>น้ำเงิน</b></div>
+    <div class="bullet">• เหตุที่ EDTA แย่งได้: EDTA จับ Ca²⁺ แน่นกว่า EBT (K_f ของ EDTA-Ca &gt; K_f ของ EBT-Ca)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">ชนิดความกระด้างและวิธีแยก</div>
+    <div class="compare-grid">
+      <div class="ccard c">
+        <div class="ccard-title">Total Hardness</div>
+        <div class="row">• Ca²⁺ + Mg²⁺ ทั้งหมด</div>
+        <div class="row">• ไทเทรตน้ำประปาโดยตรง</div>
+        <div class="row">• = Permanent + Temporary</div>
+      </div>
+      <div class="ccard d">
+        <div class="ccard-title">Permanent Hardness</div>
+        <div class="row">• Ca²⁺, Mg²⁺ ใน SO₄²⁻, Cl⁻ — ไม่ตกตะกอนเมื่อต้ม</div>
+        <div class="row">• ต้มน้ำ 20-30 นาที → กรอง → ไทเทรต filtrate</div>
+        <div class="row">• Temporary = Total − Permanent</div>
+      </div>
+    </div>
+    <div class="bullet">• <b>Temporary hardness</b> = Ca(HCO₃)₂ และ Mg(HCO₃)₂ — เมื่อต้ม CO₂ หนีออก → ตกตะกอน CaCO₃ และ Mg(OH)₂</div>
+    <div class="bullet">• ทำไมห้ามล้างกระดาษกรอง: ตะกอน CaCO₃ จะละลายกลับ → permanent hardness สูงกว่าจริง → temporary hardness ต่ำกว่าจริง</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">สูตรคำนวณ</div>
+    <div class="fblock amber">
+      <div class="flabel">Standardize EDTA ด้วย CaCO₃ primary standard</div>
+      \[ M_{EDTA} \times V_{EDTA} = M_{CaCO_3} \times V_{CaCO_3} \]
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">Total / Permanent Hardness (mg/L CaCO₃) — MW<sub>CaCO₃</sub> = 100.09 g/mol</div>
+      \[ \text{Hardness} = \frac{M_{EDTA} \times V_{EDTA} \times 100.09 \times 1000}{V_{sample}\ (\text{mL})} \]
+    </div>
+    <div class="bullet">• Temporary Hardness = Total − Permanent</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">โจทย์คำนวณตัวอย่าง <span class="tag-blue">🧮</span></div>
+    <div class="worked">
+      <div class="worked-q">จาก lab: M<sub>EDTA</sub> = 0.00845 M, V<sub>EDTA</sub> (total) = 11.75 mL, V<sub>sample</sub> = 100 mL จงหา Total Hardness</div>
+      <div class="worked-step">\[ \text{Hardness} = \frac{0.00845 \times 11.75 \times 100.09 \times 1000}{100} \]</div>
+      <div class="worked-ans">Total Hardness ≈ 99.4 mg/L CaCO₃</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: น้ำ 100 mL ไทเทรตด้วย EDTA 0.01 M ใช้ไป 15.6 mL จงหา Total Hardness</div>
+      <div class="worked-step">\[ \text{Hardness} = \frac{0.01 \times 15.6 \times 100.09 \times 1000}{100} \]</div>
+      <div class="worked-ans">Total Hardness = 156.1 mg/L CaCO₃</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: Total = 156.1, Permanent = 89.3 mg/L CaCO₃ จงหา Temporary Hardness</div>
+      <div class="worked-step">Temporary = Total − Permanent = 156.1 − 89.3</div>
+      <div class="worked-ans">Temporary Hardness = 66.8 mg/L CaCO₃</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&amp;A เน้นข้อสอบ <span class="tag-red">🔥</span></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม EDTA จับ metal ion ในอัตรา 1:1 เสมอ?</div><div class="qa-a">A: EDTA เป็น hexadentate ligand — มีตำแหน่งให้ประจุ 6 ตำแหน่ง (N 2 และ O 4) จับล้อมรอบ metal ion หมดพอดี 1 โมเลกุล ไม่ว่า charge ของ metal จะเป็น +2 หรือ +3</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม pH ต้องเป็น 10 ไม่ใช่ 7 หรือ 12?</div><div class="qa-a">A: pH 7 = EDTA protonate มากเกิน จับ Ca²⁺ ได้น้อย / pH 12 = Ca²⁺, Mg²⁺ ตกตะกอน → ค่าต่ำกว่าจริง / pH 10 = จุดที่ทั้ง EDTA พร้อมจับ และ Ca²⁺, Mg²⁺ ยังละลายอยู่</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม EBT ถึงเปลี่ยนสีได้?</div><div class="qa-a">A: EBT จับ Ca²⁺ → complex สีแดงองุ่น เมื่อ EDTA มีมากพอ EDTA แย่ง Ca²⁺ ออกจาก EBT เพราะ K_f(EDTA-Ca) &gt; K_f(EBT-Ca) → EBT อิสระ → สีน้ำเงิน</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมต้องใช้ CaCO₃ เป็น primary standard?</div><div class="qa-a">A: CaCO₃ บริสุทธิ์สูง, เสถียร, ไม่ดูดความชื้น, MW แน่นอน → standardize EDTA ได้แม่นยำ</div></div>
+  </div>
+
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• EDTA : Ca²⁺ = 1:1 เสมอ (hexadentate) / pH 10 ด้วย NH₃ buffer</div>
+    <div class="bullet">• EBT: แดงองุ่น (จับ Ca²⁺) → น้ำเงิน (EDTA แย่ง Ca²⁺) = จุดยุติ</div>
+    <div class="bullet">• Temporary = Total − Permanent / ห้ามล้างกระดาษกรอง!</div>
+    <div class="bullet">• CaCO₃ → Hardness หน่วย mg/L CaCO₃</div>
+  </div>
+</div>
+
+<!-- ===== LAB 4: ไอโอดีน ===== -->
+<div id="lab4" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Lab 4 · ไอโอดีนในเกลือ — Iodometric Back-Titration</div>
+    <div class="section-sub">หลักการ</div>
+    <div class="bullet">• <b>Iodometry</b> = การวิเคราะห์โดยใช้ I₂ หรือสารที่สร้าง I₂ ได้เป็นสารตรวจวัด</div>
+    <div class="bullet">• ใช้ <b>back-titration</b>: IO₃⁻ (iodate) ในเกลือทำปฏิกิริยากับ KI ที่เติมเกิน → ได้ I₂ → ไทเทรต I₂ ที่ได้ด้วย Na₂S₂O₃</div>
+    <div class="bullet">• <b>ทำไมไม่วัด IO₃⁻ โดยตรง?</b> — IO₃⁻ ไม่มีสีและไม่มี indicator ที่เหมาะสม แต่ I₂ ที่ได้สามารถวัดกับน้ำแป้งได้ชัดเจน</div>
+    <div class="section-sub">ทำไมต้องเติม H₂SO₄?</div>
+    <div class="bullet">• ปฏิกิริยาต้องการ H⁺: IO₃⁻ + 5I⁻ + <b>6H⁺</b> → 3I₂ + 3H₂O</div>
+    <div class="bullet">• ถ้าไม่มี H⁺ ปฏิกิริยาจะไม่เกิด → ไม่ได้ I₂ → วัดไม่ได้</div>
+    <div class="section-sub">Indicator — น้ำแป้ง (Starch)</div>
+    <div class="bullet">• I₂ + starch → complex สี <b>น้ำเงินเข้ม</b></div>
+    <div class="bullet">• จุดยุติ: I₂ หมด → สีน้ำเงินหายไป → <b>ไม่มีสี</b></div>
+    <div class="bullet">• <b>ทำไมเติมน้ำแป้งใกล้จุดยุติ?</b> — ถ้าเติมตั้งแต่ต้น I₂ เข้มข้นสูงจับแป้งแน่นมาก → complex สลายยาก → endpoint ไม่ชัด → error สูง</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Stoichiometry ที่ต้องจำ</div>
+    <div class="fblock amber">
+      <div class="flabel">ปฏิกิริยาที่ 1 — สร้าง I₂</div>
+      \[ IO_3^- + 5I^- + 6H^+ \rightarrow 3I_2 + 3H_2O \]
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">ปฏิกิริยาที่ 2 — ไทเทรต I₂</div>
+      \[ I_2 + 2S_2O_3^{2-} \rightarrow 2I^- + S_4O_6^{2-} \]
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">สรุป Stoichiometry (ต้องจำ!)</div>
+      \[ IO_3^- : I_2 : Na_2S_2O_3 = 1 : 3 : 6 \]
+    </div>
+    <div class="bullet">• ดังนั้น: $M_{Na_2S_2O_3} \times V_{Na_2S_2O_3} = 6 \times M_{KIO_3} \times V_{KIO_3}$</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">สูตรคำนวณ</div>
+    <div class="fblock amber">
+      <div class="flabel">mg ของ I⁻ ในตัวอย่าง (MW ของ I = 126.9 g/mol)</div>
+      \[ \text{mg I} = \frac{1}{2} \times M_{Na_2S_2O_3} \times V_{Na_2S_2O_3}\ (\text{L}) \times 126.9 \times 1000 \]
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">mg I⁻ ต่อ kg เกลือ</div>
+      \[ \text{mg I/kg salt} = \frac{\text{mg I}}{\text{wt sample (g)}} \times 1000 \]
+    </div>
+    <div class="bullet">• หาร 2 เพราะ I₂ 1 mol มี I 2 อะตอม แต่เราต้องการ I อะตอมเดี่ยว (I⁻ ในเกลือ)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">โจทย์คำนวณตัวอย่าง <span class="tag-blue">🧮</span></div>
+    <div class="worked">
+      <div class="worked-q">จาก lab: M<sub>Na₂S₂O₃</sub> = 2.012×10⁻³ M, V<sub>Na₂S₂O₃</sub> = 16.25 mL, wt sample = 1.9958 g จงหา mg I/kg salt</div>
+      <div class="worked-step">mg I = ½ × 2.012×10⁻³ × 0.01625 × 126.9 × 1000 = 0.0691 mg</div>
+      <div class="worked-step">mg I/kg = 0.0691 / 1.9958 × 1000</div>
+      <div class="worked-ans">≈ 34.6 mg I/kg salt</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: Standardize Na₂S₂O₃ ด้วย KIO₃ 5.0×10⁻⁴ M 25.0 mL ใช้ Na₂S₂O₃ 36.0 mL จงหา M ของ Na₂S₂O₃</div>
+      <div class="worked-step">$M \times 36.0 = 6 \times 5.0\times10^{-4} \times 25.0$ → $M = 0.075/36.0$</div>
+      <div class="worked-ans">$M_{Na_2S_2O_3} = 2.083 \times 10^{-3}$ M</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: ไทเทรตเกลือ 1.9958 g ด้วย Na₂S₂O₃ 2.083×10⁻³ M ใช้ 16.5 mL จงหา mg I/kg salt</div>
+      <div class="worked-step">mg I = ½ × 2.083×10⁻³ × 0.0165 × 126.9 × 1000 = 0.0702 mg</div>
+      <div class="worked-step">mg I/kg = 0.0702/1.9958 × 1000</div>
+      <div class="worked-ans">35.18 mg I/kg salt</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&amp;A เน้นข้อสอบ <span class="tag-red">🔥</span></div>
+    <div class="qa-box"><div class="qa-q">Q: IO₃⁻ : Na₂S₂O₃ อัตราส่วนเท่าไหร่? อธิบายที่มา</div><div class="qa-a">A: 1 : 6 — IO₃⁻ 1 mol → I₂ 3 mol (จากปฏิกิริยา 1) → Na₂S₂O₃ 6 mol (เพราะ I₂ 1 mol ต้องการ Na₂S₂O₃ 2 mol)</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมต้องเติม KI เกิน (excess)?</div><div class="qa-a">A: เพื่อให้ IO₃⁻ ทำปฏิกิริยากับ I⁻ ได้ครบ 100% → ได้ I₂ ตาม stoichiometry → ค่าที่คำนวณแม่นยำ</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ถ้าเติมน้ำแป้งตั้งแต่ต้น ผลจะเป็นอย่างไร?</div><div class="qa-a">A: I₂ เข้มข้นสูงจับแป้งแน่น → complex I₂-starch สลายตัวช้า → endpoint ไม่ชัดเจน → ใช้ Na₂S₂O₃ มากกว่าที่ควร → ผลสูงกว่าจริง</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมต้องหาร 2 ตอนคำนวณ mg I?</div><div class="qa-a">A: Na₂S₂O₃ ไทเทรต I₂ (ไม่ใช่ I⁻) และ I₂ 1 mol มี I 2 อะตอม → เราต้องการปริมาณ I อะตอม (ที่อยู่ในเกลือในรูป IO₃⁻) ไม่ใช่ I₂</div></div>
+  </div>
+
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• IO₃⁻ : I₂ : Na₂S₂O₃ = 1 : 3 : 6</div>
+    <div class="bullet">• เติมน้ำแป้งใกล้จุดยุติเท่านั้น / น้ำเงินเข้ม → ไม่มีสี = จุดยุติ</div>
+    <div class="bullet">• ต้องการ H⁺ (H₂SO₄) / KI ต้องเกิน</div>
+    <div class="bullet">• หาร 2 เพราะ I₂ มี I 2 อะตอม</div>
+  </div>
+</div>
+
+<!-- ===== LAB 6: ISE ===== -->
+<div id="lab6" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Lab 6 · ไนเตรตด้วย Ion Selective Electrode (ISE) — Potentiometry</div>
+    <div class="section-sub">หลักการ Potentiometry</div>
+    <div class="bullet">• <b>Potentiometry</b> = วิธีวิเคราะห์ที่วัด <b>potential (แรงดันไฟฟ้า, mV)</b> ของ electrochemical cell</div>
+    <div class="bullet">• ไม่ผ่านกระแสไฟฟ้าเข้าสารละลาย (วัดแบบ passive) → ไม่รบกวน sample</div>
+    <div class="bullet">• ประกอบด้วย 2 ขั้ว: <b>ISE (indicator electrode)</b> + <b>Reference electrode (Ag/AgCl)</b></div>
+    <div class="section-sub">Ion Selective Electrode (ISE) คืออะไร?</div>
+    <div class="bullet">• เยื่อเลือกผ่าน (selective membrane) ที่ผ่านเฉพาะ ion ที่ต้องการ (เช่น NO₃⁻)</div>
+    <div class="bullet">• เมื่อ NO₃⁻ เข้าสู่เยื่อ → เกิด potential ต่างกันระหว่างสองด้าน → วัดเป็น mV</div>
+    <div class="bullet">• ยิ่ง NO₃⁻ เข้มข้น → potential ต่างมาก → สัญญาณมาก</div>
+    <div class="section-sub">Nernst Equation — หัวใจของ ISE</div>
+    <div class="fblock amber">
+      <div class="flabel">Nernst Equation (สำหรับ anion เช่น NO₃⁻)</div>
+      \[ E = E^0 - \frac{0.0592}{n} \log[NO_3^-] \]
+    </div>
+    <div class="bullet">• <b>E</b> = potential ที่วัดได้ (mV) / <b>n</b> = charge ของ ion (NO₃⁻ → n=1)</div>
+    <div class="bullet">• plot <b>E vs log[NO₃⁻]</b> → เส้นตรง → slope ≈ −59.2 mV/decade สำหรับ anion monovalent</div>
+    <div class="bullet">• เมื่อรู้สมการเส้นตรง → แทนค่า E ของ sample → หา [NO₃⁻]</div>
+    <div class="section-sub">ทำไมต้องเติม Ionic Strength Adjustment Buffer (ISAB)?</div>
+    <div class="bullet">• Nernst equation จริงๆ ใช้ <b>activity</b> ไม่ใช่ concentration: $a = \gamma \times c$</div>
+    <div class="bullet">• ISAB ทำให้ ionic strength ของทุก sample เท่ากัน → activity coefficient (γ) คงที่ → activity ∝ concentration → calibration curve เป็นเส้นตรง</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">การเตรียมและวัด</div>
+    <div class="steps">
+      <div class="step"><div class="step-num" style="background:#BA7517">1</div><div class="step-body"><b>แช่ ISE ใน DI water</b> ก่อนใช้ — hydrate เยื่อให้สมบูรณ์ ถ้าไม่แช่ reading ไม่เสถียร</div></div>
+      <div class="step"><div class="step-num" style="background:#BA7517">2</div><div class="step-body"><b>เตรียม standard</b> NO₃⁻ 1, 5, 10, 20 ppm + ISAB อย่างละ 10 mL → วัด E (mV) ทีละค่า</div></div>
+      <div class="step"><div class="step-num" style="background:#BA7517">3</div><div class="step-body"><b>ล้าง DI water</b> ระหว่างทุก sample — ป้องกัน carry-over</div></div>
+      <div class="step"><div class="step-num" style="background:#BA7517">4</div><div class="step-body"><b>plot E vs log[NO₃⁻]</b> → เส้นตรง → หา slope และ intercept → แทนค่า E ของ unknown</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">โจทย์คำนวณตัวอย่าง <span class="tag-blue">🧮</span></div>
+    <div class="worked">
+      <div class="worked-q">จาก lab: standard 1 ppm → E = 344.0 mV, 20 ppm → E = 243.3 mV จงหา slope ของ calibration curve</div>
+      <div class="worked-step">slope = ΔE / Δ(log c) = (243.3 − 344.0) / (log20 − log1) = −100.7 / 1.301</div>
+      <div class="worked-ans">slope ≈ −77.4 mV/decade (ควรใกล้ −59.2 mV/decade ตาม Nernst)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: ISE วัด NO₃⁻ standard ได้: 1 ppm → 344 mV, 10 ppm → 270 mV จงหา slope และ c ของ sample ที่ E = 296 mV</div>
+      <div class="worked-step">slope = ΔE/Δ(log c) = (270−344)/(log10−log1) = −74/1 = −74 mV/decade</div>
+      <div class="worked-step">สมการ: E = 344 − 74×log[c] → 296 = 344 − 74×log[c] → log[c] = (344−296)/74 = 0.649</div>
+      <div class="worked-ans">c = 10^0.649 = 4.46 ppm NO₃⁻</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: ISE slope วัดได้ −74 mV/decade แต่ theoretical Nernst slope = −59.2 mV/decade ควรทำอย่างไร?</div>
+      <div class="worked-step">ใช้ slope จากการ calibrate จริง (−74) ไม่ใช่ theoretical ในการคำนวณ เพราะ membrane อาจไม่ ideal 100%</div>
+      <div class="worked-ans">ใช้ empirical slope จาก calibration curve เสมอ</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&amp;A เน้นข้อสอบ <span class="tag-red">🔥</span></div>
+    <div class="qa-box"><div class="qa-q">Q: ISE ต่างจาก UV-Vis ยังไง?</div><div class="qa-a">A: ISE วัด potential (ไฟฟ้า) ตาม Nernst equation → ไม่ต้องมีสาร สี หรือ complex / UV-Vis วัดการดูดกลืนแสงตาม Beer's Law → ต้องมีสารที่ดูดกลืนแสงได้</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม slope ของกราฟ E vs log[c] ต้องเป็น −59.2 mV/decade?</div><div class="qa-a">A: จาก Nernst equation: slope = −0.0592/n × 1000 (ถ้า E เป็น mV) สำหรับ monovalent anion n=1 → slope = −59.2 mV/decade ถ้า slope ต่างมาก = ISE ชำรุดหรือเยื่อเสื่อม</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม ISE ต้องแช่น้ำก่อนใช้?</div><div class="qa-a">A: เยื่อเลือกผ่านต้องดูดซับน้ำ (hydration) ก่อนจึงจะทำงานได้ ถ้าเยื่อแห้ง → ion ผ่านไม่สม่ำเสมอ → reading drift ไม่เสถียร</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม E ลดลงเมื่อ [NO₃⁻] เพิ่ม (สำหรับ anion)?</div><div class="qa-a">A: จาก Nernst: E = E⁰ − (0.0592/n)log[NO₃⁻] → เมื่อ [NO₃⁻] เพิ่ม log[NO₃⁻] เพิ่ม → E ลด (เพราะติดลบ) → กราฟ slope ลบ</div></div>
+  </div>
+
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• Potentiometry วัด mV → ตาม Nernst: E vs log[c] = เส้นตรง slope ≈ −59.2 mV/decade</div>
+    <div class="bullet">• ต้องเติม ISAB เพื่อ fix ionic strength → γ คงที่</div>
+    <div class="bullet">• แช่ ISE ก่อนใช้ / ล้าง DI ระหว่าง sample</div>
+  </div>
+</div>
+
+<!-- ===== LAB 7: Conductometry ===== -->
+<div id="lab7" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Lab 7 · Conductometric Titration — วัดการนำไฟฟ้า</div>
+    <div class="section-sub">หลักการ Conductometry</div>
+    <div class="bullet">• <b>Conductance (G)</b> = ความสามารถของสารละลายในการนำไฟฟ้า หน่วย Siemens (S)</div>
+    <div class="bullet">• G แปรผันตรงกับ <b>จำนวนและ mobility ของ ion</b> ในสารละลาย</div>
+    <div class="bullet">• H⁺ และ OH⁻ มี mobility สูงสุด (Grotthuss mechanism — ถ่ายโปรตอนผ่าน H-bond chain ของน้ำ) → G สูงสุด</div>
+    <div class="bullet">• ดังนั้นเมื่อ H⁺ หรือ OH⁻ ถูกแทนที่ด้วย ion อื่น → G จะเปลี่ยนแปลงอย่างชัดเจน</div>
+    <div class="section-sub">ข้อดีเหนือ regular titration</div>
+    <div class="bullet">• ใช้กับ <b>สารละลายสีหรือขุ่น</b> ที่ indicator ทั่วไปใช้ไม่ได้</div>
+    <div class="bullet">• ไม่ต้องใช้ indicator → ไม่มี error จาก indicator</div>
+    <div class="bullet">• หาจุดยุติจาก <b>กราฟ</b> → แม่นยำกว่าดูสีด้วยตา</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">รูปแบบกราฟ G vs V และ ทำไม?</div>
+    <div class="compare-grid">
+      <div class="ccard c">
+        <div class="ccard-title">HCl + NaOH → กราฟ V</div>
+        <div class="row">• ก่อน EP: H⁺ (G สูง) ถูกแทนด้วย Na⁺ (G ต่ำ) → <b>G ลด</b></div>
+        <div class="row">• ที่ EP: H⁺ หมด, Cl⁻ + Na⁺ เหลือ → G ต่ำสุด</div>
+        <div class="row">• หลัง EP: OH⁻ (G สูง) เพิ่ม → <b>G เพิ่ม</b></div>
+        <div class="row">• จุดยุติ = จุดต่ำสุดของกราฟ V</div>
+      </div>
+      <div class="ccard d">
+        <div class="ccard-title">CH₃COOH + NaOH → กราฟ L</div>
+        <div class="row">• ก่อน EP: CH₃COOH แตกตัวน้อย (weak acid) G ต่ำ → เกิด CH₃COONa (buffer) → G ค่อยๆ เพิ่ม</div>
+        <div class="row">• หลัง EP: OH⁻ เพิ่มชัน → G เพิ่มเร็ว</div>
+        <div class="row">• จุดยุติ = จุดเปลี่ยนความชันของกราฟ L</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">สูตรคำนวณ</div>
+    <div class="fblock amber">
+      <div class="flabel">Standardize NaOH ด้วย KHP (MW = 204.22 g/mol)</div>
+      \[ M_{NaOH} = \frac{m_{KHP}\ (\text{g})}{204.22 \times V_{NaOH}\ (\text{L})} \]
+    </div>
+    <div class="fblock amber">
+      <div class="flabel">หา c ของกรดตัวอย่าง (อ่านจุดยุติจากกราฟ)</div>
+      \[ c_{acid} \times V_{acid} = c_{NaOH} \times V_{NaOH} \]
+    </div>
+    <div class="bullet">• KHP = Potassium Hydrogen Phthalate → primary standard สำหรับ NaOH</div>
+    <div class="bullet">• ทำไมใช้ KHP? — pure, stable, MW สูง (ชั่งแม่นยำ), ไม่ดูด CO₂</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&amp;A เน้นข้อสอบ <span class="tag-red">🔥</span></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม H⁺ และ OH⁻ ถึงมี conductance สูงกว่า ion อื่น?</div><div class="qa-a">A: Grotthuss mechanism — H⁺ ไม่ได้เคลื่อนที่จริงๆ แต่ถ่ายโปรตอนผ่าน network ของ H-bond ในน้ำได้รวดเร็ว (proton hopping) → effective mobility สูงกว่า Na⁺, K⁺ มาก</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมกราฟ HCl + NaOH เป็น V แต่ CH₃COOH + NaOH เป็น L?</div><div class="qa-a">A: HCl = strong acid แตกตัว 100% → H⁺ เยอะ G สูง เมื่อ NaOH เข้า H⁺ ถูกแทนด้วย Na⁺ ที่ G ต่ำกว่า → G ลด / CH₃COOH = weak acid แตกตัวน้อย G เริ่มต้นต่ำ + เกิด buffer เมื่อเติม NaOH → G ค่อยๆ เพิ่ม</div></div>
+    <div class="qa-box"><div class="qa-q">Q: อ่านจุดยุติจากกราฟ Conductometric ยังไง?</div><div class="qa-a">A: ลากเส้นตรงผ่านจุดก่อน EP และหลัง EP แยกกัน → จุดตัดของ 2 เส้นตรง = จุดยุติ (endpoint)</div></div>
+  </div>
+
+    <div class="card">
+    <div class="card-title chrom">ตัวอย่างโจทย์คำนวณ <span class="tag-blue">🧮 ฝึกคำนวณ</span></div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 1: ชั่ง KHP 2.0131 g ละลายในน้ำ ไทเทรตด้วย NaOH ใช้ไป 10.5 mL จงหา M ของ NaOH (MW KHP = 204.22 g/mol)</div>
+      <div class="worked-step">\[ M_{NaOH} = \frac{2.0131}{204.22 \times 0.0105} = \frac{2.0131}{2.1443} \]</div>
+      <div class="worked-ans">$M_{NaOH} = 0.0939$ M</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: จาก conductometric titration ของ HCl 25.0 mL ด้วย NaOH 0.0939 M อ่านจุดยุติจากกราฟได้ที่ V = 2.80 mL จงหา M ของ HCl</div>
+      <div class="worked-step">\[ c_{HCl} \times 25.0 = 0.0939 \times 2.80 \]</div>
+      <div class="worked-step">$c_{HCl} = 0.0939 \times 2.80 / 25.0$</div>
+      <div class="worked-ans">$M_{HCl} = 0.01052$ M ≈ 0.0105 M</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: ทำไม conductometric titration ถึงหา EP ได้แม้สีสารละลายขุ่น?</div>
+      <div class="worked-step">Conductometry วัด G ทางไฟฟ้า ไม่พึ่งสี → สีของสารละลายไม่รบกวนการวัด</div>
+      <div class="worked-ans">วัด G ทางไฟฟ้า → ไม่ต้องอาศัยการมองสี → ใช้ได้กับสารละลายสีหรือขุ่น</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: กราฟ conductometric titration ของ CH₃COOH + NaOH จะมีรูปร่างแตกต่างจาก HCl + NaOH อย่างไร?</div>
+      <div class="worked-step">HCl (strong acid): G เริ่มสูง (H⁺ เยอะ) → ลดก่อน EP → เพิ่มหลัง EP = <b>V shape</b></div>
+      <div class="worked-step">CH₃COOH (weak acid): G เริ่มต่ำ (แตกตัวน้อย) → ค่อยๆ เพิ่มก่อน EP (เกิด buffer) → เพิ่มชันหลัง EP = <b>L shape</b></div>
+      <div class="worked-ans">HCl = V shape / CH₃COOH = L shape</div>
+    </div>
+  </div>
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• G วัดแทน indicator / H⁺, OH⁻ มี G สูงสุด (Grotthuss mechanism)</div>
+    <div class="bullet">• HCl + NaOH = V shape (G ลดก่อน EP) / CH₃COOH + NaOH = L shape</div>
+    <div class="bullet">• จุดยุติ = จุดตัดของ 2 เส้นตรงในกราฟ</div>
+    <div class="bullet">• KHP = primary standard สำหรับ standardize NaOH</div>
+  </div>
+</div>
+
+<!-- ===== LAB 8: เหล็ก Spectrophotometry ===== -->
+<div id="lab8" class="content">
+
+  <div class="card">
+    <div class="card-title uv">Lab 8 · เหล็กในน้ำ — UV-Vis Spectrophotometry (Beer's Law Application)</div>
+    <div class="section-sub">หลักการ — เชื่อมกับ UV-Vis tab</div>
+    <div class="bullet">• ใช้ <b>Beer's Law</b>: A = εbc → A แปรผันตรงกับ c<sub>Fe</sub> → วัด A แล้ว interpolate จาก calibration curve</div>
+    <div class="bullet">• Fe²⁺ + <b>1,10-phenanthroline</b> (3 โมเลกุล) → [Fe(phen)₃]²⁺ สีแดงส้ม → ดูดกลืนแสง ~510 nm</div>
+    <div class="bullet">• <b>ทำไมต้องสร้าง complex?</b> — Fe²⁺ เองไม่มีสี ดูดกลืนแสงในช่วง visible ไม่ได้ → ต้องสร้าง colored complex ก่อนจึงวัด A ได้</div>
+    <div class="section-sub">ทำไมต้องเติม NH₂OH·HCl ก่อน?</div>
+    <div class="bullet">• น้ำในธรรมชาติมีทั้ง Fe²⁺ และ Fe³⁺</div>
+    <div class="bullet">• 1,10-phen จับได้ <b>เฉพาะ Fe²⁺</b> เท่านั้น (ไม่จับ Fe³⁺)</div>
+    <div class="bullet">• NH₂OH·HCl = reducing agent → reduce Fe³⁺ → Fe²⁺ ทั้งหมดก่อน → วัดได้ total iron</div>
+    <div class="bullet">• ถ้าไม่ reduce → วัดได้แค่ Fe²⁺ ที่มีอยู่แล้ว → ค่าต่ำกว่า total iron จริง</div>
+    <div class="section-sub">ทำไมต้อง control pH?</div>
+    <div class="bullet">• pH ที่เหมาะสม = <b>3.5–4.5</b> (ใช้ sodium citrate ปรับ)</div>
+    <div class="bullet">• pH ต่ำเกิน (กรด) → 1,10-phen protonated → จับ Fe²⁺ ได้น้อย</div>
+    <div class="bullet">• pH สูงเกิน (ด่าง) → Fe²⁺ ตกตะกอนเป็น Fe(OH)₂ → ไม่มี Fe²⁺ ในสารละลาย</div>
+    <div class="bullet">• ตรวจ pH ด้วย <b>bromophenol blue</b>: เหลือง (pH ต่ำ) → น้ำเงิน (pH ได้ที่)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">ทำไมต้องหัก Blank?</div>
+    <div class="bullet">• Blank = สารละลายที่มี reagent ทุกอย่าง <b>ยกเว้น Fe</b></div>
+    <div class="bullet">• A ของ blank = การดูดกลืนแสงจาก reagent เอง (background absorption)</div>
+    <div class="bullet">• A จริงของ Fe = A(sample) − A(blank)</div>
+    <div class="bullet">• ถ้าไม่หัก blank → A สูงกว่าจริง → c<sub>Fe</sub> สูงกว่าจริง</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">โจทย์คำนวณตัวอย่าง <span class="tag-blue">🧮</span></div>
+    <div class="worked">
+      <div class="worked-q">จาก lab: A(blank) = 0.1864, A(sample) = 0.4136 จาก calibration curve: A = 0.800×c + 0.188 (A vs mg Fe/mL) จงหา c<sub>Fe</sub> ใน sample</div>
+      <div class="worked-step">A จริง = 0.4136 − 0.1864 = 0.2272</div>
+      <div class="worked-step">0.2272 = 0.800×c + 0.188 → c = (0.2272 − 0.188) / 0.800</div>
+      <div class="worked-ans">c<sub>Fe</sub> ≈ 0.049 mg Fe/mL → แปลงเป็น mg/L คูณ 1000</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: Calibration curve ของ Fe: A = 0.800×c + 0.000 (c ใน mg Fe/25mL) วัด A(sample) = 0.413, A(blank) = 0.186 จงหา c ของ Fe</div>
+      <div class="worked-step">A จริง = 0.413 − 0.186 = 0.227</div>
+      <div class="worked-step">0.227 = 0.800 × c → c = 0.284 mg/25mL</div>
+      <div class="worked-ans">c<sub>Fe</sub> = 0.284 mg/25 mL → ถ้า sample ปริมาตร 1.25 mL → mg/L = 0.284/1.25 × 1000 = 227 mg/L</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: ทำไม A ของ calibration ต้องอยู่ในช่วง 0.1–1.0?</div>
+      <div class="worked-step">A &lt; 0.1: T &gt; 79% → noise ของ detector คิดเป็น % error สูง → ไม่แม่นยำ</div>
+      <div class="worked-step">A &gt; 1.0: Beer's Law เริ่มเบี่ยงเบน (สารเข้มข้นเกิน) → กราฟไม่เป็นเส้นตรง → ค่าผิดพลาด</div>
+      <div class="worked-ans">A = 0.1–1.0 คือช่วงที่ Beer's Law เป็นเส้นตรงและ detector มี S/N ดี</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title uv">Q&amp;A เน้นข้อสอบ <span class="tag-red">🔥</span></div>
+    <div class="qa-box"><div class="qa-q">Q: Lab นี้ใช้ Beer's Law อย่างไร?</div><div class="qa-a">A: สร้าง [Fe(phen)₃]²⁺ ที่มีสี → A ∝ c<sub>Fe</sub> ที่ 510 nm → plot calibration curve (A vs c<sub>Fe</sub>) → เส้นตรง → หา c ของ sample จากกราฟ</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม calibration curve ต้องมีค่า A อยู่ระหว่าง 0.1–1.0?</div><div class="qa-a">A: Beer's Law เป็นเส้นตรงเฉพาะในช่วง A ต่ำ (สารละลายเจือจาง) / A &lt; 0.1 = noise มาก error สูง / A &gt; 1.0 = Beer's Law เบี่ยงเบน (สูงเกิน) → ค่าไม่แม่นยำ</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ถ้าไม่เติม NH₂OH·HCl ผลจะเป็นอย่างไร?</div><div class="qa-a">A: วัดได้แค่ Fe²⁺ ที่มีอยู่แล้ว ไม่รวม Fe³⁺ → ค่า total iron ต่ำกว่าจริง</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมต้องล้างเซลล์ด้วยสารละลายที่จะวัดก่อนใส่จริง?</div><div class="qa-a">A: ล้าง DI water ค้างในเซลล์ออก ถ้า DI water เจือจาง sample → A ต่ำกว่าจริง → c ต่ำกว่าจริง</div></div>
+  </div>
+
+  <div class="hl purple">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• Fe³⁺ →(NH₂OH)→ Fe²⁺ →(1,10-phen)→ [Fe(phen)₃]²⁺ (แดงส้ม) → วัด A ที่ 510 nm</div>
+    <div class="bullet">• A จริง = A(sample) − A(blank) เสมอ</div>
+    <div class="bullet">• pH 3.5–4.5 ด้วย sodium citrate / calibration curve A = 0.1–1.0</div>
+    <div class="bullet">• ใช้ Beer's Law: calibration curve เส้นตรง → interpolate หา c</div>
+  </div>
+</div>
+
+<!-- ===== LAB 9: Ethanol GC ===== -->
+<div id="lab9" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Lab 9 · Ethanol ในสุรา — GC-FID + Internal Standard Method</div>
+    <div class="section-sub">หลักการ — เชื่อมกับ GC tab</div>
+    <div class="bullet">• ใช้ <b>GC-FID</b> แยกและวัดปริมาณ ethanol ในสุรากลั่น</div>
+    <div class="bullet">• FID เหมาะเพราะ ethanol = organic compound (hydrocarbon) → FID sensitive มาก</div>
+    <div class="bullet">• ใช้ <b>Internal Standard (IS) Method</b> แทน External Standard เพราะ injection volume ใน GC ไม่สม่ำเสมอ</div>
+    <div class="section-sub">Internal Standard Method คืออะไร? ทำไมดีกว่า?</div>
+    <div class="bullet">• เติม IS (acetonitrile) ปริมาณ <b>คงที่เหมือนกันทุก sample</b></div>
+    <div class="bullet">• วัด <b>ratio = peak area ethanol / peak area IS</b> แทนที่จะวัด peak area ethanol เดี่ยวๆ</div>
+    <div class="bullet">• ถ้าฉีดสารมากกว่าที่ควร → peak area ethanol ↑ แต่ peak area IS ↑ ด้วย → ratio คงที่ → error หักล้างกัน</div>
+    <div class="bullet">• <b>ทำไมใช้ Acetonitrile เป็น IS?</b> — ไม่มีใน sample สุรา, elute ที่เวลาใกล้กับ ethanol แต่แยกพีคชัดเจน, FID ตรวจจับได้ดี</div>
+    <div class="section-sub">ทำไมต้องสกัดด้วย 1-Octanol ก่อน?</div>
+    <div class="bullet">• สุรามีน้ำเป็นส่วนใหญ่ → น้ำทำลาย GC column และ detector</div>
+    <div class="bullet">• 1-Octanol สกัด ethanol ออกจาก aqueous phase → ได้ organic layer ที่มี ethanol + IS</div>
+    <div class="bullet">• ฉีดเฉพาะชั้น Octanol เข้าเครื่อง → ลด matrix interference จากน้ำ</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">สภาวะเครื่อง GC-FID และเหตุผล</div>
+    <table>
+      <tr><th>พารามิเตอร์</th><th>ค่า</th><th>เหตุผล</th></tr>
+      <tr><td>Injection mode</td><td>Splitless</td><td>sample ปริมาณน้อย → ให้เข้าคอลัมน์ทั้งหมด</td></tr>
+      <tr><td>Oven 60°C (8 min)</td><td>→ 15°C/min → 160°C</td><td>เริ่มต่ำให้แยก ethanol (bp 78°C) ก่อน แล้วเพิ่มเพื่อชะสารที่เหลือ</td></tr>
+      <tr><td>Carrier gas N₂</td><td>1.5 mL/min</td><td>เฉื่อย ไม่ทำปฏิกิริยา</td></tr>
+      <tr><td>FID temp</td><td>290°C</td><td>สูงกว่า oven ป้องกัน condensation ใน detector</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">สูตรและ Calibration</div>
+    <div class="fblock amber">
+      <div class="flabel">Calibration Curve — Internal Standard Method</div>
+      \[ y = \frac{A_{ethanol}}{A_{IS}} \quad \text{vs} \quad x = \%\ \text{ethanol (v/v)} \]
+    </div>
+    <div class="bullet">• หาสมการเส้นตรง y = mx + b → แทน y ของ sample → หา %ethanol</div>
+    <div class="bullet">• R² ควรใกล้ 1.0 = linearity ดี</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">โจทย์คำนวณตัวอย่าง <span class="tag-blue">🧮</span></div>
+    <div class="worked">
+      <div class="worked-q">จาก lab: calibration ได้สมการ y = 0.0596x + 0.0 (ratio vs %ethanol), sample มี ratio = 1.204 จงหา %ethanol ในสุรา</div>
+      <div class="worked-step">1.204 = 0.0596x + 0.0 → x = 1.204 / 0.0596</div>
+      <div class="worked-ans">%ethanol ≈ 20.2% v/v</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: Calibration: 10% → ratio 0.547, 20% → 1.126, 30% → 1.738 จงหาสมการ calibration curve</div>
+      <div class="worked-step">slope = (1.738−0.547)/(30−10) = 1.191/20 = 0.05955 per %ethanol</div>
+      <div class="worked-step">intercept ≈ 0.547 − 0.05955×10 = −0.049 ≈ 0 (ผ่าน origin)</div>
+      <div class="worked-ans">ratio ≈ 0.0596 × %ethanol (R² ≈ 1.0)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: ถ้าฉีด sample โดยไม่มี IS และ injection volume เปลี่ยนจาก 1.0 µL เป็น 0.8 µL peak area ethanol ลด 20% ผลกระทบต่อค่าที่รายงาน?</div>
+      <div class="worked-step">ถ้าไม่มี IS: peak area ลด 20% → รายงาน %ethanol ต่ำกว่าจริง 20% → error มาก</div>
+      <div class="worked-step">ถ้ามี IS: peak area IS ก็ลด 20% เช่นกัน → ratio คงที่ → ไม่มี error</div>
+      <div class="worked-ans">IS ชดเชย injection variability → ผลไม่เปลี่ยน</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&amp;A เน้นข้อสอบ <span class="tag-red">🔥</span></div>
+    <div class="qa-box"><div class="qa-q">Q: Internal standard method ดีกว่า external standard อย่างไร?</div><div class="qa-a">A: IS ชดเชย injection variability — ถ้าฉีดมาก/น้อยกว่า spec ทั้ง ethanol และ IS เปลี่ยนในสัดส่วนเดียวกัน → ratio คงที่ → ผลแม่นยำกว่า external standard ที่ต้องฉีดปริมาตรแม่นยำมาก</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมต้องใช้ temperature program แทนที่จะใช้อุณหภูมิคงที่?</div><div class="qa-a">A: สารในสุรามี bp ต่างกัน → อุณหภูมิเดียวแยกไม่ครบ / program ทำให้แยกสารได้ครบทุกชนิดในเวลาที่เหมาะสม</div></div>
+    <div class="qa-box"><div class="qa-q">Q: FID ทำงานอย่างไรใน lab นี้?</div><div class="qa-a">A: Ethanol จาก column เข้าเปลวไฟ H₂/Air → เผา → ผลิต ion และ e⁻ → วัดกระแส → ยิ่ง ethanol มาก กระแสมาก → peak area ใหญ่</div></div>
+  </div>
+
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• IS (acetonitrile) ชดเชย injection variability → ratio = A<sub>ethanol</sub>/A<sub>IS</sub></div>
+    <div class="bullet">• สกัด 1-Octanol ก่อน → ลด water matrix / ฉีดชั้น Octanol เข้า GC</div>
+    <div class="bullet">• Temperature program: 60°C → 160°C ให้แยกสารได้ครบ</div>
+  </div>
+</div>
+
+<!-- ===== LAB 10: Paracetamol HPLC ===== -->
+<div id="lab10" class="content">
+
+  <div class="card">
+    <div class="card-title chrom">Lab 10 · พาราเซตามอลในยา — Reversed Phase HPLC</div>
+    <div class="section-sub">หลักการ — เชื่อมกับ HPLC tab</div>
+    <div class="bullet">• ใช้ <b>Reversed Phase HPLC</b>: SP = C18 (ไม่มีขั้ว), MP = MeOH:H₂O 50:50 (มีขั้ว)</div>
+    <div class="bullet">• พาราเซตามอลมีขั้วปานกลาง (มี –OH และ –NHCOCH₃) → ถูก retain บน C18 ในระดับที่เหมาะ → elute ออกมาในเวลาที่วัดได้</div>
+    <div class="bullet">• วัดด้วย UV 254 nm เพราะพาราเซตามอลมี <b>aromatic ring (benzene)</b> → π→π* transition → ดูดกลืนแสง UV ที่ 254 nm ได้ดี</div>
+    <div class="section-sub">ทำไมต้องกรอง membrane 0.45 µm?</div>
+    <div class="bullet">• ยาเม็ดมี excipients (แป้ง, binding agent) ที่ไม่ละลายหมด</div>
+    <div class="bullet">• อนุภาคเล็กอุดตัน column C18 ที่ราคาแพง → column เสียหาย → ต้องกรองออกก่อน</div>
+    <div class="bullet">• Guard column ยังช่วยกรองอีกชั้น แต่ membrane filter ช่วยยืดอายุ guard column ด้วย</div>
+    <div class="section-sub">ทำไม MeOH:H₂O 50:50?</div>
+    <div class="bullet">• ต้องการ k' ที่เหมาะสม (k' = 2–10 สำหรับ separation ที่ดี)</div>
+    <div class="bullet">• MeOH มาก → MP ไม่มีขั้วมากขึ้น → k' ลด → paracetamol ออกเร็ว (อาจเร็วเกินไป overlap กับ peak อื่น)</div>
+    <div class="bullet">• น้ำมาก → MP มีขั้วมากขึ้น → k' เพิ่ม → paracetamol ออกช้า (ใช้เวลานาน)</div>
+    <div class="bullet">• 50:50 = จุดที่ balance ระหว่าง resolution ดีและเวลาสมเหตุสมผล</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">การคำนวณปริมาณพาราเซตามอล</div>
+    <div class="fblock amber">
+      <div class="flabel">จาก calibration curve (peak area vs concentration) → หา c ของ sample</div>
+      \[ \text{mg paracetamol/tablet} = c_{sample} \times \frac{V_{total}}{m_{weighed}} \times m_{tablet} \]
+    </div>
+    <div class="bullet">• c<sub>sample</sub> = ความเข้มข้นที่อ่านจากกราฟ (mg/mL)</div>
+    <div class="bullet">• V<sub>total</sub> = ปริมาตรที่ปรับไว้ (25 mL)</div>
+    <div class="bullet">• m<sub>weighed</sub> = น้ำหนักยาที่ชั่งวิเคราะห์ (g)</div>
+    <div class="bullet">• m<sub>tablet</sub> = น้ำหนักยาทั้งเม็ด (g)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">โจทย์คำนวณตัวอย่าง <span class="tag-blue">🧮</span></div>
+    <div class="worked">
+      <div class="worked-q">จาก lab: c<sub>sample</sub> (จากกราฟ) = 0.382 mg/mL, V<sub>total</sub> = 25 mL, m<sub>weighed</sub> = 0.0244 g, m<sub>tablet</sub> = 0.6248 g จงหา mg paracetamol/tablet</div>
+      <div class="worked-step">mg para = 0.382 × 25 = 9.55 mg (ในสารละลายที่ชั่ง 0.0244 g)</div>
+      <div class="worked-step">mg para/tablet = 9.55 × (0.6248 / 0.0244)</div>
+      <div class="worked-ans">≈ 244.5 mg/tablet (ยาพาราเซตามอลปกติมี 500 mg/tablet)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 2: Calibration curve: peak area = 12500 × c (µg/mL) วัด sample ได้ peak area = 4,850 จงหา c</div>
+      <div class="worked-step">c = 4850 / 12500</div>
+      <div class="worked-ans">c = 0.388 µg/mL = 0.388 mg/L</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 3: จาก โจทย์ 2: c = 0.388 mg/mL ใน 25 mL, ชั่งยา 0.0244 g จาก tablet 0.6248 g จงหา mg paracetamol/tablet</div>
+      <div class="worked-step">mg ใน 25 mL = 0.388 × 25 = 9.70 mg (จาก 0.0244 g tablet)</div>
+      <div class="worked-step">mg/tablet = 9.70 × (0.6248/0.0244)</div>
+      <div class="worked-ans">≈ 248 mg/tablet</div>
+    </div>
+    <div class="worked">
+      <div class="worked-q">โจทย์ 4: ถ้าเปลี่ยน MP จาก MeOH:H₂O 50:50 เป็น 70:30 paracetamol จะออกเร็วหรือช้ากว่า?</div>
+      <div class="worked-step">MeOH เพิ่ม → MP ไม่มีขั้วมากขึ้น → C18 และ MP มีขั้วใกล้กัน → k' ลด → paracetamol ออกเร็วขึ้น</div>
+      <div class="worked-ans">ออกเร็วขึ้น (k' ลด, t_R ลด)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title chrom">Q&amp;A เน้นข้อสอบ <span class="tag-red">🔥</span></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไม lab นี้ใช้ reversed phase ไม่ใช่ normal phase?</div><div class="qa-a">A: พาราเซตามอลมีขั้วปานกลาง → Normal phase (SP มีขั้ว) จะ retain แน่นเกิน ออกยาก / Reversed phase (C18, ไม่มีขั้ว) + MeOH/water → k' เหมาะสม elute ออกมาในเวลาที่วัดได้สะดวก</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ทำไมวัดที่ 254 nm ไม่ใช่ 510 nm แบบ Lab 8?</div><div class="qa-a">A: พาราเซตามอลมี benzene ring → UV absorption ที่ ~254 nm (π→π*) ไม่มีสีในช่วง visible / Lab 8 วัด visible (510 nm) เพราะ [Fe(phen)₃]²⁺ มีสีแดงส้ม</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ถ้าลด MeOH เหลือ 30% จะเกิดอะไรกับ chromatogram?</div><div class="qa-a">A: MP มีขั้วมากขึ้น → k' เพิ่ม → paracetamol ติด C18 นานขึ้น → t<sub>R</sub> เพิ่ม → peak ออกช้าและกว้างขึ้น → ใช้เวลา run นานขึ้น</div></div>
+    <div class="qa-box"><div class="qa-q">Q: ต่างกับ Lab 9 (GC) อย่างไร?</div><div class="qa-a">A: HPLC ใช้ liquid MP → ใช้กับสารที่ระเหยยากหรือ thermally labile ได้ เช่น ยา / GC ต้องเปลี่ยนสารเป็นแก๊ส → ใช้กับสารระเหยง่ายเท่านั้น เช่น ethanol</div></div>
+  </div>
+
+  <div class="hl amber">
+    <div class="hl-title">📌 จำสั้น ๆ ก่อนสอบ</div>
+    <div class="bullet">• C18 (reversed phase) + MeOH:H₂O 50:50 + UV 254 nm (π→π* ของ benzene ring)</div>
+    <div class="bullet">• กรอง membrane 0.45 µm ก่อนฉีด ป้องกัน column อุดตัน</div>
+    <div class="bullet">• MeOH↑ → k'↓ สารออกเร็ว / น้ำ↑ → k'↑ สารออกช้า</div>
+    <div class="bullet">• HPLC = สารระเหยยาก / GC = สารระเหยง่าย</div>
+  </div>
+</div>
+
+</body>
+</html>
